@@ -1,0 +1,20 @@
+{
+  "name": "video10",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^2.5.0",
+    "purescript-console": "^2.0.0",
+    "purescript-monoid": "^2.2.0",
+    "purescript-folds": "^2.0.0",
+    "purescript-foldable-traversable": "^2.2.0",
+    "purescript-maps": "^2.1.2"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^2.0.0"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "purescript-globals",
+  "homepage": "https://github.com/purescript/purescript-globals",
+  "description": "Typed definitions for standard Javascript globals",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-globals.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "test",
+    "bower.json",
+    "package.json"
+  ],
+  "devDependencies": {
+    "purescript-assert": "^2.0.0",
+    "purescript-console": "^2.0.0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "purescript-psci-support",
+  "homepage": "https://github.com/purescript/purescript-psci-support",
+  "description": "Support module for the PSCI interactive mode",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-psci-support.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "bower.json",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-console": "^2.0.0"
+  },
+  "version": "2.0.0",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.0",
+    "commit": "0d8a303ac09eea9d724bc2bdff018ac48e8a5f6b"
+  },
+  "_source": "https://github.com/purescript/purescript-psci-support.git",
+  "_target": "^2.0.0",
+  "_originalSource": "purescript-psci-support"
+}

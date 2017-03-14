@@ -1,0 +1,23 @@
+{
+  "name": "purescript-maybe",
+  "homepage": "https://github.com/purescript/purescript-maybe",
+  "description": "Optional values",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-maybe.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "test",
+    "bower.json",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-monoid": "^2.2.0",
+    "purescript-prelude": "^2.5.0"
+  }
+}

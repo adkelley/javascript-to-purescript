@@ -1,0 +1,32 @@
+{
+  "name": "purescript-console",
+  "homepage": "https://github.com/purescript/purescript-console",
+  "description": "Console-related functions and effect type for PureScript.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-console.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "test",
+    "bower.json",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-eff": "^2.0.0"
+  },
+  "version": "2.0.0",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.0",
+    "commit": "3d3846c1a625b1996b4bc9e1d7a2fbff407fda25"
+  },
+  "_source": "https://github.com/purescript/purescript-console.git",
+  "_target": "^2.0.0",
+  "_originalSource": "purescript-console"
+}

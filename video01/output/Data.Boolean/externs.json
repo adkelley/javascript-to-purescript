@@ -1,0 +1,1 @@
+{"efVersion":"0.10.5","efModuleName":["Data","Boolean"],"efExports":[{"ValueRef":{"Ident":"otherwise"}}],"efImports":[{"eiModule":["Prim"],"eiImportType":{"Implicit":[]},"eiImportedAs":null}],"efFixities":[],"efTypeFixities":[],"efDeclarations":[{"EDValue":{"edValueName":{"Ident":"otherwise"},"edValueType":{"tag":"TypeConstructor","contents":[["Prim"],"Boolean"]}}}]}

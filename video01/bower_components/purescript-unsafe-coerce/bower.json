@@ -1,0 +1,22 @@
+{
+  "name": "purescript-unsafe-coerce",
+  "homepage": "https://github.com/purescript/purescript-unsafe-coerce",
+  "description": "Unsafe coercion of values.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-unsafe-coerce"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "test",
+    "bower.json",
+    "package.json"
+  ],
+  "devDependencies": {
+    "purescript-console": "^2.0.0"
+  }
+}

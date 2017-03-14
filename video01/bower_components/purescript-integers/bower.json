@@ -1,0 +1,29 @@
+{
+  "name": "purescript-integers",
+  "homepage": "https://github.com/purescript/purescript-integers",
+  "description": "Functions and bitwise operators for the Int numeric type",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-integers.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "test",
+    "bower.json",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-globals": "^2.0.0",
+    "purescript-math": "^2.0.0",
+    "purescript-maybe": "^2.0.0",
+    "purescript-partial": "^1.1.2"
+  },
+  "devDependencies": {
+    "purescript-assert": "^2.0.0",
+    "purescript-console": "^2.0.0"
+  }
+}

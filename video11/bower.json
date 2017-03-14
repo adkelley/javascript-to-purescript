@@ -1,0 +1,21 @@
+{
+  "name": "video11",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^2.5.0",
+    "purescript-console": "^2.0.0",
+    "purescript-control": "^2.0.0",
+    "purescript-identity": "^2.0.0",
+    "purescript-strings": "^2.1.0",
+    "purescript-integers": "^2.1.1",
+    "purescript-unsafe-coerce": "^2.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^2.0.0"
+  }
+}
