@@ -59,4 +59,5 @@ acct2 = makeAccount (First "Alex") (All false) (Sum 2) ["Gatsby"]
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   -- semigroups are concatable and associative
+  log "Semigroup examples"
   log $ showAccount $ acct1 `concatAccount` acct2

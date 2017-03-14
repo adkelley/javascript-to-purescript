@@ -44,4 +44,5 @@ getPort = do
 
 main :: forall e. Eff (console :: CONSOLE, fs :: FS | e) Unit
 main = do
+  log "Use chain for composable error handling with nested Eithers"
   log =<< getPort

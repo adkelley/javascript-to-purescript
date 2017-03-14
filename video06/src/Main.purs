@@ -27,6 +27,7 @@ instance semigroupFirst :: Semigroup (First a) where
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
+  log "Create types with Semigroups"
   -- semigroups are concatable and associative
   log $ ("a" <> "b") <> "c"
   log $ "a" <> ("b" <> "c")

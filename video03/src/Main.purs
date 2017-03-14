@@ -52,6 +52,7 @@ newColors =
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
+  log "Enforce a null check with composable code branching using Either"
   let colors = newColors
   log $ result "red" colors
   log $ result "green" colors

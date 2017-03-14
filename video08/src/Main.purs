@@ -27,6 +27,7 @@ instance monoidAll :: BooleanAlgebra a => Monoid (All a) where
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   -- semigroups are concatable and associative
+  log "Ensure failsafe combination using monoids"
   log $ "alex"
   logShow $ (Sum 1) <> (Sum 2) <> mempty
   logShow $ (All true) <> (All false) <> mempty

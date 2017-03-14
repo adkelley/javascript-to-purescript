@@ -3,10 +3,10 @@ module Main where
 
 import Prelude
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, logShow)
+import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Foldable (fold, foldMap)
-import Data.Map (fromFoldable) as M
 import Data.List (fromFoldable) as L
+import Data.Map (fromFoldable) as M
 import Data.Monoid (class Monoid)
 import Data.Tuple (Tuple(..))
 
@@ -21,6 +21,7 @@ instance monoidSum :: Semiring a => Monoid (Sum a) where
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
+  log "Unbox types with foldMap"
   logShow $ fold [(Sum 1), (Sum 2), (Sum 3)]
   logShow $ fold $ M.fromFoldable [(Tuple "brian" (Sum 1)), (Tuple "sarah" (Sum 2))]
   logShow $ fold $ map Sum $ M.fromFoldable [(Tuple "brian" 1), (Tuple "sarah" 2)]
