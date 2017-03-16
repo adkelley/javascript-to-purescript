@@ -5,6 +5,7 @@ import Data.Either (Either)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 
+-- either.of(x) == pure x
 eitherOf :: String -> Either String String
 eitherOf = pure
 
