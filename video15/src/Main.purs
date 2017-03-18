@@ -12,7 +12,9 @@ eitherOf = pure
 eitherExample :: Either String String
 eitherExample =
   eitherOf "hello" #
-  map (\x -> x <> "!")
+  -- map (\x -> x <> "!")
+  map (_ <> "!")
+
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do

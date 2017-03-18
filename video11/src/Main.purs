@@ -10,15 +10,17 @@ import Data.Maybe (fromMaybe)
 import Data.String (trim, toLower)
 import Unsafe.Coerce (unsafeCoerce)
 
-lazyBox :: forall a. a -> Lazy a
+type LazyBox = Lazy
+
+lazyBox :: forall a. a -> LazyBox a
 lazyBox a = defer (\_ -> a)
 
-nextCharForNumberString :: String -> Lazy String
+nextCharForNumberString :: String -> LazyBox String
 nextCharForNumberString str = do
   lazyBox str #
   map trim #
-  map (\s -> fromMaybe 0 $ fromString s) #
-  map (\i -> i + 1) #
+  map (\s ->fromMaybe 0 $ fromString s) #
+  map (_ + 1) #
   map (\i -> fromCharCode i) #
   map (\c -> toLower $ unsafeCoerce c :: String)
 

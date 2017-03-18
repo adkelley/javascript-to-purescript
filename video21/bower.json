@@ -1,5 +1,5 @@
 {
-  "name": "video12",
+  "name": "video21",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -10,7 +10,7 @@
     "purescript-prelude": "^2.5.0",
     "purescript-console": "^2.0.0",
     "purescript-transformers": "^2.2.0",
-    "purescript-either": "^2.2.1"
+    "purescript-functions": "^2.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^2.0.0"
