@@ -40,7 +40,7 @@ npm install -g purescript pulp bower
 ```
 ### Running your first PureScript program
 
-Assuming you've installed purescript, pulp, and bower, then it doesn't get any easier than this:
+Assuming you've installed PureScript, Pulp, and Bower, then it doesn't get any easier than this:
 
 ```
 $ mkdir purescript-hello
