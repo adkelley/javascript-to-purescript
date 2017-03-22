@@ -6,24 +6,10 @@ import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Function.Uncurried (Fn3, runFn3)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Replacement(..), Pattern(..), replace)
+import Data.Box (Box(..), fold)
 
 foreign import parseFloatImpl ::
   Fn3 (Number -> Maybe Number) (Maybe Number) String (Maybe Number)
-
--- const Box = x =>
-newtype Box a = Box a
--- map: f => Box(f(x))
-instance functorBox :: Functor Box where
- map f (Box x) = Box (f x)
--- -- inspect: () => 'Box($(x))'
-instance showBox :: Show a => Show (Box a) where
-  show (Box a) = "Box(" <> show a <> ")"
--- fold: f => f(x)
--- Box(Number) is not a monoid, and therefore unfoldable
--- so we run a function (fold) that pattern matches on x to
--- compute f x
-fold :: forall a b. (a -> b) -> Box a -> b
-fold f (Box x) = f x
 
 safeParseFloat :: String -> Number
 safeParseFloat str =
@@ -49,7 +35,7 @@ percentToFloat str =
   Box str #
   map (replace (Pattern "%") (Replacement "")) #
   map (\replaced -> safeParseFloat replaced) #
-  map (\f -> f * 0.01)
+  map (_ * 0.01)
 
 applyDiscount :: String -> String -> Number
 applyDiscount price discount =
