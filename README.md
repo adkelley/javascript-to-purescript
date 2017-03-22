@@ -18,17 +18,22 @@ If you're new to FP or you haven't tackled Brian's course, then I highly recomme
 
 Breathe easy knowing that Javascript supports some of the most important features of FP (e.g., first class functions).  But, besides FP, Javascript has to serve several masters, including object oriented and imperative programmers.  As a consequence, there are limitations and compromises when using Javascript for FP. In particular, its missing a type system, purity, immutability, and recursive tail call optimization.  Some of these gaps can be mitigated by adding a static type checker (see [Flow](https://github.com/facebook/flow)), immutable collections (see [Immutable.js](https://facebook.github.io/immutable-js/)), and FP abstraction libraries (see [RamdaJS](http://ramdajs.com)). And the Javascript ES6 standard has certainly delivered more FP goodness with the introduction of `const` and arrow functions `(x) => y`, just to name a few.  Still FP in Javascript is mostly accomplished by convention, along with cobbling together the 'bandaids' I mentioned above. A Javascript programmer must be always conscious to create pure functions that avoid side effects - it should always be front and center in their mind.  I believe this places too much cognitive load on the programmer; especially when there are proper FP languages that eliminate this friction, while compiling to optimized Javascript.
 
-PureScript has been architected solely as a FP language. Its a small, strongly typed language that compiles to human readable [CommonJS](https://en.wikipedia.org/wiki/CommonJS), and other [languages](https://github.com/andyarvanitis/purescript-native) too. So you've got both your client side and server side covered in one language - which doesn't get any better IMHO!  You'll also find all the FP language features you've probably heard or read about, including currying, pattern matching, tail call optimization, higher order and higher kinded types.  Finally there is no runtime system footprint to worry about, plus there is a very straight forward FFI to/from Javascript! So if you don't find support yet for functions from your favorite Javascript module, then its not hard to include them yourself (I'll show you some examples in the tutorials)
+PureScript has been architected solely as a FP language. Its a small, strongly typed language that compiles to human readable [CommonJS](https://en.wikipedia.org/wiki/CommonJS), and other [languages](https://github.com/andyarvanitis/purescript-native) too. So you've got both your client side and server side covered in one language - which doesn't get any better IMHO!  You'll also find all the FP language features you've probably heard or read about, including currying, pattern matching, tail call optimization, higher order and higher kinded types.  Finally there is no runtime system that adds to your download footprint (sorry [Elm](http://elm-lang.org)), and plus (**drum roll please**) there is a very powerful and straight forward FFI to and from Javascript! So if you don't find support yet for functions from your favorite Javascript module, then its not hard to include them yourself (I'll show you some examples in the tutorials)
 
-## Tutorial Layout & PureScript
+## Tutorial Layout
 
 Each tutorial has been placed in a separate folder named 'tut##', where ## is a number (e.g., 'tut01') that corresponds to video## from Brian's [course](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript). The folders have been set up so that you can run the PureScript code samples for the first time with `bower update && pulp run`, then `pulp run` from then on (explained below).  You will also find the accompanying tutorial markdown (e.g, Create-linear-data-flow-with-container-style-types.md) which matches the titles from each of Brian's tutorials.  Here I explain the abstractions covered in Brian's corresponding video and how they are implemented in PureScript.
 
-### Installing PureScript and best supporting actors
+## Getting up and running in PureScript
+
+You can skip this section if you've already installed and are using PureScript
+
+### Installing PureScript and its supporting actors
 See [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/)
 
-;TLDR
-Seriously? You don't have 10-minutes to review [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/)? Well Ok, here goes:
+**;TLDR**
+
+Seriously? You don't have 10-minutes to review [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/)? Well you've been warned and I wash my hands or (as Japanese would have it, my feet) of all responsibility for the results:
 ```
 npm install -g purescript pulp bower
 
@@ -57,4 +62,4 @@ See [Getting Started with PureScript](http://www.purescript.org/learn/getting-st
 
 * [Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
-I'll add additional links as I write the tutorial markdown. But If you would like to look ahead (e.g., [Tutorial 2](https://github.com/adkelley/fp-javascript-to-purescript/tutorial02)), then all the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.  
+I'll add additional links as I write the tutorial markdown. But If you would like to look ahead (e.g., [Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02)), then all the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.  
