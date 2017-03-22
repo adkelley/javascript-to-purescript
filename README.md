@@ -55,6 +55,6 @@ See [Getting Started with PureScript](http://www.purescript.org/learn/getting-st
 
 ## Let's get this party started!
 
-* [Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tut01/README.md)
+* [Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
 I'll add additional links as I write the tutorial markdown. But If you would like to look ahead (e.g., [Tutorial 2](https://github.com/adkelley/fp-javascript-to-purescript/tutorial02)), then all the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.  
