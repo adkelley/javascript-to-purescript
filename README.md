@@ -1,4 +1,4 @@
-# Making the Leap from Functional Javascript to PureScript
+# Making the Leap from Functional Javascript to PureScript (DRAFT)
 
 ## Introduction
 
