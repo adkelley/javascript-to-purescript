@@ -2,47 +2,50 @@ module Main where
 
 import Prelude
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Data.Char (fromCharCode)
+import Control.Monad.Eff.Console (CONSOLE, log)
+import Data.Char (fromCharCode, toLower)
 import Data.Foldable (class Foldable, foldMap)
 import Data.Int (fromString)
 import Data.Maybe (fromMaybe)
-import Data.String (trim, toLower)
-import Unsafe.Coerce (unsafeCoerce)
+import Data.String (singleton, trim)
 
--- const Box = x =>
+-- Javascript - const Box = x => ({})
 newtype Box a = Box a
--- map: f => (f(x))
+-- Javascript - map: f => (f(x))
 instance functorBox :: Functor Box where
   map f (Box x) = Box (f x)
--- fold: f => f(x)
+-- Javascript - fold: f => f(x)
 instance foldableBox :: Foldable Box where
   foldr f z (Box x) = f x z
   foldl f z (Box x) = f z x
   foldMap f (Box x) = f x
--- inspect: () => 'Box($(x))'
+-- Javascript - inspect: () => 'Box($(x))'
 instance showBox :: Show a => Show (Box a) where
   show (Box a) = "Box(" <> show a <> ")"
 
-nextCharForNumberString' :: String -> Char
+-- Bundled parenthesis, all in one expression
+-- This is suboptimal because its hard to follow
+nextCharForNumberString' :: String -> String
 nextCharForNumberString' str =
-  fromCharCode(fromMaybe 0 (fromString(trim(str))) + 1)
+  singleton(fromCharCode(fromMaybe 0 (fromString(trim(str))) + 1))
 
+-- A better approach is to use composition by putting
+-- s into a box and mapping over it
 nextCharForNumberString :: String -> String
-nextCharForNumberString str = do
+nextCharForNumberString str =
   (Box str) #
   map trim #
   map (\s -> fromMaybe 0 $ fromString s) #
   map (\i -> i + 1) #
   map (\i -> fromCharCode i) #
-  foldMap (\c -> toLower $ unsafeCoerce c :: String)
+  foldMap (\c -> singleton $ toLower c)
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   log "Create Linear Data Flow with Container Style Types (Box)"
 
-  log "Bundled parenthesis approach"
-  logShow $ nextCharForNumberString' "     64   "
+  log "Bundled parenthesis approach, all in one expression is suboptimal"
+  log $ nextCharForNumberString' "     64   "
 
-  log "Let's borrow a trick from our friend array"
+  log "Let's borrow a trick from our friend array by putting string into a Box"
   log $ nextCharForNumberString "     64   "
