@@ -33,7 +33,7 @@ nextCharForNumberString' str =
 -- s into a box and mapping over it
 nextCharForNumberString :: String -> String
 nextCharForNumberString str =
-  (Box str) #
+  Box str #
   map trim #
   map (\s -> fromMaybe 0 $ fromString s) #
   map (\i -> i + 1) #
