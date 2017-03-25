@@ -1,3 +1,5 @@
+![series banner](https://github.com/adkelley/javascript-to-purescript/tree/master/resources/glitched-abstract.jpg)
+
 # Series - Make the Leap from JavaScript to PureScript
 # Tutorial 1 - Create linear data flow with container style types (Box)
 
@@ -144,7 +146,7 @@ Let's look at the more interesting lines:
 
 ### Call the function and log the result
 
-UUnless you're calling PureScript from JavaScript (yes you can do that), every PureScript application typically has a `main` method.  The `main` method runs after all the modules are defined.  In our example, there is one module only - `Main` that imports several other modules listed at the top of the program (e.g., `import Data.Char (fromCharCode, toLower)`.  A `main` method is a simple method call with no arguments.
+Unless you're calling PureScript from JavaScript (yes you can do that), every PureScript application typically has a `main` method.  The `main` method runs after all the modules are defined.  In our example, there is one module only - `Main` that imports several other modules listed at the top of the program (e.g., `import Data.Char (fromCharCode, toLower)`.  A `main` method is a simple method call with no arguments.
 
 From our `main` method we call our function `nextCharForNumberString` and log the result using the `log` or `logShow` functions.  The difference between these two is that `log` expects a string argument, whereas `logShow` can log a value, so long as an instance of the `Show` class has been declared. Here's the code:
 ```purescript
