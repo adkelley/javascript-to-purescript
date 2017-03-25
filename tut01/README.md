@@ -152,10 +152,10 @@ main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   log "Create Linear Data Flow with Container Style Types (Box)."
 
-  log "Bundled parenthesis approach, all in one expression is suboptimal."
+  log "Bundled parenthesis approach. All in one expression is suboptimal."
   log $ nextCharForNumberString' "     64   "
 
-  log "Let's borrow a trick from our friend array by putting string into a Box."
+  log "Let's borrow a trick from our friend array by putting the string into a Box."
   log $ nextCharForNumberString "     64   "
 ```
 You can safely ignore main's type declaration for now.  But it tells the compiler and anyone who is reading the program that `main` will generate a side effect, namely logging to the console. The rest should be self-explanatory, except the special syntax called `do` notation. In simple terms (for now), `do` allows us to write our log statements as we would in an imperative program - one after the other.  It's much more than that, especially when we encounter expressions that bind elements together or give names to expressions using the `let` keyword.  But this explanation will suffice for now.
