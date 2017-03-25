@@ -1,4 +1,5 @@
-![series banner](resources/glitch-abstract.jpg)
+![series banner](../resources/glitched-abstract.jpg)
+
 # Series - Make the Leap from JavaScript to PureScript
 # Tutorial 1 - Create linear data flow with container style types (Box)
 

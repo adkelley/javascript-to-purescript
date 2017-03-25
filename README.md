@@ -1,4 +1,4 @@
-![series banner]![series banner](resources/glitch-abstract.jpg)
+![series banner](resources/glitched-abstract.jpg)
 
 # Series - Make the Leap from JavaScript to PureScript
 
