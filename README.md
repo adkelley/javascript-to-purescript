@@ -1,4 +1,4 @@
-![series banner](https://github.com/adkelley/javascript-to-purescript/tree/master/resources/glitched-abstract.jpg)
+![series banner]![series banner](resources/glitch-abstract.jpg)
 
 # Series - Make the Leap from JavaScript to PureScript
 

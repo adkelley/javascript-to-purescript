@@ -1,5 +1,4 @@
-![series banner](https://github.com/adkelley/javascript-to-purescript/tree/master/resources/glitched-abstract.jpg)
-
+![series banner](resources/glitch-abstract.jpg)
 # Series - Make the Leap from JavaScript to PureScript
 # Tutorial 1 - Create linear data flow with container style types (Box)
 
