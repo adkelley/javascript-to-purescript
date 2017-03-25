@@ -1,12 +1,12 @@
 # Series - Make the Leap from JavaScript to PureScript
 # Tutorial 1 - Create linear data flow with container style types (Box)
 
-This is the first tutorial in the series **Make the leap from JavaScript to PureScript**.  First, be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript), where the goals & outline, and the installation, compilation, & running of PureScript are covered.
+This tutorial is the first in the series **Make the leap from JavaScript to PureScript**.  First, be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript), where we cover the goals & outline, and the installation, compilation, & running of PureScript.
 
-The series outline and javascript code samples have been borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well, and I feel it's better to understand its implementation in the comfort of your own familiar JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
+The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
 
-So one more time with feeling - You should already somewhat familiar with the **Box** abstraction. You're also able to enter `bower update && pulp run` and `pulp run` thereafter, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that should be refactored then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
+So one more time with feeling - You should be already somewhat familiar with the **Box** abstraction. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
 
 ## Baby's first FP abstraction - Box( )
 
@@ -32,13 +32,13 @@ So let's try bundling everything up into one expression:
 const nextCharForNumberString = str =>
   String.fromCharCode(parseInt(str.trim()) + 1)
 ```
-Perhaps better, but it's terribly hard to follow!  We must start with the innermost parenthesis, and work our way to the outermost, all while keeping track of the changes to `str`.  Good luck with that on more complex expressions!
+Perhaps better, but it's terribly hard to follow!  We must start with the innermost parentheses, and work our way to the outermost, all while keeping track of the changes to `str`.  Good luck with that on more complex expressions!
 
-There is a better approach that we can borrow from our dear old friend `Array`. Let's put our string into a box so that we can map our string transform functions over it.  In PureScript, we typically use the `Identity` functor for this purpose, because it comes right out of the box (sorry - I couldn't resist the pun). But we don't scare anyone away from this very first tutorial, so instead let's create a new type called `Box`. Plus, we learn how to create new types in PureScript, which is a really nice way to help express the meaning and context of our program!
+There is a better approach that we can borrow from our dear old friend `Array`. Let's put our string into a box so that we can map our transform functions over it.  In PureScript, we typically use the `Identity` functor for this purpose, because it comes right out of the box (sorry - I couldn't resist the pun). But we don't scare anyone away from this very first tutorial, so instead let's build a new type called `Box`. Plus, we learn how to create new types in PureScript, which is a nice way to help express the meaning and context of our program!
 
 ## Time for PureScript
 
-Open the code example [Main.purs](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02/src/Main.purs) with your favorite code editor. If one is not installed already, you can refer to the [Introduction](https://github.com/adkelley/javascript-to-purescript) for a list of IDE plugins that will help to better format and view PureScript code in your editor.  For now, you can ignore the module declaration and import list at the top.  Instead, let's start immediately on our Box declaration.
+Open the code example [Main.purs](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02/src/Main.purs) with your favorite code editor. If you don't have editor support for PureScript, refer to the [Introduction](https://github.com/adkelley/javascript-to-purescript) for a list of IDE plugins.  For now, you can ignore the module declaration and import list at the top.  Instead, let's start immediately on our Box declaration.
 
 ### Create a Box to hold the value
 
@@ -81,7 +81,7 @@ instance showBox :: Show a => Show (Box a) where
 ```
 Note that the `<>` operator is a convenient infix operator alias for PureScript's string concatenation function `append`.
 
-Finally, what to do with this Box? When we return the string, we don't actually want it to remain in our Box. To handle this in JavaScript, we add one more function to the `Box` called `fold`. It will remove it from the Box before we run the last function(s) before returning; except it doesn't put it back in the Box.  First, again in JavaScript:
+Finally, what to do with this Box? When we return the string, we don't want it to remain in our Box. To handle this in JavaScript, we add one more function to the `Box` called `fold`. It will remove it from the Box before we run the last function(s) before returning; except it doesn't put it back in the Box.  First, again in JavaScript:
 ```javascript
 const Box = x =>
 ({
@@ -126,11 +126,11 @@ And without further ado, our PureScript reveal:
 8     foldMap (\c -> singleton $ toLower c)
 ```
 Let's look at the more interesting lines:
-1.  We declare the function `nextCharForNumberString` and tell the PureScript compiler that it should expect a `String` as input, and to return the transformed `String` as output.  Now JavaScript is a dynamically typed language and therefore we didn't and couldn't declare our `String` types. In contrast, PureScript is a statically typed language, which means that it (at compile time) will check to see if we've been asleep at the wheel.  For example, using a function argument or returning a value that is not our declared `String` type.  
+1.  We declare the function `nextCharForNumberString` and tell the PureScript compiler that it should expect a `String` as input, and to return the transformed `String` as output.  Now JavaScript is a dynamically typed language, and therefore we didn't and couldn't declare our `String` types. In contrast, PureScript is a statically typed language, which means that it (at compile time) will check to see if we've been asleep at the wheel.  For example, using a function argument or returning a value that is not our declared `String` type.  
 
- Now there's been a lot of debate on the advantages and disadvantages of dynamic vs. statically typed languages. I don't care to wax and wane over them, only to point out that JavaScript won't detect wrong argument types until you've actually run the program. It usually causes a runtime error, and perhaps this too late depending on where you weigh in on type ideology.  But with the introduction of [TypeScript](https://www.typescriptlang.org) from Microsoft and [Flow](https://flowtype.org) from Facebook, clearly there's is a greater awareness and interest in the JavaScript community for static type checking.  Nuff said!
+ Now there's been a lot of debate on the advantages and disadvantages of dynamic vs. statically typed languages. I don't care to wax and wane over them, only to point out that JavaScript won't detect wrong argument types until you've run the program. It usually causes a runtime error, and perhaps this too late depending on where you weigh in on 'type ideology'.  But with the introduction of [TypeScript](https://www.typescriptlang.org) from Microsoft and [Flow](https://flowtype.org) from Facebook, clearly, there's a greater awareness and interest in the JavaScript community for static type checking.  Nuff said!
 
-2. Next, we start the function application, assigning our input string to the variable name `str`
+2. Next, we start the function application, assigning our input string to the variable name `str`.
 
 3. We put `str` into our `Box` so that we can map over it.  And 'look ma - no parenthesis!'.  PureScript uses white space to separate arguments, avoiding the need for parenthesis in cases where the order of the expression is clear. The `#` operator is similar to `.functionName()` in JavaScript or `|>` in Elm and Elixir.  It moves our transformed value along to the next function, placing it at the end of the argument list - very handy indeed!
 
@@ -138,36 +138,36 @@ Let's look at the more interesting lines:
 
 5. Here's where things become very different from the JavaScript example.  Besides static type checking, many PureScript library functions have been written to help deal with possible runtime errors at the compiler stage.  Here, it is possible that when we attempt to convert a number string (e.g., "1") to a number, `fromString` might not have given an actual number (e.g., "this is not a number"). So, instead of ignoring the dire consequences, `fromString` returns a `Maybe String` type.  
 
- This serves as a clear signal to the programmer and the compiler that the possibility of a non-integer character must be dealt with. I won't get into the `Maybe` constructor just yet because it is too early in this series. But to deal with it, I decided to use the `fromMaybe` function that will convert the string to '0', if ever `fromString` detects that it has been given a non-integer character by returning `Nothing`.  Finally, the `$` operator is the reverse of `#`. It allows us to avoid placing parenthesis around `fromString s` - nice!
+ `Maybe String` serves as a clear signal to the programmer and the compiler that the possibility of a non-integer character, and you deal with it. I won't get into the `Maybe` constructor just yet because it is too early in this series. But to deal with it, I decided to use the `fromMaybe` function that will convert the string to '0', if ever `fromString` detects that it has been given a non-integer character by returning `Nothing`.  Finally, the `$` operator is the reverse of `#`. It allows us to avoid placing parenthesis around `fromString s` - nice!
 
 8. Now it's time to fold 'em and go home.  We convert the character to lower case, then use `singleton` to convert our `Char` to our output type, `String`. `foldMap` applies these function expressions to the character in Box, and returns the transformed string to our `main` caller method covered in the next section.
 
 ### Call the function and log the result
 
-Unless you're calling PureScript from JavaScript (yes you can do that), every PureScript application typically has a `main` method.  The `main` method is run after all the modules have been defined.  In our example, there is one module only - `Main` that imports several other modules listed at the top of the program (e.g., `import Data.Char (fromCharCode, toLower)`.  A `main` method is generated as a simple method call with no arguments.
+UUnless you're calling PureScript from JavaScript (yes you can do that), every PureScript application typically has a `main` method.  The `main` method runs after all the modules are defined.  In our example, there is one module only - `Main` that imports several other modules listed at the top of the program (e.g., `import Data.Char (fromCharCode, toLower)`.  A `main` method is a simple method call with no arguments.
 
 From our `main` method we call our function `nextCharForNumberString` and log the result using the `log` or `logShow` functions.  The difference between these two is that `log` expects a string argument, whereas `logShow` can log a value, so long as an instance of the `Show` class has been declared. Here's the code:
 ```purescript
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
-  log "Create Linear Data Flow with Container Style Types (Box)"
+  log "Create Linear Data Flow with Container Style Types (Box)."
 
-  log "All one expression bundled in parenthesis is difficult to follow"
+  log "Bundled parenthesis approach, all in one expression is suboptimal."
   log $ nextCharForNumberString' "     64   "
 
-  log "Let's borrow a trick from our friend array by putting the string into a Box"
+  log "Let's borrow a trick from our friend array by putting string into a Box."
   log $ nextCharForNumberString "     64   "
 ```
-You can safely ignore main's type declaration for now.  But it tells the compiler and anyone reading the program that `main` will generate a side effect, namely logging to the console. The rest should be self-explanatory, with the exception of the special syntax called `do` notation. In simple terms (for now), `do` allows us to write our log statements as we would in an imperative program - one after the other.  It's much more powerful than that, especially when we encounter expressions that bind elements together, or give names to expressions using the `let` keyword.  But this explanation will suffice for now.
+You can safely ignore main's type declaration for now.  But it tells the compiler and anyone who is reading the program that `main` will generate a side effect, namely logging to the console. The rest should be self-explanatory, except the special syntax called `do` notation. In simple terms (for now), `do` allows us to write our log statements as we would in an imperative program - one after the other.  It's much more than that, especially when we encounter expressions that bind elements together or give names to expressions using the `let` keyword.  But this explanation will suffice for now.
 
 To run the program for the first time, `cd` into the `tut01/src` and type `bower update && pulp run`.  Then `pulp run` afterward is enough.
 
 ### Fun Facts
 
 Some things I didn't cover that you may be wondering about:
-1. Modules must be imported explicitly using the `import` statement, whenever you use one of its functions. Even the standard PureScript library called the 'Prelude' is not loaded automatically.  Typically you will import all the functions from Prelude with `import Prelude`, while the imports from other modules are listed explicitly. This helps to avoid conflicting imports.
+1. Modules must be imported explicitly using the `import` statement, whenever you use one of its functions. Even the standard PureScript library called the 'Prelude' isn't loaded automatically.  Typically you will import all the functions from Prelude with `import Prelude`, while the imports from other modules are listed explicitly. This helps to avoid conflicting imports.
 
-2. A PureScript directory structure is typically the following; which is created automatically when you type `pulp init` inside the root (i.e., my-app):
+2. A PureScript directory structure is typically the following; which is created when you type `pulp init` inside the root (i.e., my-app):
 ```
 my-app/
   bower components/
@@ -177,16 +177,16 @@ my-app/
   bower.json
 ```
 
-3. The compiled Javascript from this exercise stored in `output/Main/index.js ` Its worth having a look and what got generated.  For example, our `newtype Box a = Box a` declaration was transpiled to
+3. The transcompiled Javascript from this exercise is stored in `output/Main/index.js ` It's worth having a look and what got generated.  For example, our `newtype Box a = Box a` declaration is translated to:
 ```javascript
 var Box = function (x) {
     return x;
 };
 ```
 
-4. If you want to run your code in the browser then have a look at the command `pulp browserify`.  The resulting Javascript code can be saved to a file, and included in an HTML document. If you try this, you should see the log statements printed to your browser’s console.
+4. If you want to run your code in the browser, then have a look at the command `pulp browserify`.  The resulting Javascript code can be saved to a file and included in an HTML document. If you try this, you should see the log statements printed to your browser’s console.
 
-5. Conversely, if you want to optimize your code, and/or run your code from the terminal, then use the commands `pulp build -O --to output.js  && node output.js`  
+5. Conversely, if you want to optimize your code, and run your code from the terminal, then use the commands `pulp build -O --to output.js  && node output.js`.  
 
 6. A recent compiler update introduced a new syntactic structure, called an operator section, for simplifying anonymous function arguments.  For example, on line 6 of `nextCharForNumberString` we wrote our increment by one function like this:
 ```purescript

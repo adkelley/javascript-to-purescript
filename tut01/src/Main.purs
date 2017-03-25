@@ -42,10 +42,10 @@ nextCharForNumberString str =
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
-  log "Create Linear Data Flow with Container Style Types (Box)"
+  log "Create Linear Data Flow with Container Style Types (Box)."
 
-  log "Bundled parenthesis approach, all in one expression is suboptimal"
+  log "Bundled parenthesis approach, all in one expression is suboptimal."
   log $ nextCharForNumberString' "     64   "
 
-  log "Let's borrow a trick from our friend array by putting string into a Box"
+  log "Let's borrow a trick from our friend array by putting string into a Box."
   log $ nextCharForNumberString "     64   "
