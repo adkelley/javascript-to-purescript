@@ -1,4 +1,4 @@
-it is# Series - Make the Leap from JavaScript to PureScript (DRAFT)
+### Series - Make the Leap from JavaScript to PureScript (DRAFT)
 
 ## Introduction
 
