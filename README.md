@@ -1,6 +1,6 @@
-![series banner](resources/glitched-abstract.jpg)
-
 # Make the Leap from JavaScript to PureScript
+
+![series banner](resources/glitched-abstract.jpg)
 
 > *Note: This is the introduction to the “Make the Leap from JavaScript to PureScript” tutorial series. I’ll be*
 > *publishing a new tutorial approximately once-per-week. So come back often, there’s a lot more of this to come!*
