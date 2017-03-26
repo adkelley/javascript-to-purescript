@@ -3,8 +3,9 @@
 ![series banner](../resources/glitched-abstract.jpg)
 
 > *Note: This is Tutorial 1 in the series "Make the leap from JavaScript to PureScript". Be sure*
-> *to read the series introduction where we cover the goals & outline, and the installation, compilation, & running* > *of PureScript. I’ll be publishing a new tutorial approximately once-per-week. So come back often, there’s*
-> *a lot more of this to come!*
+> *to read the series introduction where we cover the goals & outline, and the installation,*
+> *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
+> *once-per-week. So come back often, there’s a lot more of this to come!*
 > [<Introduction](https://github.com/adkelley/javascript-to-purescript) | [>Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
