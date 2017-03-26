@@ -1,6 +1,10 @@
 ![series banner](resources/glitched-abstract.jpg)
 
-# Series - Make the Leap from JavaScript to PureScript
+# Make the Leap from JavaScript to PureScript
+
+> *Note: This is the introduction to the “Make the Leap from JavaScript to PureScript” tutorial series. I’ll be*
+> *publishing a new tutorial approximately once-per-week. So come back often, there’s a lot more of this to come!*
+> [>Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
 ## Introduction
 
@@ -61,6 +65,6 @@ $ pulp run
 
 ## So let's get this party started!
 
-* [Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
+[>>Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
-I'll add additional links as I write the tutorial markdown. But If you would like to look ahead (e.g., [Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02)), then all the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.  
+I'll add additional links as I write the tutorial markdown. But If you would like to look ahead, then the majority of the code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) are available on [Github](https://github.com/adkelley/javascript-to-purescript). But I may amend them as I write the accompanying tutorial markdown.  

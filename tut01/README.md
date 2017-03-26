@@ -1,14 +1,17 @@
 ![series banner](../resources/glitched-abstract.jpg)
 
-# Series - Make the Leap from JavaScript to PureScript
-# Tutorial 1 - Create linear data flow with container style types (Box)
+# Make the Leap from JavaScript to PureScript
+# Create linear data flow with container style types (Box)
 
-This tutorial is the first in the series **Make the leap from JavaScript to PureScript**.  First, be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript), where we cover the goals & outline, and the installation, compilation, & running of PureScript.
+> *Note: This Tutorial 1 in the series "Make the leap from JavaScript to PureScript". Be sure*
+> *to read the series introduction where we cover the goals & outline, and the installation, compilation, & running* > *of PureScript. I’ll be publishing a new tutorial approximately once-per-week. So come back often, there’s*
+> *a lot more of this to come!*
+> [<Introduction](https://github.com/adkelley/javascript-to-purescript) | [>Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
 
-So one more time with feeling - You should be already somewhat familiar with the **Box** abstraction. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
+One more time with feeling - You should be already somewhat familiar with the **Box** abstraction. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
 
 ## Baby's first FP abstraction - Box( )
 
@@ -40,7 +43,7 @@ There is a better approach that we can borrow from our dear old friend `Array`. 
 
 ## Time for PureScript
 
-Open the code example [Main.purs](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02/src/Main.purs) with your favorite code editor. If you don't have editor support for PureScript, refer to the [Introduction](https://github.com/adkelley/javascript-to-purescript) for a list of IDE plugins.  For now, you can ignore the module declaration and import list at the top.  Instead, let's start immediately on our Box declaration.
+Open the code example [Main.purs](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01/src/Main.purs) with your favorite code editor. If you don't have editor support for PureScript, refer to the [Introduction](https://github.com/adkelley/javascript-to-purescript) for a list of IDE plugins.  For now, you can ignore the module declaration and import list at the top.  Instead, let's start immediately on our Box declaration.
 
 ### Create a Box to hold the value
 
@@ -130,7 +133,7 @@ And without further ado, our PureScript reveal:
 Let's look at the more interesting lines:
 1.  We declare the function `nextCharForNumberString` and tell the PureScript compiler that it should expect a `String` as input, and to return the transformed `String` as output.  Now JavaScript is a dynamically typed language, and therefore we didn't and couldn't declare our `String` types. In contrast, PureScript is a statically typed language, which means that it (at compile time) will check to see if we've been asleep at the wheel.  For example, using a function argument or returning a value that is not our declared `String` type.  
 
- Now there's been a lot of debate on the advantages and disadvantages of dynamic vs. statically typed languages. I don't care to wax and wane over them, only to point out that JavaScript won't detect wrong argument types until you've run the program. It usually causes a runtime error, and perhaps this too late depending on where you weigh in on 'type ideology'.  But with the introduction of [TypeScript](https://www.typescriptlang.org) from Microsoft and [Flow](https://flowtype.org) from Facebook, clearly, there's a greater awareness and interest in the JavaScript community for static type checking.  Nuff said!
+ Now there's been a lot of debate on the advantages and disadvantages of dynamic vs. statically typed languages. I don't care to wax and wane over them, only to point out that JavaScript won't detect wrong argument types until you've run the program. It might cause a runtime error, which is perhaps too late, depending on where you weigh in on ‘type ideology’.  But with the introduction of [TypeScript](https://www.typescriptlang.org) from Microsoft and [Flow](https://flowtype.org) from Facebook, clearly, there's a greater awareness and interest in the JavaScript community for static type checking.  Nuff said!
 
 2. Next, we start the function application, assigning our input string to the variable name `str`.
 
@@ -205,4 +208,4 @@ That's all, for now, folks!  See you in [Tutorial 2](https://github.com/adkelley
 ## Navigation
 [Previous <--](https://github.com/adkelley/javascript-to-purescript) **Tutorials** [-->  Next](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02)
 
-You may find that the README for the next tutorial is still under construction. Regardless, eager beavers are encouraged to look ahead. You'll find that all the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I reserve the right to amend them as I draft the accompanying tutorial markdown.  
+You may find that the README for the next tutorial is still under construction. Regardless, eager beavers are encouraged to look ahead. Most of the code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I reserve the right to amend them as I write the accompanying tutorial.  
