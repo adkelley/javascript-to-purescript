@@ -8,7 +8,7 @@
 
 ## Introduction
 
-Make the Leap from JavaScript to PureScript takes some of the most popular functional programming (FP) abstractions in JavaScript and demonstrates how to implement them in [PureScript](http://www.purescript.org). I borrowed the series outline and JavaScript code samples with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
+"Make the Leap from JavaScript to PureScript" takes some of the most popular functional programming (FP) abstractions in JavaScript and demonstrates how to implement them in [PureScript](http://www.purescript.org). I borrowed the series outline and JavaScript code samples with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean).  I want to thank Brian (an enthusiastic coder of PureScript) for supporting this project.
 
 ### Motivation for this series

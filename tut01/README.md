@@ -1,9 +1,8 @@
-# Make the Leap from JavaScript to PureScript
 # Create linear data flow with container style types (Box)
 
 ![series banner](../resources/glitched-abstract.jpg)
 
-> *Note: This Tutorial 1 in the series "Make the leap from JavaScript to PureScript". Be sure*
+> *Note: This is Tutorial 1 in the series "Make the leap from JavaScript to PureScript". Be sure*
 > *to read the series introduction where we cover the goals & outline, and the installation, compilation, & running* > *of PureScript. I’ll be publishing a new tutorial approximately once-per-week. So come back often, there’s*
 > *a lot more of this to come!*
 > [<Introduction](https://github.com/adkelley/javascript-to-purescript) | [>Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
