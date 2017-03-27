@@ -12,7 +12,7 @@
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
 
-One more time with feeling - You should be already somewhat familiar with the **Box** abstraction. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
+One more time with feeling - You should be comfortable with the **Box** abstraction in JavaScript. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
 
 ## Baby's first FP abstraction - Box( )
 
@@ -31,7 +31,7 @@ const result = nextCharForNumberString(' 64 ')
 console.log(result)
 ```
 
-What's wrong with it?  Well, there's lots of variable assignment and consequently lots of **state** that our feeble minds must track.  Wouldn't it be better to unify it all, by composing it into one linear workflow? Yes, of course!
+What's wrong with it?  Well, there's lots of variable assignment and consequently lots of state that our feeble minds must track.  Wouldn't it be better to unify it all, by composing it into one linear workflow? Yes, of course!
 
 So let's try bundling everything up into one expression:
 ```javascript
@@ -209,6 +209,7 @@ Hopefully, it's clear that the underscore represents the anonymous function argu
 That's all, for now, folks!  See you in [Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02)
 
 ## Navigation
-[Previous <--](https://github.com/adkelley/javascript-to-purescript) **Tutorials** [-->  Next](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02)
 
-You may find that the README for the next tutorial is still under construction. Regardless, eager beavers are encouraged to look ahead. Most of the code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I reserve the right to amend them as I write the accompanying tutorial.  
+[< Introduction](https://github.com/adkelley/javascript-to-purescript) | [> Tutorial 2 ](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02)
+
+You may find that the README for subsequent tutorials are under construction. Most of the code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. Eager beavers are encouraged to look ahead, but I reserve the right to amend them as I write the accompanying tutorial.  
