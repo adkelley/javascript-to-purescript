@@ -1,10 +1,10 @@
 module Main where
 
 import Prelude
+import Control.Comonad (class Comonad, class Extend, extract)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Char (fromCharCode, toLower)
-import Data.Foldable (class Foldable, foldMap)
 import Data.Int (fromString)
 import Data.Maybe (fromMaybe)
 import Data.String (singleton, trim)
@@ -15,10 +15,10 @@ newtype Box a = Box a
 instance functorBox :: Functor Box where
   map f (Box x) = Box (f x)
 -- Javascript - fold: f => f(x)
-instance foldableBox :: Foldable Box where
-  foldr f z (Box x) = f x z
-  foldl f z (Box x) = f z x
-  foldMap f (Box x) = f x
+instance extendBox :: Extend Box where
+  extend f m = Box (f m)
+instance comonadBox :: Comonad Box where
+  extract (Box x) = x
 -- Javascript - inspect: () => 'Box($(x))'
 instance showBox :: Show a => Show (Box a) where
   show (Box a) = "Box(" <> show a <> ")"
@@ -38,7 +38,8 @@ nextCharForNumberString str =
   map (\s -> fromMaybe 0 $ fromString s) #
   map (\i -> i + 1) #
   map (\i -> fromCharCode i) #
-  foldMap (\c -> singleton $ toLower c)
+  map (\c -> singleton $ toLower c) #
+  extract
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do

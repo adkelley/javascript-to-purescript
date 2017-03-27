@@ -10,7 +10,7 @@
 > [< Introduction](https://github.com/adkelley/javascript-to-purescript) | [> Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well and, , assuming you’re a JavaScript programmer, I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
 
 One more time with feeling - You should be comfortable with the **Box** abstraction in JavaScript. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
 
@@ -78,7 +78,7 @@ Next, we should declare how to show the value of `Box` when logging to the conso
 ```javascript
 const Box = x =>
 ({
-  map: f => (f(x)),
+  map: f => Box(f(x)),
   inspect: () => 'Box($(x))'
 })
 ```
@@ -93,20 +93,21 @@ Finally, what to do with this Box? When we return the string, we don't want it t
 ```javascript
 const Box = x =>
 ({
-  map: f => (f(x)),
+  map: f => Box(f(x)),
   fold: f => f(x),
   inspect: () => 'Box($(x))'
 })
 ```
 
-Next, in PureScript, we declare `Box` to be 'foldable' by creating an instance of the `Foldable` class.  
+Next, in PureScript, we declare `Box` to be a comonad by creating an instance of the `CoMonad` class.  Comonads are like monads but wearing their category arrows backwards — forgive and forget I said that!
+
 ```purescript
-instance foldableBox :: Foldable Box where
-  foldr f z (Box x) = f x z
-  foldl f z (Box x) = f z x
-  foldMap f (Box x) = f x
+instance extendBox :: Extend Box where
+  extend f m = Box (f m)
+instance comonadBox :: Comonad Box where
+  extract (Box x) = x
 ```
-You can ignore `foldr` and `foldl` for now because we don't need them to run the `nextCharForNumberString` function shown below. But by declaring the `Foldable` instance for `Box`, PureScript expects us to define `foldr` and `foldl`, and so we did. Its `foldMap` that we care about, which tells PureScript how to take the element out of the Box, and map a function **f** to it.  But don't put it back in the Box - just like the `fold` function declared in the JavaScript code below.
+You can ignore `extendBox`. Simply `comonadBox` needs it to do its magic. Otherwise, the compiler will complain if we don’t create an instance for it. Its `extract` we care about, and you should notice that the instance signature is a little different than `fold` from the javascript example. In particular, there’s no function application. So we’ll just use `map` to apply **f** on the values in `Box`, and `extract` to tell PureScript how to take the element out of the Box.
 
 ### Compose our functions
 
@@ -131,12 +132,13 @@ And without further ado, our PureScript reveal:
 5     map (\s -> fromMaybe 0 $ fromString s) #
 6     map (\i -> i + 1) #
 7     map (\i -> fromCharCode i) #
-8     foldMap (\c -> singleton $ toLower c)
+8     map (\c -> singleton $ toLower c) #
+9     extract
 ```
 Let's look at the more interesting lines:
 1.  We declare the function `nextCharForNumberString` and tell the PureScript compiler that it should expect a `String` as input, and to return the transformed `String` as output.  Now JavaScript is a dynamically typed language, and therefore we didn't and couldn't declare our `String` types. In contrast, PureScript is a statically typed language, which means that it (at compile time) will check to see if we've been asleep at the wheel.  For example, using a function argument or returning a value that is not our declared `String` type.  
 
- Now there's been a lot of debate on the advantages and disadvantages of dynamic vs. statically typed languages. I don't care to wax and wane over them, only to point out that JavaScript won't detect wrong argument types until you've run the program. It might cause a runtime error, which is perhaps too late, depending on where you weigh in on ‘type ideology’.  But with the introduction of [TypeScript](https://www.typescriptlang.org) from Microsoft and [Flow](https://flowtype.org) from Facebook, clearly, there's a greater awareness and interest in the JavaScript community for static type checking.  Nuff said!
+ Now there's been a lot of debate on the advantages and disadvantages of dynamic vs. statically typed languages. I don't care to wax and wane over them, only to point out that JavaScript won't detect wrong argument types until you've run the program. It might cause a runtime error, which is perhaps too late; depending on where you weigh in on ‘type ideology’.  But with the introduction of [TypeScript](https://www.typescriptlang.org) from Microsoft and [Flow](https://flowtype.org) from Facebook, clearly, there's a greater awareness and interest by the JavaScript community for static type checking.  Nuff said!
 
 2. Next, we start the function application, assigning our input string to the variable name `str`.
 
@@ -144,11 +146,13 @@ Let's look at the more interesting lines:
 
 4. Use `map` to take `str` out of the Box, and trim it using `trim` function.
 
-5. Here's where things become very different from the JavaScript example.  Besides static type checking, many PureScript library functions have been written to help deal with possible runtime errors at the compiler stage.  Here, it is possible that when we attempt to convert a number string (e.g., "1") to a number, `fromString` might not have given an actual number (e.g., "this is not a number"). So, instead of ignoring the dire consequences, `fromString` returns a `Maybe String` type.  
+5. Here's where things become very different from the JavaScript example.  Besides static type checking, many PureScript library functions have been written to help deal with possible runtime errors, but at the compiler stage.  It is possible that when we attempt to convert a number string (e.g., "1") to a number, `fromString` might not have given an actual number (e.g., "this is not a number"). So, instead of ignoring the dire consequences, `fromString` returns a `Maybe String` type.  
 
  `Maybe String` serves as a clear signal to the programmer and the compiler that the possibility of a non-integer character, and you deal with it. I won't get into the `Maybe` constructor just yet because it is too early in this series. But to deal with it, I decided to use the `fromMaybe` function that will convert the string to '0', if ever `fromString` detects that it has been given a non-integer character by returning `Nothing`.  Finally, the `$` operator is the reverse of `#`. It allows us to avoid placing parenthesis around `fromString s` - nice!
 
-8. Now it's time to fold 'em and go home.  We convert the character to lower case, then use `singleton` to convert our `Char` to our output type, `String`. `foldMap` applies these function expressions to the character in Box, and returns the transformed string to our `main` caller method covered in the next section.
+8. Convert the character to lower case, then use `singleton` to convert our `Char` to our output type, `String`. Again, `map` applies these function expressions to the character in Box
+
+9. Now it's time to fold 'em and go home. `extract` takes the value out of the Box and we return the transformed string to our `main` caller method covered in the next section.
 
 ### Call the function and log the result
 
