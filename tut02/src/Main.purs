@@ -1,12 +1,13 @@
 module Main where
 
 import Prelude
+-- import Control.Comonad (extract)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Data.Box (Box(..))
 import Data.Function.Uncurried (Fn3, runFn3)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Replacement(..), Pattern(..), replace)
-import Data.Box (Box(..), fold)
 
 foreign import parseFloatImpl ::
   Fn3 (Number -> Maybe Number) (Maybe Number) String (Maybe Number)
@@ -16,8 +17,7 @@ safeParseFloat str =
   runFn3 parseFloatImpl Just Nothing str #
   fromMaybe 0.0
 
--- | const moneyToFloat = str =>
--- | parseFloat(str.replace(/\$/g, ''))
+
 moneyToFloat :: String -> Box Number
 moneyToFloat str =
   Box str #
@@ -25,11 +25,6 @@ moneyToFloat str =
   map (\replaced -> safeParseFloat replaced)
 
 
--- | const percentToFloat = str => {
--- | const replaced = str.replace(/\%/g, '')
--- | const number = parseFloat(replaced)
--- | return number * 0.01
--- | }
 percentToFloat :: String -> Box Number
 percentToFloat str =
   Box str #
@@ -37,11 +32,21 @@ percentToFloat str =
   map (\replaced -> safeParseFloat replaced) #
   map (_ * 0.01)
 
+fold :: forall a b. (a -> b) -> Box a -> b
+fold f (Box x) = f x
+
 applyDiscount :: String -> String -> Number
 applyDiscount price discount =
   moneyToFloat price #
   fold (\cost -> percentToFloat discount #
     fold (\savings -> cost - cost * savings))
+
+-- applyDiscount :: String -> String -> Number
+-- applyDiscount price discount = cost - cost * savings
+--   where
+--     cost = extract $ moneyToFloat price
+--     savings = extract $ percentToFloat discount
+
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do

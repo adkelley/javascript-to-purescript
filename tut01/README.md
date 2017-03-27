@@ -7,10 +7,10 @@
 > *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there’s a lot more to come!*
 
-> [< Introduction](https://github.com/adkelley/javascript-to-purescript) | [> Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
+> [< Introduction](https://github.com/adkelley/javascript-to-purescript) | [> Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well and, , assuming you’re a JavaScript programmer, I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian teaches the featured abstraction extremely well and, assuming you’re a JavaScript programmer, I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
 
 One more time with feeling - You should be comfortable with the **Box** abstraction in JavaScript. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  **Finally**, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01). Let's go!
 

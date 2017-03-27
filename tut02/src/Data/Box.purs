@@ -1,9 +1,9 @@
 module Data.Box
   ( Box(..)
-  , fold
   ) where
 
 import Prelude
+import Control.Comonad (class Comonad, class Extend)
 
 -- const Box = x =>
 newtype Box a = Box a
@@ -17,5 +17,8 @@ instance showBox :: Show a => Show (Box a) where
 -- Box(Number) is not a monoid, and therefore unfoldable
 -- so we run a function (fold) that pattern matches on x to
 -- compute f x
-fold :: forall a b. (a -> b) -> Box a -> b
-fold f (Box x) = f x
+
+instance extendBox :: Extend Box where
+  extend f m = Box (f m)
+instance comonadBox :: Comonad Box where
+  extract (Box x) = x
