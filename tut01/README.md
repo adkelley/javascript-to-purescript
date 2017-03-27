@@ -2,11 +2,12 @@
 
 ![series banner](../resources/glitched-abstract.jpg)
 
-> *Note: This is Tutorial 1 in the series "Make the leap from JavaScript to PureScript". Be sure*
-> *to read the series introduction where we cover the goals & outline, and the installation,*
+> *Note: This is* **Tutorial 1** *in the series* **Make the leap from JavaScript to PureScript** *. Be sure*
+> *to read the series introduction where I covered the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
-> *once-per-week. So come back often, there’s a lot more of this to come!*
-> [<Introduction](https://github.com/adkelley/javascript-to-purescript) | [>Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
+> *once-per-week. So come back often, there’s a lot more to come!*
+
+> [< Introduction](https://github.com/adkelley/javascript-to-purescript) | [> Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video already before tackling the abstraction in PureScript.  Brian covers the featured abstraction extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, the abstraction is Box( ) covered in [video1](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box). Note that the Box( ) abstraction is better known as the 'Identity' functor in swanky FP circles.  
@@ -43,7 +44,9 @@ There is a better approach that we can borrow from our dear old friend `Array`. 
 
 ## Time for PureScript
 
-Open the code example [Main.purs](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01/src/Main.purs) with your favorite code editor. If you don't have editor support for PureScript, refer to the [Introduction](https://github.com/adkelley/javascript-to-purescript) for a list of IDE plugins.  For now, you can ignore the module declaration and import list at the top.  Instead, let's start immediately on our Box declaration.
+I’ve created a github repository with the markdown versions of these stories (i.e., README.md) together with the code samples. Now would be a good time to clone it from [here](https://github.com/adkelley/javascript-to-purescript) and you can [fetch upstream](https://help.github.com/articles/syncing-a-fork/) for future updates.
+
+Navigate to tut01/src and open the code example [Main.purs](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01/src/Main.purs) with your favorite code editor. If you don't have editor support for PureScript, refer to the [Introduction](https://github.com/adkelley/javascript-to-purescript) for a list of IDE plugins.  For now, you can ignore the module declaration and import list at the top.  Instead, let's start immediately on our Box declaration.
 
 ### Create a Box to hold the value
 
