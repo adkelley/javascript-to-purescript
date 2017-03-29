@@ -47,7 +47,7 @@ applyDiscount price discount =
 applyDiscount' :: String -> String -> Number
 applyDiscount' price discount = extract $
   (moneyToFloat price) >>=
-    (\cost -> (percentToFloat discount) >>= 
+    (\cost -> (percentToFloat discount) >>=
       (\savings -> pure $ cost - cost * savings))
 
 
@@ -56,5 +56,5 @@ main = do
   log "Refactor imperative code to a single composed expression using Box"
   log "Using extract to remove x from the Box before apply the expression"
   logShow $ applyDiscount "$5.00" "20%"
-  log "Oh god - Monads bind operations already!  Only if you want them"
+  log "Oh god - Monad bind operations already!  Only if you want them"
   logShow $ applyDiscount' "$5.00" "20%"
