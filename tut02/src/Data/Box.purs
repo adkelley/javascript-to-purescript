@@ -17,7 +17,15 @@ instance showBox :: Show a => Show (Box a) where
 -- Box(Number) is not a monoid, and therefore unfoldable
 -- so we run a function (fold) that pattern matches on x to
 -- compute f x
+instance applyBox :: Apply Box where
+  apply (Box f) (Box x) = Box (f x)
+instance applicativeBox :: Applicative Box where
+  pure = Box
 
+instance bindBox :: Bind Box where
+  bind (Box m) f = f m
+
+instance monadBox :: Monad Box
 instance extendBox :: Extend Box where
   extend f m = Box (f m)
 instance comonadBox :: Comonad Box where
