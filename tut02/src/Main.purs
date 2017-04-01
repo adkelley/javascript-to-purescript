@@ -5,31 +5,25 @@ import Control.Comonad (extract)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Box (Box(..))
-import Data.Function.Uncurried (Fn3, runFn3)
-import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Replacement(..), Pattern(..), replace)
 
-foreign import parseFloatImpl ::
-  Fn3 (Number -> Maybe Number) (Maybe Number) String (Maybe Number)
-
-safeParseFloat :: String -> Number
-safeParseFloat str =
-  runFn3 parseFloatImpl Just Nothing str #
-  fromMaybe 0.0
-
+-- We use an unsafe prefix for parseFloat, because JS parseFloat
+-- may return NaN.  We deal with this case by returning 0.0 (see Main.js)
+foreign import unsafeParseFloat :: String -> Number
 
 moneyToFloat :: String -> Box Number
 moneyToFloat str =
   Box str #
   map (replace (Pattern "$") (Replacement "")) #
-  map (\replaced -> safeParseFloat replaced)
+  map (\replaced -> unsafeParseFloat replaced)
 
-
+-- No different than moneyToFloat with the exception of showing that
+-- we can always start immediately with a `Box` of `str.replace( )`
+-- It comes down to your preference for readability and performance
 percentToFloat :: String -> Box Number
 percentToFloat str =
-  Box str #
-  map (replace (Pattern "%") (Replacement "")) #
-  map (\replaced -> safeParseFloat replaced) #
+  Box (replace (Pattern "%") (Replacement "") str) #
+  map (\replaced -> unsafeParseFloat replaced) #
   map (_ * 0.01)
 
 -- Notice how we have cost captured in a closure here. We can continue on
@@ -42,8 +36,9 @@ applyDiscount price discount =
   (\cost -> (extract $ percentToFloat discount)  #
     (\savings -> cost - cost * savings))
 
--- For those that like to think ahead, this monad bind operation
--- is perhaps the more canonical pattern for solving applyDiscount
+-- Bonus Example: For those who are familar with Monads,  Besides using oridinary
+-- functions, these bind operations (>>=) are perhaps the more canonical approach
+-- for solving applyDiscount. We'll cover them in a later tutorial
 applyDiscount' :: String -> String -> Number
 applyDiscount' price discount = extract $
   (moneyToFloat price) >>=
@@ -54,7 +49,7 @@ applyDiscount' price discount = extract $
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   log "Refactor imperative code to a single composed expression using Box"
-  log "Using extract to remove x from the Box before apply the expression"
+  log "Using extract to remove x from the Box before applying the final expression"
   logShow $ applyDiscount "$5.00" "20%"
   log "Oh god - Monad bind operations already!  Only if you want them"
   logShow $ applyDiscount' "$5.00" "20%"

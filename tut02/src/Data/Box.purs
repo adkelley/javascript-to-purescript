@@ -23,6 +23,9 @@ instance applyBox :: Apply Box where
 instance applicativeBox :: Applicative Box where
   pure = Box
 
+-- Bonus: We'll be using these class instances in a later tutorial
+-- So you can ignore them for now.  But for those who are familer with
+-- Monads, take a look at applyDiscount' in Main.purs
 -- chain: f => f(x)
 instance bindBox :: Bind Box where
   bind (Box m) f = f m

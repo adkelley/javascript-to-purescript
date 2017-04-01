@@ -6,7 +6,7 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Char (fromCharCode, toLower)
 import Data.Int (fromString)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (singleton, trim)
 
 -- Javascript - const Box = x => ({})
@@ -29,8 +29,20 @@ nextCharForNumberString' :: String -> String
 nextCharForNumberString' str =
   singleton(fromCharCode(fromMaybe 0 (fromString(trim(str))) + 1))
 
--- A better approach is to use composition by putting
--- s into a box and mapping over it
+-- Composition using oridinary functions.  This is simple, to read, write
+-- use and reason about than bundled parenthesis.  See the ReadMe in Tutorial 2
+-- for more information on this topic
+nextCharForNumberString'' :: String -> String
+nextCharForNumberString'' =
+  trim >>>
+  fromString >>>
+  fromMaybe 0 >>>
+  (+) 1 >>>
+  fromCharCode >>>
+  singleton
+
+-- But when mixing categories (i.e., Box, Maybe), we'll often use
+-- composition by putting s into a box and mapping over it
 nextCharForNumberString :: String -> String
 nextCharForNumberString str =
   Box str #
@@ -47,6 +59,9 @@ main = do
 
   log "Bundled parenthesis approach, all in one expression is suboptimal."
   log $ nextCharForNumberString' "     64   "
+
+  log "Composition using oridinary functions"
+  log $ nextCharForNumberString'' "     64   "
 
   log "Let's borrow a trick from our friend array by putting string into a Box."
   log $ nextCharForNumberString "     64   "
