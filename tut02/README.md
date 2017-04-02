@@ -10,7 +10,7 @@
 > [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) | [> Tutorial 3](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the abstraction in PureScript.  Brian covers the featured concepts extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, we're going to look at another example of the abstraction is Box( ) (see [video2](https://egghead.io/lessons/javascript-refactoring-imperative-code-to-a-single-composed-expression-using-box)) that was introduced in [Tutorial 1]((https://github.com/adkelley/javascript-to-purescript/tree/master/tut01))
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the abstraction in PureScript.  Brian covers the featured concepts extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, we're going to look at another example of the abstraction `Box( )` (see [video2](https://egghead.io/lessons/javascript-refactoring-imperative-code-to-a-single-composed-expression-using-box)) that was introduced in [Tutorial 1]((https://github.com/adkelley/javascript-to-purescript/tree/master/tut01))
 
 One more time with feeling - You should be already somewhat familiar with the **Box** abstraction. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  Finally, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02). Let's go!
 
@@ -39,18 +39,18 @@ nextCharForNumberString  =
   singleton
 ```
 
-Where Functors shine is when you’re mixing categories, and you need a bridge from one category to the other.  First, what is a category?  Well, we’ve seen two categories already from Tutorial 1.  `Box` is a category and `Maybe` is another, and each contains our transformed values at some point during the transformation chain.  If you recall, we passed the value from `Maybe` back into `Box` by using the `fromMaybe` function.  Still, using Box and its instances map and fold is contrived, because it composes just fine using ordinary functions.
+Where Functors shine is when you’re mixing categories, and you need a bridge from one category to the other.  First, what is a category?  Well, we’ve seen two categories already from Tutorial 1.  `Box` is a category and `Maybe` is another, and each contains our transformed values at some point during the transformation chain.  If you recall, we passed the value from `Maybe` back into `Box` by using the `fromMaybe` function.  Still, using `Box` and its instances `map` and `fold` is contrived in Tutorial 1, because it `nextCharForNumberString` composes just fine using ordinary functions.
 
-But in the wild, you’ll often be mixing several categories, and thus you’re likely to provide an adaptor layer that transforms another category to yours or vice-versa.  Functors help you to write this adaptor layer, but we’re not quite ready to show.  We need a few more tools in our toolbox, so I’ll come back to this topic later in the tutorial series.
+But in the wild, you’ll often be mixing several categories, and thus you’ll likely need to provide an adaptor layer that transforms another category to yours or vice-versa.  Functors help you to write this adaptor layer, but we’re not quite ready to show how.  We just need a few more tools in our toolbox, so I’ll come back to this topic later in the tutorial series.
 
 ## Taking Box out for another spin
 
 Our Tutorial 2 code example solves the simple problem of computing a discount, given money and
-percentage strings.  We’re going to use our Box functor again from Tutorial 1, but it would've been perfectly okay to use ordinary function composition. Since our objective is to learn the Box functor, let’s give it another spin.
+percentage strings.  We’re going to use our Box functor again from Tutorial 1, but it would've been perfectly okay to use ordinary function composition. Since our objective is to learn the Box functor, let’s focus in by giving it another spin.
 
 ### Convert the money string to float
 
-First let's show `moneyToFloat` in JavaScript, followed by PureScript.
+First, showing `moneyToFloat` in JavaScript followed by PureScript.
  ```javascript
 const moneyToFloat = str =>
      Box(str)
@@ -63,22 +63,22 @@ moneyToFloat :: String -> Box Number
 moneyToFloat str =
     Box str #
     map (replace (Pattern "$") (Replacement "")) #
-    map (\replaced -> safeParseFloat replaced)
+    map (\replaced -> unsafeParseFloat replaced)
 ```
 
 In the `replace` function, notice the constructor
 `Pattern`, which is used by the `purescript-strings` module to match our substring.  I chose to use a substring rather than a regular expression just to keep it simple.  It's a viable solution because there should only be one dollar sign in the currency string. Our new substring “” is wrapped in a`Replacement` constructor which specifies a replacement for our pattern.  You can check out [Pursuit](https://pursuit.purescript.org) for more information on these two constructors.
 
-Let’s move on to `unsafeParseFloat` on the last line.  It's our first encounter with PureScript’s FFI capabilities which I partially cover in **Calling JavaScript from PureScript** in the next section below. In JavaScript’s `parseFloat` function, invalid number strings return, NaN.  But we told the type system that we’re always returning a `Number` - ouch!  We can't return NaN without warning the user of this potential hazard because that’s not how we roll in PureScript. We must deal with it - no excuses!
+Let’s move on to `unsafeParseFloat` on the last line.  It's our first encounter with PureScript’s FFI capabilities which I partially cover in **Calling JavaScript from PureScript** in the next section below. In JavaScript’s `parseFloat` function, invalid number strings return, NaN.  But we told the type system that we’re always returning a `Number` - ouch!  We can't return NaN without warning the user because that’s not how we roll in PureScript. We must deal with it - no excuses!
 
-In production, returning a Maybe or Either constructor here would be two good choices, so that the type signature makes it clear that the user must deal with the possibility of NaN.  We’ll cover both of these in detail in future tutorials. So as to avoid conflating the example with these abstractions, I chose to create `unsafeParseFloat`  (see [Main.js](https://github.com/adkelley/javascript-to-purescript/blob/master/tut01/src/Main.js)).  Here's why:
+In production, returning a Maybe or Either constructor here would be two good choices, so that the type signature makes it clear that the user must deal with the possibility of NaN.  We’ll cover both of these in detail in future tutorials. To avoid conflating the example with these abstractions, I chose to create `unsafeParseFloat`  (see [Main.js](https://github.com/adkelley/javascript-to-purescript/blob/master/tut02/src/Main.js)).  Here's why:
 
 In PureScript and other functional languages, it's a common idiom to designate functions as either `safe` or
-`unsafe` whenever there’s a possibility of side effects, such as exceptions. For example, you might create the foreign declaration `unsafeHead` which returns the head of an array. And to deal with the possibility of calling `unsafeHead` on an empty array, you can decide to throw an error exception.  Therefore designating it with the `unsafe` prefix warns the user that they should ensure that they don't call `unsafeHead` with an empty array.
+`unsafe` whenever there’s the possibility of side effects, such as exceptions. For example, you might create the foreign declaration `unsafeHead` which returns the head of an array. And to deal with the possibility of calling `unsafeHead` on an empty array, you can decide to throw an error exception.  Therefore designating it with the `unsafe` prefix warns the user that they should ensure that they don't call `unsafeHead` with an empty array.
 
 ### Convert the discount string to a number
 
-Next up is `percentToFloat` which is nothing new, with one exception.  We can start immediately with a `Box` of  `str.replace( )`.  It means that in practice we don't have put a value in the box first before applying our first transformation function.  It comes down to your preference for readability and performance.
+Next up is `percentToFloat` which is nothing new, with one exception.  We can start immediately with a `Box` of  `str.replace(/\%/g, ''))`.  It means that in practice we don't have put a value in the box first before applying our first transformation in the function.  It just comes down to your preference for readability and performance.
 
 ```javascript
 const percentToFloat = str =>
@@ -124,7 +124,7 @@ applyDiscount price discount =
 ```
 
 One final note: besides using ordinary function composition
-(see **Function Composition with ordinary functions** above), there’s a more canonical approach to writing `applyDiscount`.  So for those of you who like to see what’s in store for my future tutorials, I’ve included this canonical pattern as a bonus example in the [code](https://github.com/adkelley/javascript-to-purescript/blob/master/tut01/src/Main.purs).  
+(see **Function Composition with ordinary functions** above), there’s a more canonical approach to writing `applyDiscount`.  So for those of you who like to see what’s in store for my future tutorials, I’ve included this canonical pattern as a bonus example in the [code](https://github.com/adkelley/javascript-to-purescript/blob/master/tut02/src/Main.purs).  
 
 ## Calling JavaScript from PureScript
 
@@ -139,10 +139,10 @@ From PureScript, to call an existing JavaScript function, we create a foreign im
 foreign import unsafeParseFloat :: String -> Number
 ```
 
-We also need to write a foreign Javascript module, in our case [Main.js](https://github.com/adkelley/javascript-to-purescript/blob/master/tut01/src/Main.js):
+We also need to write a foreign Javascript module, in our case [Main.js](https://github.com/adkelley/javascript-to-purescript/blob/master/tut02/src/Main.js):
 
 ```javascript
-”use strict";
+”use strict”;
 
 exports.unsafeParseFloat = parseFloat;
 ```
