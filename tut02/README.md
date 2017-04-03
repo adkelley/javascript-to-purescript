@@ -48,6 +48,10 @@ But in the wild, you’ll often be mixing several categories, and thus you’ll 
 Our Tutorial 2 code example solves the simple problem of computing a discount, given money and
 percentage strings.  We’re going to use our Box functor again from Tutorial 1, but it would've been perfectly okay to use ordinary function composition. Since our objective is to learn the Box functor, let’s focus in by giving it another spin.
 
+### Where did our Box declaration go?
+
+You might be wondering what happened to our `Box` Class and instances from Tutorial 1, or why aren't they declared in `Main.purs`.  Well, Box is all safe and warm, tucked away in [tut02/src/Data/Box.purs](https://github.com/adkelley/javascript-to-purescript/blob/master/tut02/src/Data/Box.purs). We're going to be using Box in several tutorials, so its best to create a module for it and park it somewhere permanent.  In idiomatic PureScript (and Haskell) you'll see type constructors (e.g., List) and functions for working with these constructors in `src/Data`. Then, just import the module (i.e., `import Data.Box (Box(..)`) as you would any other module when you need to call the constructor and its functions.  I've added a couple more instance declarations, but you can ignore them as we'll be sticking with `map`, `show` and `extract` for now. 
+
 ### Convert the money string to float
 
 First, showing `moneyToFloat` in JavaScript followed by PureScript.

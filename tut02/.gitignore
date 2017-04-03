@@ -4,3 +4,5 @@
 /output/
 /.psc*
 /.psa*
+.DS_Store
+/*.003/
