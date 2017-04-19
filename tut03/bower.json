@@ -1,17 +1,17 @@
 {
-  "name": "video03",
+  "name": "tut03",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "output"
+    "output",
+    "tut03.003/"
   ],
   "dependencies": {
     "purescript-prelude": "^2.4.0",
     "purescript-console": "^2.0.0",
     "purescript-functions": "^2.0.0",
-    "purescript-either": "^2.1.0",
-    "purescript-lists": "^3.4.0"
+    "purescript-either": "^2.1.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^2.0.0"

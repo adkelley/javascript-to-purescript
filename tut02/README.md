@@ -1,4 +1,4 @@
-# Refactor imperative code to a single composed expression using Box (DRAFT)
+# Refactor imperative code to a single composed expression using Box
 
 ![series banner](../resources/glitched-abstract.jpg)
 
@@ -10,7 +10,7 @@
 > [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) | [> Tutorial 3](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the abstraction in PureScript.  Brian covers the featured concepts extremely well, and I feel it's better to understand its implementation in the comfort of JavaScript.  For this tutorial, we're going to look at another example of the abstraction `Box( )` (see [video2](https://egghead.io/lessons/javascript-refactoring-imperative-code-to-a-single-composed-expression-using-box))
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the abstraction in PureScript.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript.  For this tutorial, we're going to look at another example of the abstraction `Box( )` (see [video2](https://egghead.io/lessons/javascript-refactoring-imperative-code-to-a-single-composed-expression-using-box))
 
 One more time with feeling - You should be already somewhat familiar with the **Box** abstraction. You're also able to enter `bower update && pulp run` and `pulp run` after that, to load the library dependencies, compile the program, and run the PureScript code example.  Finally, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02). Let's go!
 
