@@ -38,17 +38,17 @@ const Left = x =>
 
 From the code snippet above, notice that when a computation is successful then mapping over our `Right` functor performs no differently than `Box` from Tutorials 1 and 2.  Like `Box` we continue to map functions over `Right` until we return the final result using `fold`.  Now `fold: (f, g) ` is interesting and different than what we've seen so far.  If you will recall, the `fold`  function in `Box` removes the value from the type after we run the function.  But with `Either`, we have two types `Left` and `Right`, and we don't know whether our computation has succeeded or failed until we return the result.  The function `fold` handles these two cases by applying one of the two functions we supply.  If our type constructor is `Right` then apply `g(x) `; if its `Left` then apply `f(x)`
 
-The `Left` constructor is what makes the `Either` functor more flexible than `Box`.  With `Left`, we can perform pure functional error handling, rather than creating a side-effect like throwing an exception or returning a null value.  During our computation, if a function fails then we return `Left a`, where `a` can be assigned an error message, and we stop mapping over `Left` throughout the rest of the program.  This much better than crashing the program or returning a null value; leaving the user high and dry figuring out what went wrong.
+The `Left` constructor is what makes the `Either` functor more flexible than `Box`.  With `Left`, we can perform pure functional error handling, rather than creating a side-effect like throwing an exception or returning a null value.  During our computation, if a function fails then we return `Left a`, where `a` can be assigned an error message, and we stop mapping over `Left` throughout the rest of the computation.  This much better than crashing the program or returning a null value; leaving the user high and dry figuring out what went wrong.
 
 ### Type Annotation (PureScript)
 
-Fortunately, there’s no need to write the type declaration in PureScript ourselves, because `Either` is a core component of most functional programming languages.  You'll find it in the module `purescript-either` located on [github](https://github.com/purescript/purescript-either)
+Fortunately, there’s no need to write the `Either` declaration in PureScript ourselves, because it is a core component of most functional programming languages.  You'll find it in the module `purescript-either` located on [github](https://github.com/purescript/purescript-either)
 
 ```purescript
 data Either a b = Left a | Right b
 ```
 
-Simple enough: `Either a b` is a data type where, by common convention, `Left` can be used to carry an error value and `Right` takes a success value.  Also the values a and b are polymorphic in this declaration, meaning when we declare types of the values `a` and `b` they can be a string, integer, float, etc. and they don't have to be the same type.
+Simple enough: `Either a b` is a data type where, by common convention, `Left` can be used to carry an error value and `Right` takes a success value.  Also the values `a` and `b` are polymorphic in this declaration, meaning when we declare their types they can be a string, integer, float, etc. and they don't have to be the same type.
 
 Like `Box` we declare our instances and, in this case, let's limit them to `map` and `either`, with `either` being equivalent to our `fold` function from the JavaScript type signature above.
 
@@ -146,7 +146,7 @@ type HexValue = String
 type Error = String
 ```
 
-I believe it helps anyone reading my code to understand what’s happening in each of my functions.  Later on, if I decide to express `HexValue` as a hexadecimal number, I can do that without having to go back and change all the type annotations for my functions. Look at the type annotations below, and hopefully, you’ll see what I mean.
+I believe it helps anyone reading my code to understand what’s happening in each of my functions.  Later on, if I decide to express `HexValue` as a hexadecimal number, I can do that without having to go back and change all the type annotations for my functions. Look at the type annotations in the next section, and hopefully, you’ll see what I mean.
 
 The next type declaration is even more impressive.  We use `data` to combine our types `ColorName` and `HexValue` into a composite type `Color`.  This structure is an *algebraic data type* and [wikipedia](https://en.wikipedia.org/wiki/Algebraic_data_type) has an excellent discussion on the topic.
 
