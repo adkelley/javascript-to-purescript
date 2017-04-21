@@ -52,7 +52,7 @@ result name =
   map (slice 1 0) #
   either (\e -> "No color") toUpper
 
--- Bonus: This veriation will make your head spin. It really shows the power of
+-- Bonus: This variation will make your head spin. It really shows the power of
 -- mapping and composition. All in one expression!
 result' :: ColorName -> String
 result' name = either (\e -> "No Color") toUpper $ (slice 1 0) <$> hex <$> (findColor name)
