@@ -1,0 +1,1535 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE outline PUBLIC "-//omnigroup.com//DTD OUTLINE 3.0//EN" "http://www.omnigroup.com/namespace/OmniOutliner/xmloutline-v3.dtd">
+<outline xmlns="http://www.omnigroup.com/namespace/OmniOutliner/v3">
+  <style-attribute-registry>
+    <style-attribute version="0" key="font-family" group="font" name="family" class="string">Helvetica</style-attribute>
+    <style-attribute version="1" key="font-fill" group="font" name="fill color" class="color">
+      <color w="0"/>
+    </style-attribute>
+    <style-attribute version="0" key="font-size" group="font" name="size" class="number" integral="0" min="1" max="65536">12</style-attribute>
+    <style-attribute version="0" key="font-weight" group="font" name="weight" class="number" integral="1" min="1" max="14">5</style-attribute>
+    <style-attribute version="0" key="item-to-note-space(com.omnigroup.OmniOutliner)" group="row" name="above note padding" class="number" integral="1" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="kerning-adjust" group="kerning" name="adjust" class="number" integral="0" min="-1000" max="1000">NaN</style-attribute>
+    <style-attribute version="0" key="paragraph-alignment" group="paragraph" name="alignment" class="enum">
+      <enum-name-table default-value="4">
+        <enum-name-table-element value="0" name="left"/>
+        <enum-name-table-element value="1" name="right"/>
+        <enum-name-table-element value="2" name="center"/>
+        <enum-name-table-element value="3" name="justified"/>
+        <enum-name-table-element value="4" name="natural"/>
+      </enum-name-table>
+    </style-attribute>
+    <style-attribute version="0" key="paragraph-base-writing-direction" group="paragraph" name="writing direction" class="enum">
+      <enum-name-table default-value="-1">
+        <enum-name-table-element value="-1" name="natural"/>
+        <enum-name-table-element value="0" name="left-to-right"/>
+        <enum-name-table-element value="1" name="right-to-left"/>
+      </enum-name-table>
+    </style-attribute>
+    <style-attribute version="0" key="paragraph-line-height-multiple" group="paragraph" name="line height multiple" class="number" integral="0" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="paragraph-tab-stop-interval" group="paragraph" name="tab stop interval" class="number" integral="0" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="text-background-color" group="text" name="background color" class="color">
+      <color w="0" a="0"/>
+    </style-attribute>
+  </style-attribute-registry>
+  <named-styles>
+    <named-style id="eUsXLp0Pv1g" name="Heading 1" display-order="0">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-fill">
+          <color r="0.196247" g="0.196247" b="0.196247"/>
+        </value>
+        <value key="font-size">30</value>
+        <value key="font-weight">3</value>
+      </style>
+    </named-style>
+    <named-style id="d4-frBYwy2X" name="Heading 2" display-order="1">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-fill">
+          <color r="0.196247" g="0.196247" b="0.196247"/>
+        </value>
+        <value key="font-size">18</value>
+      </style>
+    </named-style>
+    <named-style id="kRw332h0q-G" name="Heading 3" display-order="2">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-size">13</value>
+        <value key="font-weight">6</value>
+      </style>
+    </named-style>
+    <named-style id="nU7Pax9sHwm" name="Highlight: Yellow" display-order="3">
+      <style>
+        <value key="text-background-color">
+          <color r="1" g="0.733334" b="0" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="m6c_M2fT6yP" name="Highlight: Red" display-order="4">
+      <style>
+        <value key="text-background-color">
+          <color r="0.94902" g="0.376471" b="0.466667" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="auoqZ5xVKeG" name="Highlight: Green" display-order="5">
+      <style>
+        <value key="text-background-color">
+          <color r="0.406736" g="0.736132" b="0.210461" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="hE9mXgl4a8m" name="Purple" display-order="6">
+      <style>
+        <value key="font-fill">
+          <color r="0.588981" g="0.38239" b="0.815403"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="l2kopvXC4ak" name="Blue" display-order="7">
+      <style>
+        <value key="font-fill">
+          <color r="0.227451" g="0.556863" b="0.929412"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="f7F2187eZ56" name="Bondi" display-order="8">
+      <style>
+        <value key="font-fill">
+          <color r="0" g="0.749538" b="0.75371"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="kJhkVDl2Xsd" name="Green" display-order="9">
+      <style>
+        <value key="font-fill">
+          <color r="0.406736" g="0.736132" b="0.210461"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="inNRQJ-da6E" name="Yellow" display-order="10">
+      <style>
+        <value key="font-fill">
+          <color r="1" g="0.733334" b="0"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="nAm7imW-teW" name="Orange" display-order="11">
+      <style>
+        <value key="font-fill">
+          <color r="1" g="0.568627" b="0.301961"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="jtC-ndQ7Pcw" name="Red" display-order="12">
+      <style>
+        <value key="font-fill">
+          <color r="0.94902" g="0.376471" b="0.466667"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="dI8s4BxgdIs" name="Graphite" display-order="13">
+      <style>
+        <value key="font-fill">
+          <color r="0.419608" g="0.486275" b="0.647059"/>
+        </value>
+      </style>
+    </named-style>
+  </named-styles>
+  <settings>
+    <base-style>
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-size">13</value>
+        <value key="item-to-note-space(com.omnigroup.OmniOutliner)">4</value>
+        <value key="paragraph-base-writing-direction">left-to-right</value>
+        <value key="paragraph-line-height-multiple">1.1</value>
+      </style>
+    </base-style>
+    <print-info>
+      <print-info-key name="NSPaperName" type="string"></print-info-key>
+      <print-info-key name="OOScaleDocumentToFitPageWidth" type="boolean">true</print-info-key>
+    </print-info>
+    <auto-generate-level-styles>no</auto-generate-level-styles>
+  </settings>
+  <editor content-size="{1035, 1344}" vertical-scrollbar-visible-width="15" outline-title-display-mode="always" column-titles-display-mode="auto" status-visible="no" hide-attachment-tags="yes" is-spellchecking-enabled="yes">
+    <drawer display="sections" width="242" palette-height="818"/>
+    <note-split-view height="141"/>
+    <hoisted-rows ids="dks03nxawRo"/>
+    <selected-rows ids="mXhiVChh8BY"/>
+    <selected-columns ids="jFqHUGd_Dg1"/>
+    <selected-characters range="{0, 222}"/>
+  </editor>
+  <outline-title>
+    <text>
+      <p>
+        <run>
+          <style>
+            <value key="font-size">12</value>
+            <value key="paragraph-alignment">center</value>
+          </style>
+          <lit><cell variable="OODocumentFilenameVariableIdentifier"/></lit>
+        </run>
+      </p>
+    </text>
+  </outline-title>
+  <columns>
+    <column id="dTpN3JwYpBn" type="text" width="18" minimum-width="18" maximum-width="18" text-export-width="1" is-note-column="yes">
+      <style>
+        <value key="font-fill">
+          <color r="0.33" g="0.33" b="0.33"/>
+        </value>
+        <value key="font-size">11</value>
+      </style>
+      <title>
+        <text>
+          <p/>
+        </text>
+      </title>
+    </column>
+    <column id="jFqHUGd_Dg1" type="text" width="999" minimum-width="13" maximum-width="1000000" text-export-width="72" is-outline-column="yes">
+      <title>
+        <text>
+          <p>
+            <run>
+              <lit>Topic</lit>
+            </run>
+          </p>
+        </text>
+      </title>
+    </column>
+  </columns>
+  <root>
+    <style>
+      <value key="font-weight">6</value>
+    </style>
+    <style>
+      <value key="font-size">14</value>
+      <value key="font-weight">9</value>
+    </style>
+    <item id="eiCskKZozb0" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Introduction</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="jPuRSyNsTwy">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>We&apos;re going to move on from `Box` in the previous tutorials to explore the `Either` functor. `Either a b` will always contain a value of `a` or `b`,  defined by the constructor’s `Left a` or `Right b`, but never both at the same time.  We often use `Either` to express a computation as a sequence of functions that may or may not succeed.  For example, a successful computation could be designated by `Right b` and ‘failure’ during one of the functions by `Left a`.  Note that you can assign the meaning of `Left a` or `Right b` to be whatever you want.  But for the sake of convention let’s go with success to mean `Right b` and failure to be `Left a`.   First, we’ll look at the `Either ` functor in JavaScript to help illustrate this point.  Later on, we’ll show how `Either` is implemented in PureScript:</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="oXFhZND3VLC" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Snippets:</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="eMq41bd3eQu">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>It is an important tool in our functional toolbox, because it allows us to do some pure functional error handling when necessary.  </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="kbTfyPi37Po">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <style>
+                        <value key="font-family">Arial</value>
+                        <value key="font-fill">
+                          <color space="srgb" r="0.14118" g="0.15294" b="0.16078"/>
+                        </value>
+                        <value key="kerning-adjust">0</value>
+                        <value key="paragraph-alignment">left</value>
+                        <value key="paragraph-line-height-multiple">0</value>
+                        <value key="paragraph-tab-stop-interval">36</value>
+                        <value key="text-background-color">
+                          <color space="srgb" r="1" g="1" b="1"/>
+                        </value>
+                      </style>
+                      <lit>Either could well be interpreted as a disjunction: a value of type Either a b contains value of type a or value of type b but not both</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="ifbGQEIJTjc">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>You can think of Either a b as a computation, that may succeed and return b or fail with an error message a. (This is also, how the monad instance works). So it&apos;s only natural, that the functor instance won&apos;t touch the Left values, since you want to map over the computation, if it fails, there&apos;s nothing to manipulate.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="dR0VJn0UiQ-">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>, its doesn&apos;t.   Note this designation of success and failure isn’t defined by the type definition</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="bu58b2ZiQpw">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>For example, perhaps their input was incorrect, or an endpoint that the program was attempting to communicate with was unavailable during the computation.  The point again is, this much much better than crashing the program or simply returning a null value leaving the user to figure out what went wrong.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+      </children>
+    </item>
+    <item id="dks03nxawRo" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Either Type Annotation in JavaScript</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="mXhiVChh8BY">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>```javascript</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>const Right = x =&gt;</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>({</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>  map: f =&gt; Right(f(x)),</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>  fold: (f, g) =&gt; g(x),</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>  inspect: () =&gt; `Right(${x})`</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>})</lit>
+                </run>
+              </p>
+              <p/>
+              <p>
+                <run>
+                  <lit>const Left = x =&gt;</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>({</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>  map: f =&gt; Left(x),</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>  fold: (f, g) =&gt; f(x),</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>  inspect: () =&gt; `Left(${x})`</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>})</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>```</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="dMPIb1ztASY">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>From the code snippet above, notice that when a computation is successful then mapping over our `Right` functor performs no differently than `Box` from Tutorials 1 and 2.  Like `Box` we continue to map functions over `Right` until we return the final result using `fold`.  Now `fold: (f, g) ` is interesting and different than what we&apos;ve seen so far.  If you will recall, the `fold`  function in `Box` removes the value from the type after we run the function.  But with `Either`, we have two types `Left` and `Right`, and we don&apos;t know whether our computation has succeeded or failed until we return the result.  The function `fold` handles these two cases by applying one of the two functions we supply.  If our type constructor is `Right` then apply `g(x) `; if its `Left` then apply `f(x)`</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="amJ_ly3sLv3">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>The `Left` constructor is what makes the `Either` functor more flexible than `Box`.  With `Left`, we can perform pure functional error handling, rather than creating a side-effect like throwing an exception or returning a null value.  During our computation, if a function fails then we return `Left a`, where `a` can be assigned an error message, and we stop mapping over `Left` throughout the rest of the program.  This much better than crashing the program or returning a null value; leaving the user high and dry figuring out what went wrong.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="nUgX6u4phGr">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Snippets</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="c8qWd4t_0kN">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>But notice `(Left y)`!  No matter what the function `f`, it will not run `f` on the value `y`.  No mapping for you `Left y`, you shall remain untouched.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="nCmJNZ5baYY">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>So, when a computation fails, we don&apos;t throw an exception, return a null value or some other side effect.  That’s not how we roll in PureScript, we deal with it by pure functional error handling.  Instead  we use the `Left` constructor to return a message that tells the user what went wrong during the computation.  We might return a string that reports “x was not found”, or “division by zero attempted”, etc.  And we can feel safe in knowing that any further mapping on this constructor will be left untouched (nice pun for remembering what left does).  Our message will propagate all the way down a chain of maps and then logged to the console for example. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="fdtIFFmlArk">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>We might return a string that reports “x was not found”, or “division by zero attempted”, etc.  And we can feel safe in knowing that any further mapping on this constructor will be left untouched (nice pun for remembering what left does).  Our message will propagate all the way down a chain of maps and then logged to the console for example. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+      </children>
+    </item>
+    <item id="envqjx1WSUX" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Either Type Signature in PureScript</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="e_jzgY9ymGR">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Let&apos;s look at the PureScript type declaration for Either.  Fortunately, there’s no need to write it ourselves, because `Either` is a core component of functional programming.  You&apos;ll find it in the module `purescript-either` located on [github](</lit>
+                </run>
+                <run>
+                  <lit><cell href="https://github.com/purescript/purescript-either" name="https://github.com/purescript/purescript-either" type="link"/></lit>
+                </run>
+                <run>
+                  <lit>) </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="jDxMY1zG4QQ">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>```purescript</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>data Either a b = Left a | Right b</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>```</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="l4cDf_BAHbo">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Simple enough: `Either a b` is a data type where, by common convention, `Left` can be used to carry an error value and `Right` takes a success value.  Also the values a and b are polymorphic in this declaration, meaning when we declare types of the values `a` and `b` they can be a string, integer, float, etc. and they don&apos;t have to be the same type. </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="dckMPAZ_OJa" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Like `Box` we declare our instances and, in this case, let&apos;s limit them to `map` and `either`, with `either` being equivalent to our `fold` function from the JavaScript declaration in the previous section.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="lpoFJ2vM7Nm">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>```purescript</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>instance functorEither :: Functor (Either a) where</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  map _ (Left x) = Left x</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  map f (Right y) = Right (f y)</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>either :: forall a b c. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>either f _ (Left a) = f a</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>either _ g (Right b) = g b</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="kv9g8qs-7l1">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Hopefully, it is clear that there’s no difference mapping over the Either functor in JavaScript or PureScript.  Moreover, except the difference in names, `either` and `fold` perform identically:</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="cMEqMidHA7N" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Finally, let’s examine the showEither class instance:</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="keoULlEQTZw">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>```purescript</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>instance showEither :: (Show a, Show b) =&gt; Show (Either a b) where</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  show (Left x) = &quot;(Left &quot; &lt;&gt; show x &lt;&gt; &quot;)&quot;</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  show (Right y) = &quot;(Right &quot; &lt;&gt; show y &lt;&gt; &quot;)&quot;</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="jJAByv6aK0E">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>There&apos;s nothing new here when compared to our `showBox` class instance from Tutorials 1 or 2.  We’re just telling PureScript how to format our constructors whenever we log them to the console.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+      </children>
+    </item>
+    <item id="h9pxGMhaols">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Example: `findColor`</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="oa9g6q9vdv7" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Introduction </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="aLSz7Omy7PI">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>We&apos;re going to return the hex value of a color requested by the user from a collection of colors.  When we find the color, return its hex value sans ‘#.’  If we don&apos;t find it, we’re not going to throw an exception, return a null or some other silly side effect.  Instead, we’ll use pure functional error handling with the `Either` abstraction to return an error message to the user.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="m2HVscIQqNr">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>To reference the Either constructor and perform FFI, we include a few more package dependencies in our `bower.json` file .  I’ve done this already by adding the `purescript-either` and `purescript-functions` in addition to the default dependencies.  But if you are starting a fresh project, then you could use `bower install purescript-either &amp;&amp; bower install purescript-functions` to add these dependencies.  Note that the PureScript compiler is ‘package manager agnostic’ so if you don&apos;t like Bower then use another package manager, such as [purescript-npm](</lit>
+                    </run>
+                    <run>
+                      <lit><cell href="https://github.com/ecliptic/purescript-npm" name="https://github.com/ecliptic/purescript-npm" type="link"/></lit>
+                    </run>
+                    <run>
+                      <lit>).</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="e3KLCAi0SDc">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Let’s go!</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="f6SjV5UFWW-" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Revisiting Javascript FFI with a twist</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="begY05rs7dx" expanded="yes">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Introduction</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <children>
+                <item id="ddtQnaorcu3">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>This will be a slight review from our foreign function interface (FFI) discussion in Tutorial 2.  This time, instead of a single argument we’re calling a JavaScript function with multiple arguments.  We’re call the Javascript function `slice` from PureScript to remove the `#` mark from our color hex value.  From the [MDN](</lit>
+                        </run>
+                        <run>
+                          <lit><cell href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice" name="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice" type="link"/></lit>
+                        </run>
+                        <run>
+                          <lit>) docs, slice() extracts a section of a string and returns a new string.  Let’s see how we can accomplish this from PureScript.</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+              </children>
+            </item>
+            <item id="ijLnza-SMMI" expanded="yes">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Function signature</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <children>
+                <item id="dK842jG2kws">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>Let’s take a look at our function signature.  First the PureScript code, followed by our JavaScript implementation `sliceImpl` in Main.js:</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="hw4TGQb4m76">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>```purescript</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>foreign import sliceImpl :: Fn3 Int Int String String</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>slice :: Int -&gt; Int -&gt; String -&gt; String</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>slice begin end string =</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  runFn3 sliceImpl begin end string</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>```</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="p0z3YMEFoAu">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>```javascript</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>&quot;use strict&quot;;</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>exports.sliceImpl = function(beginIndex, endIndex, string) {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  if (endIndex === 0) {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>    return string.slice(beginIndex);</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  } else {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>    return string.slice(beginIndex, endIndex);</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  }</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>};</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>```</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+              </children>
+            </item>
+            <item id="fVLPHjkxbcp" expanded="yes">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Explain sliceImpl</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <children>
+                <item id="exawlBuEGDo">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>Let’s take it from the top.  We declare our foreign import `sliceImpl ` as a function `Fn3` that takes three arguments that represent the `begin`, `end ` and raw `string`, and returns our sliced `string`.</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="pMrdq1d-nq-" expanded="yes">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>Compare that with our FFI declaration of `unsafeParseFloat` in Tutorial 2, and you’ll find them to be very different:</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                  <children>
+                    <item id="forPNrb1BWg">
+                      <values>
+                        <text>
+                          <p>
+                            <run>
+                              <lit>`foreign import unsafeParseFloat :: String -&gt; Number`</lit>
+                            </run>
+                          </p>
+                        </text>
+                      </values>
+                    </item>
+                  </children>
+                </item>
+                <item id="aLSHS1XqMi3">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>While `sliceImpl ` has multiple arguments, `unsafeParseFloat ` has one argument only and looks like any other PureScript function declaration that we’ve seen so far.  What’s going on?</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="cmoKJo_o7zQ">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>Well, all PureScript functions take exactly one argument and simulate functions of multiple arguments via [currying](</lit>
+                        </run>
+                        <run>
+                          <lit><cell href="https://en.wikipedia.org/wiki/Currying" name="https://en.wikipedia.org/wiki/Currying" type="link"/></lit>
+                        </run>
+                        <run>
+                          <lit>), which is standard in many functional programming languages such as Haskell.  We could have declared `sliceImpl` with the following:</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="kR8GYXJ-rmf">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>`foreign import sliceImpl :: Int -&gt; Int -&gt; String -&gt; String`</lit>
+                        </run>
+                      </p>
+                      <p/>
+                    </text>
+                  </values>
+                </item>
+                <item id="gk80jMK10iP">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>But if we do that, then we’ll have to write our JavaScript code to curry these arguments manually.  In this case, `sliceImpl` in `Main.js` would be written as follows:</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="o6p6rYjEQbX">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>```javascript</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>&quot;use strict&quot;;</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>exports.sliceImpl = function(beginIndex) {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  return function(endIndex) {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>    return function(string) {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>      if (endIndex === 0) {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>        return string.slice(beginIndex);</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>      } else {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>        return string.slice(beginIndex, endIndex);</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>      }</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>    }</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  }</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>};</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="mypHgpyjO3u">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>The moral of this story is that manually currying our JavaScript code to be compiled by PureScript is tedious and error prone.  We want to write our JavaScript functions as we normally do.  So, fortunately, PureScript provides us with an alternative: `Fn0 to Fn10` coupled with `runFn0 to runFn10 ` and is available from the module `Data.Function`.  If you’re still wondering why/how to accomplished this, then take a look at this PureScript [wiki page(</lit>
+                        </run>
+                        <run>
+                          <lit><cell href="https://github.com/purescript/documentation/blob/master/guides/FFI-Tips.md" name="https://github.com/purescript/documentation/blob/master/guides/FFI-Tips.md" type="link"/></lit>
+                        </run>
+                        <run>
+                          <lit>) for a simpler example.</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+              </children>
+            </item>
+          </children>
+        </item>
+        <item id="a97U2nY7yEQ" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Explain type A = type</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="hWQnq-YeSpL">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>The declarations below are one of the reasons why I love PureScript (and Haskell) so much because I can be more expressive with my type signatures.  So instead of  `String`, I can better express its use in my application by aliasing this native type value to `ColorName`, `HexValue`, and `Error`.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="bkwt7sD152x">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>```purescript</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>type ColorName = String</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>type HexValue = String</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>type Error = String</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="j5u5arKdhg7">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>I believe it helps anyone reading my code to understand what’s happening in each of my functions.  Later on, if I decide to express `HexValue` as a hexadecimal number, I can do that without having to go back and change all the type annotations for my functions. Look at the type annotations below, and hopefully, you’ll see what I mean.</lit>
+                    </run>
+                  </p>
+                  <p/>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="joq8U1LJiq9" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Explain Algebraic Data Type</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="ce3pUcz1f6B">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>The next type declaration is even more impressive.  We use `data` to combine our types `ColorName` and `HexValue` into a composite type `Color`.  This structure is an *algebraic data type* and [wikipedia](</lit>
+                    </run>
+                    <run>
+                      <lit><cell href="https://en.wikipedia.org/wiki/Algebraic_data_type" name="https://en.wikipedia.org/wiki/Algebraic_data_type" type="link"/></lit>
+                    </run>
+                    <run>
+                      <lit>) has an excellent discussion on the topic.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="onmE-nwEPOP">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>```purescript</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>data Color = Color ColorName HexValue</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="gAXvBxqCRT_" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Find the user’s color</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="oyX0OdhFDyj">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>With our type declarations out of the way, it is time to find the user’s color in `Colors` (assuming it&apos;s in the collection) using the function `findColor`.  First, the JavaScript function followed by PureScript.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="jBjfZdzJwPk" expanded="yes">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Javascript example</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <children>
+                <item id="fxDB6sMdq8t">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>```javascript</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>const fromNullable = color =&gt;</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  color != null ? Right(color) : Left(‘No color found’)</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>const masterColors = { red: &apos;#ff4444&apos;, yellow: &apos;#fff68f&apos;, blue: &apos;#4444ff&apos; }</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>const findColor = name =&gt; {</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  return fromNullable((masterColors)[name])</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>}</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>const resultColor = findColor(&apos;blue&apos;)</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>                               .map(c =&gt; c.slice(1))</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>                               .fold(e =&gt; “Error: “.concat(e) ,</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>                                       c =&gt; “Hex Value: “.concat(c.toUpperCase())</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>```</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="cLvlAufyNvf">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>The JavaScript example is straightforward. We create a hash map of color objects with the color names as keys.  When the name maps to an object in the collection, then the hex value is returned.  When it doesn’t, then the hash lookup will return `undefined`.  We’ll use the PureScript example below to explain this sequence of operations further.</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+              </children>
+            </item>
+            <item id="f0l5X2KVCUJ" expanded="yes">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>PureScript example:</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <children>
+                <item id="dKW4AOJpzhH">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>```purescript</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>fromNullable :: Colors -&gt; Either Error HexValue</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>fromNullable colors =</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  if (null colors)</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>    then Left &quot;Color was not found&quot;</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>    else Right $ (\(Color _ h) -&gt; h) $ unsafePartial head colors</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>masterColors :: Colors</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>masterColors = [ (Color &quot;red&quot; &quot;#ff4444&quot;)</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>                          , (Color &quot;blue&quot; &quot;#44ff44&quot;)</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>                          , (Color &quot;yellow&quot; &quot;#fff68f&quot;)</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>                          ]</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>findColor :: ColorName -&gt; Colors -&gt; Either Error HexValue</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>findColor colorName colors =</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  fromNullable $ dropWhile (\(Color n _) -&gt; n /= name) masterColors</lit>
+                        </run>
+                      </p>
+                      <p/>
+                      <p>
+                        <run>
+                          <lit>result :: ColorName -&gt; Colors -&gt; String</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>result name colors =</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  findColor name colors #</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  map (slice 1 0) #</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>  either ((&lt;&gt;) &quot;Error: &quot;) toUpper</lit>
+                        </run>
+                      </p>
+                      <p>
+                        <run>
+                          <lit>```</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="m_MYEp_mMX1">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>The two functions in `findColor` that are pertinent to our discussion are `dropWhile followed by `fromNullable`.  Let’s take them one at a time:</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="nRJ4QRE3E_c">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>The `dropWhile` function takes a predicate and a collection and drops elements while the condition is true and then stops (returning the remaining elements) once the condition is false.  Naturally, if the condition remains true, then return an empty list or array, etc.  Otherwise, the value that caused the predicate to be false will be at the front of the collection.  </lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="iNv9tWBN3cb">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>`dropWhile` will stop iterating over the collection as soon as it finds the user&apos;s color.  Using reverse logic, we express this predicate as `(\Color n _) -&gt; n /= name`, which essentially means &quot;drop colors while `ColorName` is not equal to `name`.&quot;  With the help of pattern matching, we can ignore `HexValue` (the second type in `Color` and focus on `ColorName`.  Now assuming we have a very long list of unique colors that contains the user&apos;s color, then this will be more efficient than filtering over the entire collection. Had I chose `filter predicate collection`, `filter` would’ve examined every value; even after finding the user’s color!</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="gYquv0RnLeX">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>At last, we’re in the homestretch.  In our PureScript implementation `dropWhile` has either found the user&apos;s color and its sitting at the head of our `Colors` collection OR the collection is empty.  Similar to the Single Responsibility principle in Objected Oriented programming, functions in FP should do one thing and one thing only.  So to avoid multiple expressions in `findColor`, we create another function `fromNullable` that will return the `Left` or `Right` construct depending on failure or success, respectively. </lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="dPjiHcYhyw4">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>Our JavaScript and PureScript implementations of `fromNullable` are slightly different.  `fromNullable` in JavaScript has a single value for `x`, which is either `null` or the color&apos;s hex value.  It tests `x` and returns either `Right(x)` or `Left(‘No color found’)`.  The PureScript example also uses `fromNullable` to return the `Left` or `Right` construct.  However `colors` is a collection of colors (assuming we found the color) with the user&apos;s color sitting at the front.  So we use `head colors` to get the color from the front.  The `unsafePartial` function is our way of telling PureScript that yes, there’s always the possibility that a collection may be empty. But not in this case so just give us the damn color!</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+              </children>
+            </item>
+          </children>
+        </item>
+      </children>
+    </item>
+    <item id="d5fG9nnbaYF" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Summary</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="pO5l559O1N6">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>This tutorial was rather long, so if you made it all the way here then thank you for your time, and I hope it was worth it.  We introduced a new functor `Either` which is more flexible than the `Box` functor from our previous tutorials because it allows us to do pure functional error handling.  So instead of generating side effects, we can use `Left a` to indicate to the user that the computation failed and why.  But if it succeeds then use the `Right b` constructor and mapping over `Right` is the same as mapping over `Box`.  Our `fold` function is a little different by accounting for two types `Left` and `Right`.  So we supply two functions `f` and `g`.  If it&apos;s the `Right` constructor (i.e., success), then run the second function `g` and return the result.  If it&apos;s the `Left` constructor (i.e., failure), then run the first function `f` and return our result. </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="iobba6zH2em">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Our JavaScript and PureScript implementations of `findColor` were relatively identical in implementation.  But we were able to use more expressive types in PureScript thanks to the `type` and `data` constructors. For example, using `type HexValue = String` allowed us to better express the built-in type `String` in the context of our application.  Later, if we decide to change the type of `HexValue`, then we don&apos;t need to modify the type annotations of our functions.  Finally, we used `data` to denote our algebraic data type `Color` which is a composite of the type constructors `ColorName` and `HexValue`.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="aedii4KEvYu">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>That&apos;s all for now, next time we’ll cover how to use `chain` (i.e., `bind` in PureScript) to compose error handling with nested Eithers.  Stay tuned!</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+      </children>
+    </item>
+  </root>
+</outline>
