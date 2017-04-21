@@ -53,9 +53,10 @@ result name =
   either (\e -> "No color") toUpper
 
 -- Bonus: This variation will make your head spin. It really shows the power of
--- mapping and composition. All in one expression!
+-- mapping and composition. All in one expression!  Thanks to @goodacre.liam on
+-- on the FP #purescript forum on Slack for this example
 result' :: ColorName -> String
-result' name = either (\e -> "No Color") toUpper $ (slice 1 0) <$> hex <$> (findColor name)
+result' = either (const "No Color") toUpper <<< map (slice 1 0 <<< hex) <<< findColor
 
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
