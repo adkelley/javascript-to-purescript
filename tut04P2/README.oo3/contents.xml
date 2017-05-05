@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE outline PUBLIC "-//omnigroup.com//DTD OUTLINE 3.0//EN" "http://www.omnigroup.com/namespace/OmniOutliner/xmloutline-v3.dtd">
+<outline xmlns="http://www.omnigroup.com/namespace/OmniOutliner/v3">
+  <style-attribute-registry>
+    <style-attribute version="0" key="font-family" group="font" name="family" class="string">Helvetica</style-attribute>
+    <style-attribute version="1" key="font-fill" group="font" name="fill color" class="color">
+      <color w="0"/>
+    </style-attribute>
+    <style-attribute version="0" key="font-size" group="font" name="size" class="number" integral="0" min="1" max="65536">12</style-attribute>
+    <style-attribute version="0" key="font-weight" group="font" name="weight" class="number" integral="1" min="1" max="14">5</style-attribute>
+    <style-attribute version="0" key="item-to-note-space(com.omnigroup.OmniOutliner)" group="row" name="above note padding" class="number" integral="1" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="paragraph-alignment" group="paragraph" name="alignment" class="enum">
+      <enum-name-table default-value="4">
+        <enum-name-table-element value="0" name="left"/>
+        <enum-name-table-element value="1" name="right"/>
+        <enum-name-table-element value="2" name="center"/>
+        <enum-name-table-element value="3" name="justified"/>
+        <enum-name-table-element value="4" name="natural"/>
+      </enum-name-table>
+    </style-attribute>
+    <style-attribute version="0" key="paragraph-base-writing-direction" group="paragraph" name="writing direction" class="enum">
+      <enum-name-table default-value="-1">
+        <enum-name-table-element value="-1" name="natural"/>
+        <enum-name-table-element value="0" name="left-to-right"/>
+        <enum-name-table-element value="1" name="right-to-left"/>
+      </enum-name-table>
+    </style-attribute>
+    <style-attribute version="0" key="paragraph-line-height-multiple" group="paragraph" name="line height multiple" class="number" integral="0" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="text-background-color" group="text" name="background color" class="color">
+      <color w="0" a="0"/>
+    </style-attribute>
+  </style-attribute-registry>
+  <named-styles>
+    <named-style id="eUsXLp0Pv1g" name="Heading 1" display-order="0">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-fill">
+          <color r="0.196247" g="0.196247" b="0.196247"/>
+        </value>
+        <value key="font-size">30</value>
+        <value key="font-weight">3</value>
+      </style>
+    </named-style>
+    <named-style id="d4-frBYwy2X" name="Heading 2" display-order="1">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-fill">
+          <color r="0.196247" g="0.196247" b="0.196247"/>
+        </value>
+        <value key="font-size">18</value>
+      </style>
+    </named-style>
+    <named-style id="kRw332h0q-G" name="Heading 3" display-order="2">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-size">13</value>
+        <value key="font-weight">6</value>
+      </style>
+    </named-style>
+    <named-style id="nU7Pax9sHwm" name="Highlight: Yellow" display-order="3">
+      <style>
+        <value key="text-background-color">
+          <color r="1" g="0.733334" b="0" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="m6c_M2fT6yP" name="Highlight: Red" display-order="4">
+      <style>
+        <value key="text-background-color">
+          <color r="0.94902" g="0.376471" b="0.466667" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="auoqZ5xVKeG" name="Highlight: Green" display-order="5">
+      <style>
+        <value key="text-background-color">
+          <color r="0.406736" g="0.736132" b="0.210461" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="hE9mXgl4a8m" name="Purple" display-order="6">
+      <style>
+        <value key="font-fill">
+          <color r="0.588981" g="0.38239" b="0.815403"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="l2kopvXC4ak" name="Blue" display-order="7">
+      <style>
+        <value key="font-fill">
+          <color r="0.227451" g="0.556863" b="0.929412"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="f7F2187eZ56" name="Bondi" display-order="8">
+      <style>
+        <value key="font-fill">
+          <color r="0" g="0.749538" b="0.75371"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="kJhkVDl2Xsd" name="Green" display-order="9">
+      <style>
+        <value key="font-fill">
+          <color r="0.406736" g="0.736132" b="0.210461"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="inNRQJ-da6E" name="Yellow" display-order="10">
+      <style>
+        <value key="font-fill">
+          <color r="1" g="0.733334" b="0"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="nAm7imW-teW" name="Orange" display-order="11">
+      <style>
+        <value key="font-fill">
+          <color r="1" g="0.568627" b="0.301961"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="jtC-ndQ7Pcw" name="Red" display-order="12">
+      <style>
+        <value key="font-fill">
+          <color r="0.94902" g="0.376471" b="0.466667"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="dI8s4BxgdIs" name="Graphite" display-order="13">
+      <style>
+        <value key="font-fill">
+          <color r="0.419608" g="0.486275" b="0.647059"/>
+        </value>
+      </style>
+    </named-style>
+  </named-styles>
+  <settings>
+    <base-style>
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-size">13</value>
+        <value key="item-to-note-space(com.omnigroup.OmniOutliner)">4</value>
+        <value key="paragraph-base-writing-direction">left-to-right</value>
+        <value key="paragraph-line-height-multiple">1.1</value>
+      </style>
+    </base-style>
+    <print-info>
+      <print-info-key name="OOScaleDocumentToFitPageWidth" type="boolean">true</print-info-key>
+    </print-info>
+    <auto-generate-level-styles>no</auto-generate-level-styles>
+  </settings>
+  <editor content-size="{1090, 704}" outline-title-display-mode="always" column-titles-display-mode="auto" status-visible="no" hide-attachment-tags="yes" is-spellchecking-enabled="yes">
+    <drawer display="sections" width="185" palette-height="314"/>
+    <note-split-view height="141"/>
+    <hoisted-rows ids="hzM_MRQza7j"/>
+    <selected-rows ids="hzM_MRQza7j"/>
+    <selected-columns ids="jFqHUGd_Dg1"/>
+    <selected-characters range="{39, 0}"/>
+  </editor>
+  <outline-title>
+    <text>
+      <p>
+        <run>
+          <style>
+            <value key="font-size">12</value>
+            <value key="paragraph-alignment">center</value>
+          </style>
+          <lit><cell variable="OODocumentFilenameVariableIdentifier"/></lit>
+        </run>
+      </p>
+    </text>
+  </outline-title>
+  <columns>
+    <column id="dTpN3JwYpBn" type="text" width="18" minimum-width="18" maximum-width="18" text-export-width="1" is-note-column="yes">
+      <style>
+        <value key="font-fill">
+          <color r="0.33" g="0.33" b="0.33"/>
+        </value>
+        <value key="font-size">11</value>
+      </style>
+      <title>
+        <text>
+          <p/>
+        </text>
+      </title>
+    </column>
+    <column id="jFqHUGd_Dg1" type="text" width="1069" minimum-width="13" maximum-width="1000000" text-export-width="72" is-outline-column="yes">
+      <title>
+        <text>
+          <p>
+            <run>
+              <lit>Topic</lit>
+            </run>
+          </p>
+        </text>
+      </title>
+    </column>
+  </columns>
+  <root>
+    <style>
+      <value key="font-weight">6</value>
+    </style>
+    <item id="oQsgWXZnaO7">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Introduction</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="oLkrZ5os1zl">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Build on previous `Either` Tutorial to handle Nested Eithers</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="bA3wHhGkMn3" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Break this tutorial into 2-Parts</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="jrtHAvQdKw0">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Part 1</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <children>
+                <item id="h4r_7O1yu19">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>Handling multiple effects beside just console</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+                <item id="niS1Y1y54kP">
+                  <values>
+                    <text>
+                      <p>
+                        <run>
+                          <lit>Show how we perform File I/O in PureScript using the nodejs library.</lit>
+                        </run>
+                      </p>
+                    </text>
+                  </values>
+                </item>
+              </children>
+            </item>
+            <item id="oVQ-VxiJXtD">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Part 2- Use what we learned in Part 1 to do Nested Eithers</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+      </children>
+    </item>
+    <item id="hzM_MRQza7j" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Handling Multiple Effects in PureScript</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="fDEKpyj_unv">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>I think you would agree that if all we could do was to write message to the console then that wouldn&apos;t be a very interesting language</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="dKddD1waVzi">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Of course we can do many more things in PureScript  - perform I/O such as read/write to your hard drive, handling state, accessing a database etc.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="kCrD3rIVyjN">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>In other languages such as haskell, this is lumped into one big monad</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="kMFAjE4ecz8">
+          <values>
+            <null/>
+          </values>
+        </item>
+      </children>
+    </item>
+    <item id="a7yZS6IjwS1" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Nested Eithers</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="jJx8bEKANyp">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Quickly review `Either` from the previous tutorial</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="md16KuG8Gfo" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>How do nested Eithers come about?</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="kHMKW-xixVY">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>This can happen with other Monads besides Either e.g., Maybe (Maybe)  </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="nBg_hm_MxRf">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Introduce bind operation to solve Right (Right a)  to Right a)</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+      </children>
+    </item>
+    <item id="n9Cr4BPjkMA" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Code Example</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="nwTsk_OqQG_">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Prelude - show how you would do it without FP</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+      </children>
+    </item>
+  </root>
+</outline>

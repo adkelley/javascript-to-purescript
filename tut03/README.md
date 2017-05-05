@@ -12,7 +12,7 @@
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript.  
 
-For this tutorial, we're going to define the Either type and see how it works.  Then we'll try it out to enforce a null check and branch our code (see [video3](https://egghead.io/lessons/javascript-composable-code-branching-with-either)) If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03).
+For this tutorial, we're going to introduce the Either type and use it to express a computation as a sequence of functions that may or may not succeed.  Then we'll try it out to enforce a null check and branch our code (see [video3](https://egghead.io/lessons/javascript-composable-code-branching-with-either)) If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03).
 
 ## Either
 

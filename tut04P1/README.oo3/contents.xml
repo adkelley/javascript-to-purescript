@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE outline PUBLIC "-//omnigroup.com//DTD OUTLINE 3.0//EN" "http://www.omnigroup.com/namespace/OmniOutliner/xmloutline-v3.dtd">
+<outline xmlns="http://www.omnigroup.com/namespace/OmniOutliner/v3">
+  <style-attribute-registry>
+    <style-attribute version="0" key="font-family" group="font" name="family" class="string">Helvetica</style-attribute>
+    <style-attribute version="1" key="font-fill" group="font" name="fill color" class="color">
+      <color w="0"/>
+    </style-attribute>
+    <style-attribute version="0" key="font-size" group="font" name="size" class="number" integral="0" min="1" max="65536">12</style-attribute>
+    <style-attribute version="0" key="font-weight" group="font" name="weight" class="number" integral="1" min="1" max="14">5</style-attribute>
+    <style-attribute version="0" key="item-to-note-space(com.omnigroup.OmniOutliner)" group="row" name="above note padding" class="number" integral="1" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="paragraph-alignment" group="paragraph" name="alignment" class="enum">
+      <enum-name-table default-value="4">
+        <enum-name-table-element value="0" name="left"/>
+        <enum-name-table-element value="1" name="right"/>
+        <enum-name-table-element value="2" name="center"/>
+        <enum-name-table-element value="3" name="justified"/>
+        <enum-name-table-element value="4" name="natural"/>
+      </enum-name-table>
+    </style-attribute>
+    <style-attribute version="0" key="paragraph-base-writing-direction" group="paragraph" name="writing direction" class="enum">
+      <enum-name-table default-value="-1">
+        <enum-name-table-element value="-1" name="natural"/>
+        <enum-name-table-element value="0" name="left-to-right"/>
+        <enum-name-table-element value="1" name="right-to-left"/>
+      </enum-name-table>
+    </style-attribute>
+    <style-attribute version="0" key="paragraph-line-height-multiple" group="paragraph" name="line height multiple" class="number" integral="0" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="text-background-color" group="text" name="background color" class="color">
+      <color w="0" a="0"/>
+    </style-attribute>
+  </style-attribute-registry>
+  <named-styles>
+    <named-style id="eUsXLp0Pv1g" name="Heading 1" display-order="0">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-fill">
+          <color r="0.196247" g="0.196247" b="0.196247"/>
+        </value>
+        <value key="font-size">30</value>
+        <value key="font-weight">3</value>
+      </style>
+    </named-style>
+    <named-style id="d4-frBYwy2X" name="Heading 2" display-order="1">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-fill">
+          <color r="0.196247" g="0.196247" b="0.196247"/>
+        </value>
+        <value key="font-size">18</value>
+      </style>
+    </named-style>
+    <named-style id="kRw332h0q-G" name="Heading 3" display-order="2">
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-size">13</value>
+        <value key="font-weight">6</value>
+      </style>
+    </named-style>
+    <named-style id="nU7Pax9sHwm" name="Highlight: Yellow" display-order="3">
+      <style>
+        <value key="text-background-color">
+          <color r="1" g="0.733334" b="0" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="m6c_M2fT6yP" name="Highlight: Red" display-order="4">
+      <style>
+        <value key="text-background-color">
+          <color r="0.94902" g="0.376471" b="0.466667" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="auoqZ5xVKeG" name="Highlight: Green" display-order="5">
+      <style>
+        <value key="text-background-color">
+          <color r="0.406736" g="0.736132" b="0.210461" a="0.25"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="hE9mXgl4a8m" name="Purple" display-order="6">
+      <style>
+        <value key="font-fill">
+          <color r="0.588981" g="0.38239" b="0.815403"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="l2kopvXC4ak" name="Blue" display-order="7">
+      <style>
+        <value key="font-fill">
+          <color r="0.227451" g="0.556863" b="0.929412"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="f7F2187eZ56" name="Bondi" display-order="8">
+      <style>
+        <value key="font-fill">
+          <color r="0" g="0.749538" b="0.75371"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="kJhkVDl2Xsd" name="Green" display-order="9">
+      <style>
+        <value key="font-fill">
+          <color r="0.406736" g="0.736132" b="0.210461"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="inNRQJ-da6E" name="Yellow" display-order="10">
+      <style>
+        <value key="font-fill">
+          <color r="1" g="0.733334" b="0"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="nAm7imW-teW" name="Orange" display-order="11">
+      <style>
+        <value key="font-fill">
+          <color r="1" g="0.568627" b="0.301961"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="jtC-ndQ7Pcw" name="Red" display-order="12">
+      <style>
+        <value key="font-fill">
+          <color r="0.94902" g="0.376471" b="0.466667"/>
+        </value>
+      </style>
+    </named-style>
+    <named-style id="dI8s4BxgdIs" name="Graphite" display-order="13">
+      <style>
+        <value key="font-fill">
+          <color r="0.419608" g="0.486275" b="0.647059"/>
+        </value>
+      </style>
+    </named-style>
+  </named-styles>
+  <settings>
+    <base-style>
+      <style>
+        <value key="font-family">Helvetica Neue</value>
+        <value key="font-size">13</value>
+        <value key="item-to-note-space(com.omnigroup.OmniOutliner)">4</value>
+        <value key="paragraph-base-writing-direction">left-to-right</value>
+        <value key="paragraph-line-height-multiple">1.1</value>
+      </style>
+    </base-style>
+    <print-info>
+      <print-info-key name="OOScaleDocumentToFitPageWidth" type="boolean">true</print-info-key>
+    </print-info>
+    <auto-generate-level-styles>no</auto-generate-level-styles>
+  </settings>
+  <editor content-size="{1090, 704}" outline-title-display-mode="always" column-titles-display-mode="auto" status-visible="no" hide-attachment-tags="yes" is-spellchecking-enabled="yes">
+    <drawer display="sections" width="185" palette-height="314"/>
+    <note-split-view height="141"/>
+    <hoisted-rows ids="oLkrZ5os1zl"/>
+    <selected-rows ids="oLkrZ5os1zl"/>
+    <selected-columns ids="jFqHUGd_Dg1"/>
+    <selected-characters range="{39, 0}"/>
+  </editor>
+  <outline-title>
+    <text>
+      <p>
+        <run>
+          <style>
+            <value key="font-size">12</value>
+            <value key="paragraph-alignment">center</value>
+          </style>
+          <lit><cell variable="OODocumentFilenameVariableIdentifier"/></lit>
+        </run>
+      </p>
+    </text>
+  </outline-title>
+  <columns>
+    <column id="dTpN3JwYpBn" type="text" width="18" minimum-width="18" maximum-width="18" text-export-width="1" is-note-column="yes">
+      <style>
+        <value key="font-fill">
+          <color r="0.33" g="0.33" b="0.33"/>
+        </value>
+        <value key="font-size">11</value>
+      </style>
+      <title>
+        <text>
+          <p/>
+        </text>
+      </title>
+    </column>
+    <column id="jFqHUGd_Dg1" type="text" width="1069" minimum-width="13" maximum-width="1000000" text-export-width="72" is-outline-column="yes">
+      <title>
+        <text>
+          <p>
+            <run>
+              <lit>Topic</lit>
+            </run>
+          </p>
+        </text>
+      </title>
+    </column>
+  </columns>
+  <root>
+    <style>
+      <value key="font-weight">6</value>
+    </style>
+    <item id="oQsgWXZnaO7">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Introduction</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="oLkrZ5os1zl">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>In this tutorial, we’re going to build on what we learned about the `Either` functor in the previous tutorial to handle Nested Eithers.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="ij_Y6AIwHky">
+          <values>
+            <null/>
+          </values>
+        </item>
+        <item id="kTxZWwl3YMm" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Break this tutorial into two parts</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="d8AThRi7H3Z">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>In Brian’s original </lit>
+                    </run>
+                    <run>
+                      <lit><cell href="http://egghead.io" name="egghead.io" type="link"/></lit>
+                    </run>
+                    <run>
+                      <lit> tutorial (tutorial #) , he shows how to refactor a `getPort` function using nested `Eithers`.  `getPort` will read a configuration file `config.json` using nodejs.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="bsDkp8qTS-K">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Well demonstrating how to handle native side effects in PureScript such as File I/O in nodejs deserves a tutorial of its very own.  So I’ve decided to break this tutorial into two parts - Part1 “native side-effects” and Part 2 will use what we learned about handling side effects to refactor the code using nested Eithers</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="aWbCAMt3Ge-">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>This way, we keep the focus on one major topic each time, and should help to keep these tutorials shorter. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+      </children>
+    </item>
+    <item id="hzM_MRQza7j" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Handling Multiple Native Side Effects in PureScript</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="fDEKpyj_unv">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>I think you would agree that if all we could do was to write messages to the console then PureScript wouldn&apos;t be a very interesting or useful language.  Naturally, that’s not the case and PureScript has a simple and elegant approach to dealing with the messiness  of the outside world.  These are better known as side effects.  But before we dive into PureScript’s approach to handling side effects, let’s step back for a paragraph or two to review what it means to be a functional programming language and why its so compelling and advantageous to create an entire paradigm around it.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <note expanded="yes">
+            <text>
+              <p>
+                <run>
+                  <lit>is there another word for messiness?</lit>
+                </run>
+              </p>
+            </text>
+          </note>
+        </item>
+        <item id="e1zqDyVdcUG">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>If there was one word to describe functional programming for me, then I think its “predictability”.  For me, the attraction of functional programming languages is that many have been designed to by keeping the majority of my functions pure, then I know what’s going happen.  Why?  Because when a function is pure it will always evaluate to the same value given the same argument.  The function always evaluates the same result value given the same argument value(s). The function result value cannot depend on any hidden information or state that may change while program execution proceeds or between different executions of the program, nor can it depend on any external input from I/O devices (usually—see below).</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="kYtAFWm3QmU">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>What do I mean by “native-effects”.  I’m talking about effects that are provided by the runtime, such as generating random numbers, exceptions, reading/writing mutable state, writing/reading to/from local storage</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="dKddD1waVzi">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Of course we can do many more things in PureScript  - perform I/O such as read/write to your hard drive, moving from one state to the other, generating random numbers, accessing a database etc.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="kCrD3rIVyjN" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>In Haskell, the majority of these operations are lumped into one big monad I/O.  Instead native effects are more fine grained in PureScript. </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <note expanded="yes">
+            <text>
+              <p>
+                <run>
+                  <lit>Do I want to talk about this?</lit>
+                </run>
+              </p>
+            </text>
+          </note>
+          <children>
+            <item id="kFKchjrAnBz">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>I like the PureScript approach because I get to see what side effects I’m going to be perform, whether its handling exceptions, performing File I/O - its all very clear in the types.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="jatnuKr7TkM">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>In other languages native-side effects, like the ones I mentioned above, are often lumped together into one big .  In contrast PureScript provides a finer granularity  granularity - if I want to generate a random number then there’s an effect for that </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <note expanded="yes">
+            <text>
+              <p>
+                <run>
+                  <lit>Perhaps a side note </lit>
+                </run>
+              </p>
+            </text>
+          </note>
+        </item>
+      </children>
+    </item>
+    <item id="nY2cr96-MtS" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>How we declare side effects in PureScript</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="pwwmEpRHVro">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Without getting into the intricacies of Monads (we’ll save that topic for later).  Let’s talk about how we declare a side effect in our types</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+      </children>
+    </item>
+    <item id="n9Cr4BPjkMA" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Code Example</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="nwTsk_OqQG_">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Prelude - show how you would do it without FP</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+      </children>
+    </item>
+  </root>
+</outline>
