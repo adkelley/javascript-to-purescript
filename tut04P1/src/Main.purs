@@ -3,46 +3,38 @@ module Main where
 import Prelude
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Eff.Exception (Error, try)
-import Control.Monad.Except (runExcept)
-import Data.Either (Either(..))
-import Data.Foreign (Foreign, ForeignError, parseJSON)
-import Data.List.Types (NonEmptyList)
-import Node.Encoding (Encoding(..))
-import Node.FS (FS)
-import Node.FS.Sync (readTextFile)
+import Control.Monad.Eff.Exception (EXCEPTION, catchException, error, message, throwException)
+import Control.Monad.Eff.Random (RANDOM, randomInt)
 
-type FilePath = String
-type ErrorMessage = String
+type PortRange = { min :: Int, max :: Int }
 
-fileName :: FilePath
-fileName = "./resources/config.json"
+validPorts :: PortRange
+validPorts = { min: 2500,  max: 7500 }
 
-defaultPort :: String
-defaultPort = "3000"
+invalidPort :: Int -> Boolean
+invalidPort portNumber =
+  (portNumber < validPorts.min || portNumber > validPorts.max)
 
-foreign import getPortValue :: Foreign -> String
+throwWhenBadPort :: Int -> forall eff. Eff (err :: EXCEPTION | eff) Unit
+throwWhenBadPort portNumber =
+  when (invalidPort portNumber) $ throwException $
+    error $ "Error: expected a port number between " <>
+            show validPorts.min <> " and " <> show validPorts.max
 
-foldRead :: forall eff. (Either Error String) -> Eff (fs :: FS | eff) String
-foldRead result =
-  case result of
-    (Left e) -> pure $ "{\"port\": " <> defaultPort <> "}"
-    (Right x) -> pure x
+catchWhenBadPort :: Int -> forall eff. Eff (console :: CONSOLE | eff) Unit
+catchWhenBadPort portNumber =
+  catchException printException (throwWhenBadPort portNumber)
+  where
+    printException e = log $ message e
 
-foldJSON :: forall eff. (Either (NonEmptyList ForeignError) Foreign) -> Eff (fs :: FS | eff) String
-foldJSON json =
-  case json of
-    (Left e) -> pure $ defaultPort
-    (Right x) -> pure $ getPortValue x
-
-getPort :: forall eff. Eff (fs :: FS | eff) String
-getPort = do
-  result <- try (readTextFile UTF8 fileName)
-  jsonString <- foldRead result
-  runExcept (parseJSON jsonString) #
-  foldJSON
-
-main :: forall e. Eff (console :: CONSOLE, fs :: FS | e) Unit
+main :: Eff (console :: CONSOLE, random :: RANDOM, err :: EXCEPTION) Unit
 main = do
-  log "Use chain for composable error handling with nested Eithers"
-  log =<< getPort
+  log "Use chain for composable error handling with nested Eithers - Part 1"
+  -- Create 50% chance of generating invalid port numbers
+  portNumber <- randomInt (validPorts.min - 2500) (validPorts.max + 2500)
+  log $ "Our random port number is: " <> show portNumber
+
+  -- Try commenting out catchWhenBadPort and uncommenting throwWhenBadPort
+  -- to see throwException in action
+  catchWhenBadPort portNumber
+  -- throwWhenBadPort portNumber

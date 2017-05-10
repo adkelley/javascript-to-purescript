@@ -6,9 +6,12 @@
     <style-attribute version="1" key="font-fill" group="font" name="fill color" class="color">
       <color w="0"/>
     </style-attribute>
+    <style-attribute version="0" key="font-fixed-pitch" group="font" name="fixed pitch" class="bool">no</style-attribute>
+    <style-attribute version="0" key="font-italic" group="font" name="italic" class="bool">no</style-attribute>
     <style-attribute version="0" key="font-size" group="font" name="size" class="number" integral="0" min="1" max="65536">12</style-attribute>
     <style-attribute version="0" key="font-weight" group="font" name="weight" class="number" integral="1" min="1" max="14">5</style-attribute>
     <style-attribute version="0" key="item-to-note-space(com.omnigroup.OmniOutliner)" group="row" name="above note padding" class="number" integral="1" min="0" max="1000">0</style-attribute>
+    <style-attribute version="0" key="kerning-adjust" group="kerning" name="adjust" class="number" integral="0" min="-1000" max="1000">NaN</style-attribute>
     <style-attribute version="0" key="paragraph-alignment" group="paragraph" name="alignment" class="enum">
       <enum-name-table default-value="4">
         <enum-name-table-element value="0" name="left"/>
@@ -146,17 +149,24 @@
       </style>
     </base-style>
     <print-info>
+      <print-info-key name="NSJobDisposition" type="string">NSPrintCancelJob</print-info-key>
+      <print-info-key name="NSJobFeatures" type="coded">BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9uYXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpAIY=</print-info-key>
+      <print-info-key name="NSPagesPerSheet" type="int">1</print-info-key>
+      <print-info-key name="NSPaperName" type="string"></print-info-key>
+      <print-info-key name="NSReversePageOrder" type="boolean">false</print-info-key>
+      <print-info-key name="OOColumnHeaderPrintBehavior" type="int">0</print-info-key>
+      <print-info-key name="OOPageHeaderPrintBehavior" type="int">0</print-info-key>
       <print-info-key name="OOScaleDocumentToFitPageWidth" type="boolean">true</print-info-key>
     </print-info>
     <auto-generate-level-styles>no</auto-generate-level-styles>
   </settings>
-  <editor content-size="{1090, 704}" outline-title-display-mode="always" column-titles-display-mode="auto" status-visible="no" hide-attachment-tags="yes" is-spellchecking-enabled="yes">
-    <drawer display="sections" width="185" palette-height="314"/>
+  <editor content-size="{1092, 1344}" vertical-scrollbar-visible-width="15" outline-title-display-mode="always" column-titles-display-mode="auto" status-visible="no" hide-attachment-tags="yes" is-spellchecking-enabled="yes">
+    <drawer display="sections" width="185" palette-height="311"/>
     <note-split-view height="141"/>
-    <hoisted-rows ids="oLkrZ5os1zl"/>
-    <selected-rows ids="oLkrZ5os1zl"/>
+    <hoisted-rows ids="dQ1NIOrU55z"/>
+    <selected-rows ids="e02z7BPKpAP"/>
     <selected-columns ids="jFqHUGd_Dg1"/>
-    <selected-characters range="{39, 0}"/>
+    <selected-characters range="{14, 0}"/>
   </editor>
   <outline-title>
     <text>
@@ -185,7 +195,7 @@
         </text>
       </title>
     </column>
-    <column id="jFqHUGd_Dg1" type="text" width="1069" minimum-width="13" maximum-width="1000000" text-export-width="72" is-outline-column="yes">
+    <column id="jFqHUGd_Dg1" type="text" width="1056" minimum-width="13" maximum-width="1000000" text-export-width="72" is-outline-column="yes">
       <title>
         <text>
           <p>
@@ -201,7 +211,7 @@
     <style>
       <value key="font-weight">6</value>
     </style>
-    <item id="oQsgWXZnaO7">
+    <item id="oQsgWXZnaO7" expanded="yes">
       <values>
         <text>
           <p>
@@ -212,67 +222,132 @@
         </text>
       </values>
       <children>
-        <item id="oLkrZ5os1zl">
+        <item id="cmlrJsSA6ie" expanded="yes">
           <values>
             <text>
               <p>
                 <run>
-                  <lit>In this tutorial, we’re going to build on what we learned about the `Either` functor in the previous tutorial to handle Nested Eithers.</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="ij_Y6AIwHky">
-          <values>
-            <null/>
-          </values>
-        </item>
-        <item id="kTxZWwl3YMm" expanded="yes">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Break this tutorial into two parts</lit>
+                  <lit>What did I cover last time, and what am I going to cover this time</lit>
                 </run>
               </p>
             </text>
           </values>
           <children>
-            <item id="d8AThRi7H3Z">
+            <item id="oLkrZ5os1zl">
               <values>
                 <text>
                   <p>
                     <run>
-                      <lit>In Brian’s original </lit>
+                      <lit>In my previous tutorial, I introduced the `Either` functor and showed how it could be used to express a series of computations that may or may not succeed.  Now we’re going to practice what we learned by demonstrating how to handle nested `Either` functors. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <note expanded="yes">
+                <text>
+                  <p>
+                    <run>
+                      <lit>it?</lit>
+                    </run>
+                  </p>
+                </text>
+              </note>
+            </item>
+          </children>
+        </item>
+        <item id="dstjCBUAgdW" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>How do we get nested Eithers?</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="cJWhJrEDbhx">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>This is exactly the scenario that Brian set up in his [nested Either tutorial](</lit>
                     </run>
                     <run>
-                      <lit><cell href="http://egghead.io" name="egghead.io" type="link"/></lit>
+                      <lit><cell href="https://egghead.io/lessons/javascript-composable-error-handling-with-either" name="https://egghead.io/lessons/javascript-composable-error-handling-with-either" type="link"/></lit>
                     </run>
                     <run>
-                      <lit> tutorial (tutorial #) , he shows how to refactor a `getPort` function using nested `Eithers`.  `getPort` will read a configuration file `config.json` using nodejs.</lit>
+                      <lit>) using JavaScript.  He showed how to refactor a `getPort` function to use nested `Eithers`, wrapping potential errors discussed above in a `Left` type and preventing the program from blowing up.  Its important to note the his function `getPort` reads a configuration file `config.json` using Node.js and this presents a dilemma for me when thinking about how to structure this tutorial.</lit>
                     </run>
                   </p>
                 </text>
               </values>
             </item>
-            <item id="bsDkp8qTS-K">
+            <item id="jSK9DoG3xrG">
               <values>
                 <text>
                   <p>
                     <run>
-                      <lit>Well demonstrating how to handle native side effects in PureScript such as File I/O in nodejs deserves a tutorial of its very own.  So I’ve decided to break this tutorial into two parts - Part1 “native side-effects” and Part 2 will use what we learned about handling side effects to refactor the code using nested Eithers</lit>
+                      <lit>The above scenario is what Brian set up in his [nested Either tutorial](</lit>
+                    </run>
+                    <run>
+                      <lit><cell href="https://egghead.io/lessons/javascript-composable-error-handling-with-either" name="https://egghead.io/lessons/javascript-composable-error-handling-with-either" type="link"/></lit>
+                    </run>
+                    <run>
+                      <lit>) using JavaScript.  He showed how to refactor a `getPort` function to use nested `Either`s, wrapping potential errors discussed above in a `Left` type and preventing the program from blowing up.  It&apos;s important to note the his function `getPort` reads a configuration file `config.json` using Node.js and this presents a dilemma for me when thinking about how to structure this tutorial.</lit>
                     </run>
                   </p>
                 </text>
               </values>
             </item>
-            <item id="aWbCAMt3Ge-">
+          </children>
+        </item>
+        <item id="lArc4EDNGzF" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>I&apos;m breaking this into two tutorials?</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="neEKHGKHHJE">
               <values>
                 <text>
                   <p>
                     <run>
-                      <lit>This way, we keep the focus on one major topic each time, and should help to keep these tutorials shorter. </lit>
+                      <lit>Its a dilemma because File I/O with Node.js is one of several </lit>
+                    </run>
+                    <run>
+                      <style>
+                        <value key="font-italic">yes</value>
+                      </style>
+                      <lit>native </lit>
+                    </run>
+                    <run>
+                      <lit>side effects which we haven&apos;t covered yet.  What I mean by </lit>
+                    </run>
+                    <run>
+                      <style>
+                        <value key="font-italic">yes</value>
+                      </style>
+                      <lit>native</lit>
+                    </run>
+                    <run>
+                      <lit> side effects are those which are provided by the runtime system - typically console &amp; file IO, random number generation, DOM manipulation, etc.   Moreover, handling native side effects in PureScript deserves a tutorial of its very own.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="k48sDV9bapD">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>So I’ve decided to break this tutorial into two parts.  In Part 1, I will demonstrate how to handle side effects (in this case file I/O using Node.js). In Part 2, I follow Brian’s example using file I/O in Node.js to show how to wrap potential errors with nested `Either`s.  This approach keeps these tutorials shorter by focusing on one major topic at a time. And, as a bonus, I cover how to handle side effects in PureScript so that I can begin using them in future tutorials.</lit>
                     </run>
                   </p>
                 </text>
@@ -293,79 +368,192 @@
         </text>
       </values>
       <children>
-        <item id="fDEKpyj_unv">
+        <item id="atSrfrLfEDC" expanded="yes">
           <values>
             <text>
               <p>
                 <run>
-                  <lit>I think you would agree that if all we could do was to write messages to the console then PureScript wouldn&apos;t be a very interesting or useful language.  Naturally, that’s not the case and PureScript has a simple and elegant approach to dealing with the messiness  of the outside world.  These are better known as side effects.  But before we dive into PureScript’s approach to handling side effects, let’s step back for a paragraph or two to review what it means to be a functional programming language and why its so compelling and advantageous to create an entire paradigm around it.</lit>
+                  <lit>How to model side effects in a pure function programming language</lit>
                 </run>
               </p>
             </text>
           </values>
-          <note expanded="yes">
-            <text>
-              <p>
-                <run>
-                  <lit>is there another word for messiness?</lit>
-                </run>
-              </p>
-            </text>
-          </note>
-        </item>
-        <item id="e1zqDyVdcUG">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>If there was one word to describe functional programming for me, then I think its “predictability”.  For me, the attraction of functional programming languages is that many have been designed to by keeping the majority of my functions pure, then I know what’s going happen.  Why?  Because when a function is pure it will always evaluate to the same value given the same argument.  The function always evaluates the same result value given the same argument value(s). The function result value cannot depend on any hidden information or state that may change while program execution proceeds or between different executions of the program, nor can it depend on any external input from I/O devices (usually—see below).</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="kYtAFWm3QmU">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>What do I mean by “native-effects”.  I’m talking about effects that are provided by the runtime, such as generating random numbers, exceptions, reading/writing mutable state, writing/reading to/from local storage</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="dKddD1waVzi">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Of course we can do many more things in PureScript  - perform I/O such as read/write to your hard drive, moving from one state to the other, generating random numbers, accessing a database etc.</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="kCrD3rIVyjN" expanded="yes">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>In Haskell, the majority of these operations are lumped into one big monad I/O.  Instead native effects are more fine grained in PureScript. </lit>
-                </run>
-              </p>
-            </text>
-          </values>
-          <note expanded="yes">
-            <text>
-              <p>
-                <run>
-                  <lit>Do I want to talk about this?</lit>
-                </run>
-              </p>
-            </text>
-          </note>
           <children>
+            <item id="fDEKpyj_unv">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>A cornerstone of pure functional programming languages is their ability to model side effects without breaking [referential transparency](</lit>
+                    </run>
+                    <run>
+                      <lit><cell href="https://en.wikipedia.org/wiki/Referential_transparency" name="https://en.wikipedia.org/wiki/Referential_transparency" type="link"/></lit>
+                    </run>
+                    <run>
+                      <lit>).  It means that a pure function could be replaced with its corresponding value without changing the behavior of the program.  For example, in the last tutorial, I showed how the `Either` functor can be used to catch and wrap an exception inside a `Left` constructor and prevent the program from crashing.  Another popular abstraction for handling side effects is a monad, where all operations with native side effects have to be executed inside the monad.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="i3ENoU7Xp94" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Monads are the primary goto</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="fx4sgcOxOgN">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Don&apos;t worry if you haven&apos;t encountered monads yet.  And I won&apos;t belabor you with a feeble attempt to define monads or create yet another “a monad is like a burrito” analogy.  If you’re like me, then I learn better by working through concrete examples of an abstraction first.  Then, after I’ve developed a good intuition about the abstraction,  I’ll go back and learn the finer details about what it is and how it works. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <note expanded="yes">
+                <text>
+                  <p>
+                    <run>
+                      <lit>is there another word for messiness? burrito analogy - </lit>
+                    </run>
+                    <run>
+                      <style>
+                        <value key="font-fill">
+                          <color w="0"/>
+                        </value>
+                        <value key="font-size">13</value>
+                      </style>
+                      <lit><cell href="https://byorgey.wordpress.com/2009/01/12/abstraction-intuition-and-the-monad-tutorial-fallacy/" name="https://byorgey.wordpress.com/2009/01/12/abstraction-intuition-and-the-monad-tutorial-fallacy/" type="link"/></lit>
+                    </run>
+                  </p>
+                </text>
+              </note>
+            </item>
+          </children>
+        </item>
+        <item id="jb7M6Yq8UPY" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>What is PureScripts approach to handling side effects?</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="bhoA8QzU9TW">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>PureScript has a simple and elegant approach to dealing with the messiness of the outside world.  Besides functors like `Either`, there is a “go-to” monad for handling native side effects in PureScript called the `Eff` Monad.   In fact, you may be surprised to learn that we’ve already been using the `Eff` monad in the previous tutorials to log results to the console! </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="h4uUhy20hvk" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>We’re going to show how to use EFF by a few examples</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="pNYkQXFI8gk">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>In the code samples below, I’m going to show how to use the `Eff` monad with a couple native side effects generated by the JavaScript runtime. Finally, please note that I am going to shorten  `native side effects` to just `effects` from here on.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="gaPd41hQpnc" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Ideas &amp; Minutia</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="fScdVcR0y5A">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>but before we dive into PureScript’s approach to handling side effects, let’s step back for a paragraph or two to review what it means to be a functional programming language and why its so compelling and advantageous to create an entire paradigm around it.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="pHDKrBZLCxA">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>If there is a word to describe functional programming for me, then I think its “predictability”.  For me, the attraction of functional programming languages is that many have been designed to by keeping the majority of my functions pure, then I know what’s going happen.  Why?  Because when a function is pure it will always evaluate to the same value given the same argument.  The function always evaluates the same result value given the same argument value(s). The function result value cannot depend on any hidden information or state that may change while program execution proceeds or between different executions of the program, nor can it depend on any external input from I/O devices (usually—see below).</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="jYxKdNP3zJr">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>with an ability to specify exactly which side effects you’re dealing with and whether you’re restricting them to that subset.  Thus, its also more granular than other languages such as Haskell where . </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="fhwlQfe969X">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>What do I mean by “native-effects”.  I’m talking about effects that are provided by the runtime, such as generating random numbers, exceptions, reading/writing mutable state, writing/reading to/from local storage</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="dKddD1waVzi">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Of course we can do many more things in PureScript  - perform I/O such as read/write to your hard drive, moving from one state to the other, generating random numbers, accessing a database etc.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
             <item id="kFKchjrAnBz">
               <values>
                 <text>
@@ -377,51 +565,49 @@
                 </text>
               </values>
             </item>
+            <item id="kCrD3rIVyjN">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>In Haskell, the majority of these operations are lumped into one big monad I/O.  Instead native effects are more fine grained in PureScript. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <note expanded="yes">
+                <text>
+                  <p>
+                    <run>
+                      <lit>Do I want to talk about this?</lit>
+                    </run>
+                  </p>
+                </text>
+              </note>
+            </item>
+            <item id="jatnuKr7TkM">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>In other languages native-side effects, like the ones I mentioned above, are often lumped together into one big .  In contrast PureScript provides a finer granularity  granularity - if I want to generate a random number then there’s an effect for that </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+              <note expanded="yes">
+                <text>
+                  <p>
+                    <run>
+                      <lit>Perhaps a side note </lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p/>
+                </text>
+              </note>
+            </item>
           </children>
-        </item>
-        <item id="jatnuKr7TkM">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>In other languages native-side effects, like the ones I mentioned above, are often lumped together into one big .  In contrast PureScript provides a finer granularity  granularity - if I want to generate a random number then there’s an effect for that </lit>
-                </run>
-              </p>
-            </text>
-          </values>
-          <note expanded="yes">
-            <text>
-              <p>
-                <run>
-                  <lit>Perhaps a side note </lit>
-                </run>
-              </p>
-            </text>
-          </note>
-        </item>
-      </children>
-    </item>
-    <item id="nY2cr96-MtS" expanded="yes">
-      <values>
-        <text>
-          <p>
-            <run>
-              <lit>How we declare side effects in PureScript</lit>
-            </run>
-          </p>
-        </text>
-      </values>
-      <children>
-        <item id="pwwmEpRHVro">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Without getting into the intricacies of Monads (we’ll save that topic for later).  Let’s talk about how we declare a side effect in our types</lit>
-                </run>
-              </p>
-            </text>
-          </values>
         </item>
       </children>
     </item>
@@ -430,18 +616,613 @@
         <text>
           <p>
             <run>
-              <lit>Code Example</lit>
+              <lit>Example 1 - Random Number Generation</lit>
             </run>
           </p>
         </text>
       </values>
       <children>
-        <item id="nwTsk_OqQG_">
+        <item id="fQIvqNEGWYL">
           <values>
             <text>
               <p>
                 <run>
-                  <lit>Prelude - show how you would do it without FP</lit>
+                  <lit>Given Brian’s JavaScript [example]()  involves reading a port number from a JSON file, I thought I would create two code examples with a variation on that theme.  In this first code example, we are going to generate a random port number and log it to the console.  This example generates two effects - RANDOM which accesses the JavaScript global random number generator, and CONSOLE which writes computations to the console.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="cfo7qD2eq4q" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Code Example</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="crLz-6IJGdv">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>module Main where</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>import Prelude</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>import Control.Monad.Eff (Eff)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>import Control.Monad.Eff.Console (CONSOLE, log)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>import Control.Monad.Eff.Random (RANDOM, randomInt)</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>type PortRange = { min :: Int, max :: Int }</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>validPorts :: PortRange</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>validPorts = { min: 2500,  max: 7500 }</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>main :: Eff (console :: CONSOLE, random :: RANDOM, err :: EXCEPTION) Unit</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>main = do</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  log &quot;Use chain for composable error handling with nested Eithers - Part 1&quot;</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  portNumber &lt;- randomInt (validPorts.min) (validPorts.max)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  log $ &quot;Our random port number is: &quot; &lt;&gt; show portNumber</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="f4lHC3cXI8R">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>When you run this example, you should see a port number between 2500 and 7500 logged to the console.  </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="jtc82-lx-9b">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Similar to the code examples in my previous tutorials, I import the `Control.Monad.Eff` and `Control.Monad.Eff.Console` modules so that I can log the results to the console.  But in addition, I import the `Control.Monad.Eff.Random` module so that `main` can use it to generate random integers.  For this to compile, both the `purescript-console` and `purescript-random` dependencies are added to the `bower.json` file.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="nwrua5yLxIE">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Notice the type declaration of `main` </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="jbTeDVt9Yov">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>```</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <style>
+                    <value key="font-family">Menlo</value>
+                    <value key="font-fill">
+                      <color space="drgb" r="0" g="0" b="0"/>
+                    </value>
+                    <value key="font-fixed-pitch">yes</value>
+                    <value key="font-size">12</value>
+                    <value key="kerning-adjust">0</value>
+                    <value key="text-background-color">
+                      <color space="drgb" r="1" g="1" b="1"/>
+                    </value>
+                  </style>
+                  <lit>main :: Eff (console :: CONSOLE, random :: RANDOM) Unit</lit>
+                </run>
+              </p>
+              <p>
+                <run>
+                  <lit>```</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="dfQ2kPogVzv">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>The module `main` will run an effectual computation that will generate two effects; 1) logging to the `CONSOLE` and 2) generating `RANDOM` numbers, yielding a value of type `Unit`.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="f4gMEWKrl8V">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Now the astute reader will be asking the question why doesn’t `main` return instead `String` instead of `Unit`?  Well `main` is a computation that has effects and this cannot be emulated by pure functions.  So instead, `Unit` (i.e., nothing) is returned to indicate that `main` has terminated correctly.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <note expanded="yes">
+            <text>
+              <p>
+                <run>
+                  <lit>Try and elaborate on the point about If `main` was able to return `String` then it would no longer be a pure function.  </lit>
+                </run>
+              </p>
+            </text>
+          </note>
+        </item>
+        <item id="hKIC_peyv7D" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Alternatively, you’ll most often see a type declaration like the following</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="poNxzAGGSfe">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <style>
+                        <value key="font-family">Menlo</value>
+                        <value key="font-fill">
+                          <color space="drgb" r="0" g="0" b="0"/>
+                        </value>
+                        <value key="font-fixed-pitch">yes</value>
+                        <value key="font-size">12</value>
+                        <value key="kerning-adjust">0</value>
+                        <value key="text-background-color">
+                          <color space="drgb" r="1" g="1" b="1"/>
+                        </value>
+                      </style>
+                      <lit>main :: forall eff. Eff (console :: CONSOLE, random :: RANDOM | eff) Unit</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="az6y1uh-UjW">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>This declaration states that the module `main` is an effectful computation, which can be run in any environment that supports RANDOM number generation and CONSOLE IO, </lit>
+                    </run>
+                    <run>
+                      <style>
+                        <value key="font-italic">yes</value>
+                      </style>
+                      <lit>and any other types of side effects</lit>
+                    </run>
+                    <run>
+                      <lit>, which yields a value of type Unit. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="gv5HlY26Ubq">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Continuing on,  `main` generates a random integer between 2500 and 7500 using the function `randomInt` and it is bound to the variable `portNumber`.  Finally, print the port number to the console using our old and trusted friend ‘log’. </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="aZ56YmxDjnQ">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit> I introduced a few new pieces of syntax in this example:  The ‘&lt;&gt;’ is the operator alias for appending Semigroups (Strings are one example), and `show` converts types such as `Int` into a `String` representation.  I’m also introducing PureScript’s record type to declare the range of valid ports `type PortRange = { min :: Int, max :: Int }`.  Records mimic JavaScript-style objects and are really handy constructor for representing this type of information.   So I’ll be tapping on them more times in future tutorials.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="jvKFcAbSUad">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Now, moving to an example even more interesting that uses JavaScript’s runtime exceptions.</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="eDFe0kNe4Xx" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Appendix</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="apwXJq8ZdoF">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>But first, in case you’re wondering why RANDOM is a native side effect, it is because: 1) random numbers are generated by the JavaScript runtime system which qualifies as ‘native’, and 2) you can’t create a pure function that gives a different result each time</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="m6FOCUoWiWa">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Hopefully this example was straight forward, but you may be wondering why I didn&apos;t generate the random number directly within the `floor` expression i.e., </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="ly06nBeHQFu">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>let portNumber = floor (random * 10000.0)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>```</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="keagiWuAryJ">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Well it all comes down to ensuring that our types match. The function `floor` is expecting a `Number`, but `random` returns type: `forall e. Eff (random :: RANDOM | e) Number `.  Taking this line of thinking one step further, then why isn’t `floor (r * 10000.0)` a type mismatch?</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="mglDdy5mve4">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Well notice I used the word `bind` above to describe how `r` was assigned to the random number generated from `random`.  What the bind operator  `&lt;-`  essentially does is take the random number out of the `Eff` monad and assigns it to `r`.  It is similar to how `map` was used in [Tutorial 1]() to lift the values out of `Box`  and apply them to our functions.  We’re going to be using the bind operator a lot going forward so I hope that you understand my explanation.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+      </children>
+    </item>
+    <item id="dQ1NIOrU55z" expanded="yes">
+      <values>
+        <text>
+          <p>
+            <run>
+              <lit>Example 2 - Adding Runtime Exceptions</lit>
+            </run>
+          </p>
+        </text>
+      </values>
+      <children>
+        <item id="bBUd26ltmiW">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Let’s do a little preparation for Part 2 of this tutorial by introducing exception handling in PureScript.  Here’s the expanded code from Example 1:</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="pcrygDXQKs-">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>module Main where</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>import Prelude</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>import Control.Monad.Eff (Eff)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>import Control.Monad.Eff.Console (CONSOLE, log)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>import Control.Monad.Eff.Exception (EXCEPTION, catchException, error, message, throwException)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>import Control.Monad.Eff.Random (RANDOM, randomInt)</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>type PortRange = { min :: Int, max :: Int }</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>validPorts :: PortRange</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>validPorts = { min: 2500,  max: 7500 }</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>invalidPort :: Int -&gt; Boolean</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>invalidPort port =</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  (port &lt; validPorts.min || port &gt; validPorts.max)</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>throwWhenBadPort :: Int -&gt; forall eff. Eff (err :: EXCEPTION | eff) Unit</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>throwWhenBadPort portNumber =</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  when (invalidPort portNumber) $ throwException $</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>    error $ &quot;Error: expected a port number between &quot; &lt;&gt;</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>            show validPorts.min &lt;&gt; &quot; and &quot; &lt;&gt; show validPorts.max</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>catchWhenBadPort :: Int -&gt; forall eff. Eff (console :: CONSOLE | eff) Unit</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>catchWhenBadPort portNumber =</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  catchException printException (throwWhenBadPort portNumber)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  where</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>    printException e = log $ message e</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>main :: Eff (console :: CONSOLE, random :: RANDOM, err :: EXCEPTION) Unit</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>main = do</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  log &quot;Use chain for composable error handling with nested Eithers - Part 1&quot;</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  -- Create 50% chance of generating invalid port numbers</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  portNumber &lt;- randomInt (validPorts.min - 2500) (validPorts.max + 2500)</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  log $ &quot;Our random port number is: &quot; &lt;&gt; show portNumber</lit>
+                    </run>
+                  </p>
+                  <p/>
+                  <p>
+                    <run>
+                      <lit>  -- Try commenting out catchWhenBadPort and uncommenting throwWhenBadPort</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  -- to see throwException in action</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  catchWhenBadPort portNumber</lit>
+                    </run>
+                  </p>
+                  <p>
+                    <run>
+                      <lit>  -- throwWhenBadPort portNumber</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="amae7zmjWlk">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>In this example we’re adding an additional effect to our arsenal, namely JavaScript runtime exception handling using `throwException` and `catchException` .  They essentially work like their JavaScript counterparts with the ability to throw and catch user-defined exceptions.  </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="e02z7BPKpAP">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Starting with </lit>
+                </run>
+              </p>
+            </text>
+          </values>
+        </item>
+        <item id="bVoCDWn4MNA">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>You may notice that I’ve increased the port range so that there’s a 50% chance of throwing and catching an exception.  Also, feel free to comment out `catchWhenBadPort` and call `throwWhenBadPort` directly from `main` to see what happens when you throw an exception in PureScript.</lit>
                 </run>
               </p>
             </text>
