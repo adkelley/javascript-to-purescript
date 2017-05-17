@@ -14,11 +14,12 @@ import Node.FS.Sync (readTextFile)
 
 type FilePath = String
 type ErrorMessage = String
+type PortNumber = String
 
 fileName :: FilePath
 fileName = "./resources/config.json"
 
-defaultPort :: String
+defaultPort :: PortNumber
 defaultPort = "3000"
 
 foreign import getPortValue :: Foreign -> String
@@ -44,5 +45,5 @@ getPort = do
 
 main :: forall e. Eff (console :: CONSOLE, fs :: FS | e) Unit
 main = do
-  log "Use chain for composable error handling with nested Eithers"
+  log "Use bind for composable error handling with nested Eithers"
   log =<< getPort

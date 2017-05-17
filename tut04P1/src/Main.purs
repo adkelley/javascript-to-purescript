@@ -11,19 +11,21 @@ type PortRange = { min :: Int, max :: Int }
 validPorts :: PortRange
 validPorts = { min: 2500,  max: 7500 }
 
-invalidPort :: Int -> Boolean
-invalidPort portNumber =
+isInvalidPort :: Int -> Boolean
+isInvalidPort portNumber =
   (portNumber < validPorts.min || portNumber > validPorts.max)
 
 throwWhenBadPort :: Int -> forall eff. Eff (err :: EXCEPTION | eff) Unit
 throwWhenBadPort portNumber =
-  when (invalidPort portNumber) $ throwException $
-    error $ "Error: expected a port number between " <>
-            show validPorts.min <> " and " <> show validPorts.max
+  when (invalidPort portNumber) $ throwException errorMessage
+  where
+    errorMessage = error $ "Error: expected a port number between " <>
+                           show validPorts.min <> " and " <> show validPorts.max
+
 
 catchWhenBadPort :: Int -> forall eff. Eff (console :: CONSOLE | eff) Unit
 catchWhenBadPort portNumber =
-  catchException printException (throwWhenBadPort portNumber)
+  catchException printException $ throwWhenBadPort portNumber
   where
     printException e = log $ message e
 

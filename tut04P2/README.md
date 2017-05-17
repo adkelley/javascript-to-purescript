@@ -14,7 +14,8 @@ The series outline and javascript code samples were borrowed with permission fro
 
 In this tutorial, we refactor a function that uses try/catch to a single composed expression using Either. We then introduce the chain function to deal with nested Eithers resulting from two try/catch calls. (see [video4](https://egghead.io/lessons/javascript-composable-error-handling-with-either)) If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04).
 
-## Abstraction
+## Introduction
+It is fairly common to encounter nested `Either` functors in the wild.  For example, imagine your task is to read a configuration file to collect some information about how to run your program.  Alas, your computation will not be pure because there are side-effects to consider that are related to file IO.  So we're going to have to handle this side-effect.  More specifically, there are at least two possible errors that may occur.  The first is that, for whatever reason, you are unable to access the configuration file.  And secondly, while you may be successful in reading the file, the fields that you're looking for may be missing or incorrect. In any case, you decide that `Either` is the best functor to wrap and report possible errors back to the user
 
 ## Diving into the code
 
