@@ -146,17 +146,18 @@
       </style>
     </base-style>
     <print-info>
+      <print-info-key name="NSPaperName" type="string"></print-info-key>
       <print-info-key name="OOScaleDocumentToFitPageWidth" type="boolean">true</print-info-key>
     </print-info>
     <auto-generate-level-styles>no</auto-generate-level-styles>
   </settings>
-  <editor content-size="{1090, 704}" outline-title-display-mode="always" column-titles-display-mode="auto" status-visible="no" hide-attachment-tags="yes" is-spellchecking-enabled="yes">
-    <drawer display="sections" width="185" palette-height="314"/>
+  <editor content-size="{1092, 1344}" vertical-scrollbar-visible-width="15" outline-title-display-mode="always" column-titles-display-mode="auto" status-visible="no" hide-attachment-tags="yes" is-spellchecking-enabled="yes">
+    <drawer display="sections" width="185" palette-height="313"/>
     <note-split-view height="141"/>
-    <hoisted-rows ids="hzM_MRQza7j"/>
-    <selected-rows ids="hzM_MRQza7j"/>
+    <hoisted-rows ids="oQsgWXZnaO7"/>
+    <selected-rows ids="hfjrNQE-tC3"/>
     <selected-columns ids="jFqHUGd_Dg1"/>
-    <selected-characters range="{39, 0}"/>
+    <selected-characters range="{9, 0}"/>
   </editor>
   <outline-title>
     <text>
@@ -185,7 +186,7 @@
         </text>
       </title>
     </column>
-    <column id="jFqHUGd_Dg1" type="text" width="1069" minimum-width="13" maximum-width="1000000" text-export-width="72" is-outline-column="yes">
+    <column id="jFqHUGd_Dg1" type="text" width="1056" minimum-width="13" maximum-width="1000000" text-export-width="72" is-outline-column="yes">
       <title>
         <text>
           <p>
@@ -201,7 +202,7 @@
     <style>
       <value key="font-weight">6</value>
     </style>
-    <item id="oQsgWXZnaO7">
+    <item id="oQsgWXZnaO7" expanded="yes">
       <values>
         <text>
           <p>
@@ -212,69 +213,148 @@
         </text>
       </values>
       <children>
-        <item id="oLkrZ5os1zl">
+        <item id="hzM_MRQza7j" expanded="yes">
           <values>
             <text>
               <p>
                 <run>
-                  <lit>Build on previous `Either` Tutorial to handle Nested Eithers</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="bA3wHhGkMn3" expanded="yes">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Break this tutorial into 2-Parts</lit>
+                  <lit>What did I cover in Part1?</lit>
                 </run>
               </p>
             </text>
           </values>
           <children>
-            <item id="jrtHAvQdKw0">
+            <item id="m4Qzu-N-6E5">
               <values>
                 <text>
                   <p>
                     <run>
-                      <lit>Part 1</lit>
+                      <lit>Handling Multiple Native Effects in PureScript</lit>
                     </run>
                   </p>
                 </text>
               </values>
-              <children>
-                <item id="h4r_7O1yu19">
-                  <values>
-                    <text>
-                      <p>
-                        <run>
-                          <lit>Handling multiple effects beside just console</lit>
-                        </run>
-                      </p>
-                    </text>
-                  </values>
-                </item>
-                <item id="niS1Y1y54kP">
-                  <values>
-                    <text>
-                      <p>
-                        <run>
-                          <lit>Show how we perform File I/O in PureScript using the nodejs library.</lit>
-                        </run>
-                      </p>
-                    </text>
-                  </values>
-                </item>
-              </children>
             </item>
-            <item id="oVQ-VxiJXtD">
+            <item id="hfjrNQE-tC3">
               <values>
                 <text>
                   <p>
                     <run>
-                      <lit>Part 2- Use what we learned in Part 1 to do Nested Eithers</lit>
+                      <lit>Summarize</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="gRbZlmpw61a" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>Why was it important for Part2?</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="gi3fIOCJZ1X">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>We’re going to be using the file system in this tutorial File I/O from NodeJS which is a native side effect.  </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="nhm-GqEsejB">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>You needed to understand what native side effects are in order to grok this tutorial.  </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="nMocesqDa_J">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>Now that we covered Native Side Effects in PureScript, File I/O in NodeJS will be much easier</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+          </children>
+        </item>
+        <item id="bAjzmjQnbEZ" expanded="yes">
+          <values>
+            <text>
+              <p>
+                <run>
+                  <lit>What are we going to do in this tutorial</lit>
+                </run>
+              </p>
+            </text>
+          </values>
+          <children>
+            <item id="dimWmnpn4Rk">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>I’m going to show how to refactor a try/catch pattern in JavaScript to use Either instead</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="k1MSMNVNiH3">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>getPort in JavaScript using `fs`</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="kohju1k1aWA">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>We have a file `config.json` that we’re going to read.  Its got `{“port”: 8888}`. </lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="l7ZiYaWC9D_">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>We’re going to parse this file and the grab the port.</lit>
+                    </run>
+                  </p>
+                </text>
+              </values>
+            </item>
+            <item id="a_p27ZIM_4a">
+              <values>
+                <text>
+                  <p>
+                    <run>
+                      <lit>if anything goes wrong we’ll return 3000 as a default.  </lit>
                     </run>
                   </p>
                 </text>
@@ -284,139 +364,10 @@
         </item>
       </children>
     </item>
-    <item id="hzM_MRQza7j" expanded="yes">
+    <item id="j9cUqMET9EM">
       <values>
-        <text>
-          <p>
-            <run>
-              <lit>Handling Multiple Effects in PureScript</lit>
-            </run>
-          </p>
-        </text>
+        <null/>
       </values>
-      <children>
-        <item id="fDEKpyj_unv">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>I think you would agree that if all we could do was to write message to the console then that wouldn&apos;t be a very interesting language</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="dKddD1waVzi">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Of course we can do many more things in PureScript  - perform I/O such as read/write to your hard drive, handling state, accessing a database etc.</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="kCrD3rIVyjN">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>In other languages such as haskell, this is lumped into one big monad</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="kMFAjE4ecz8">
-          <values>
-            <null/>
-          </values>
-        </item>
-      </children>
-    </item>
-    <item id="a7yZS6IjwS1" expanded="yes">
-      <values>
-        <text>
-          <p>
-            <run>
-              <lit>Nested Eithers</lit>
-            </run>
-          </p>
-        </text>
-      </values>
-      <children>
-        <item id="jJx8bEKANyp">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Quickly review `Either` from the previous tutorial</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-        <item id="md16KuG8Gfo" expanded="yes">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>How do nested Eithers come about?</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-          <children>
-            <item id="kHMKW-xixVY">
-              <values>
-                <text>
-                  <p>
-                    <run>
-                      <lit>This can happen with other Monads besides Either e.g., Maybe (Maybe)  </lit>
-                    </run>
-                  </p>
-                </text>
-              </values>
-            </item>
-          </children>
-        </item>
-        <item id="nBg_hm_MxRf">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Introduce bind operation to solve Right (Right a)  to Right a)</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-      </children>
-    </item>
-    <item id="n9Cr4BPjkMA" expanded="yes">
-      <values>
-        <text>
-          <p>
-            <run>
-              <lit>Code Example</lit>
-            </run>
-          </p>
-        </text>
-      </values>
-      <children>
-        <item id="nwTsk_OqQG_">
-          <values>
-            <text>
-              <p>
-                <run>
-                  <lit>Prelude - show how you would do it without FP</lit>
-                </run>
-              </p>
-            </text>
-          </values>
-        </item>
-      </children>
     </item>
   </root>
 </outline>

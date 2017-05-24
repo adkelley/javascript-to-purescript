@@ -15,15 +15,17 @@ isInvalidPort :: Int -> Boolean
 isInvalidPort portNumber =
   (portNumber < validPorts.min || portNumber > validPorts.max)
 
-throwWhenBadPort :: Int -> forall eff. Eff (err :: EXCEPTION | eff) Unit
+throwWhenBadPort :: Int
+                 -> forall eff. Eff (err :: EXCEPTION | eff) Unit
 throwWhenBadPort portNumber =
-  when (invalidPort portNumber) $ throwException errorMessage
+  when (isInvalidPort portNumber) $ throwException errorMessage
   where
-    errorMessage = error $ "Error: expected a port number between " <>
-                           show validPorts.min <> " and " <> show validPorts.max
+    errorMessage =
+       error $ "Error: expected a port number between " <>
+               show validPorts.min <> " and " <> show validPorts.max
 
-
-catchWhenBadPort :: Int -> forall eff. Eff (console :: CONSOLE | eff) Unit
+catchWhenBadPort :: Int
+                 -> forall eff. Eff (console :: CONSOLE | eff) Unit
 catchWhenBadPort portNumber =
   catchException printException $ throwWhenBadPort portNumber
   where
@@ -32,6 +34,7 @@ catchWhenBadPort portNumber =
 main :: Eff (console :: CONSOLE, random :: RANDOM, err :: EXCEPTION) Unit
 main = do
   log "Use chain for composable error handling with nested Eithers - Part 1"
+  
   -- Create 50% chance of generating invalid port numbers
   portNumber <- randomInt (validPorts.min - 2500) (validPorts.max + 2500)
   log $ "Our random port number is: " <> show portNumber
