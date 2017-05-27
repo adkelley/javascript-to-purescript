@@ -6,7 +6,8 @@ import Control.Monad.Eff.Console (CONSOLE, log)
 import Control.Monad.Eff.Exception (Error, try)
 import Control.Monad.Except (runExcept)
 import Data.Either (Either(..))
-import Data.Foreign (Foreign, ForeignError, parseJSON)
+import Data.Foreign (Foreign, ForeignError)
+import Data.Foreign.JSON (parseJSON)
 import Data.List.Types (NonEmptyList)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
@@ -46,4 +47,5 @@ getPort = do
 main :: forall e. Eff (console :: CONSOLE, fs :: FS | e) Unit
 main = do
   log "Use bind for composable error handling with nested Eithers"
+  -- log =<< readTextFile UTF8 "./resources/config.json"
   log =<< getPort
