@@ -2,50 +2,62 @@ module Main where
 
 import Prelude
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Eff.Exception (Error, try)
+import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Control.Monad.Eff.Exception (EXCEPTION, Error, error, try)
 import Control.Monad.Except (runExcept)
-import Data.Either (Either(..))
-import Data.Foreign (Foreign, ForeignError)
+import Data.Either (Either(..), either)
+import Data.Foreign (unsafeFromForeign)
 import Data.Foreign.JSON (parseJSON)
-import Data.List.Types (NonEmptyList)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
 import Node.FS.Sync (readTextFile)
 
-type FilePath = String
-type ErrorMessage = String
-type PortNumber = String
+newtype Port = Port { port :: Int }
+instance showPort :: Show Port where
+  show (Port { port }) = show port
 
-fileName :: FilePath
-fileName = "./resources/config.json"
+defaultPort :: Port
+defaultPort = Port { port: 3000 }
 
-defaultPort :: PortNumber
-defaultPort = "3000"
+defaultPortJSON :: String
+defaultPortJSON = "\"port\": 4000"
 
-foreign import getPortValue :: Foreign -> String
+pathToFile :: String
+pathToFile = "./resources/config.json"
 
-foldRead :: forall eff. (Either Error String) -> Eff (fs :: FS | eff) String
-foldRead result =
-  case result of
-    (Left e) -> pure $ "{\"port\": " <> defaultPort <> "}"
-    (Right x) -> pure x
+portInRange :: Port -> Either Error Port
+portInRange (Port { port }) =
+  if (port >= 1000 && port <= 8888)
+    then Right $ Port { port }
+    else Left $ error "Port number out of range"
 
-foldJSON :: forall eff. (Either (NonEmptyList ForeignError) Foreign) -> Eff (fs :: FS | eff) String
-foldJSON json =
-  case json of
-    (Left e) -> pure $ defaultPort
-    (Right x) -> pure $ getPortValue x
+parsePort :: String -> Either Error Port
+parsePort port =
+  case parsed of
+    Left _ -> Left $ error "Failed to parse port"
+    Right x -> Right $ unsafeFromForeign x :: Port
+  where parsed = runExcept $ parseJSON port
 
-getPort :: forall eff. Eff (fs :: FS | eff) String
-getPort = do
-  result <- try (readTextFile UTF8 fileName)
-  jsonString <- foldRead result
-  runExcept (parseJSON jsonString) #
-  foldJSON
 
-main :: forall e. Eff (console :: CONSOLE, fs :: FS | e) Unit
+chain :: forall a b e. (a -> Either e b) ->  Either e a -> Either e b
+chain f  = either (\e -> Left e) (\x -> (f x))
+
+getPort :: forall eff. Eff (fs :: FS, exception :: EXCEPTION | eff) Port
+getPort =
+  (try $ readTextFile UTF8 pathToFile) >>=
+  chain parsePort >>>
+  chain portInRange >>>
+  either (\_ -> defaultPort) id >>>
+  pure
+
+
+main :: forall e. Eff (console :: CONSOLE, fs :: FS, exception :: EXCEPTION | e) Unit
 main = do
-  log "Use bind for composable error handling with nested Eithers"
-  -- log =<< readTextFile UTF8 "./resources/config.json"
-  log =<< getPort
+  log "Use chain for composable error handling with nested Eithers"
+
+    -- Code Example 1: using bind and bundFlipped respectively
+  (try $ readTextFile UTF8 pathToFile) >>= logShow
+  logShow =<< (try $ readTextFile UTF8 pathToFile)
+
+    -- Code Example 2
+  logShow =<< getPort
