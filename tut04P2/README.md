@@ -1,5 +1,5 @@
 # Use chain for composable error handling with nested Eithers
-## Part 2 - Putting it all together
+## Part 2 - More side effects, records, and chain
 
 ![series banner](../resources/glitched-abstract.jpg)
 
@@ -24,7 +24,7 @@ npm update -g purescript pulp
 
 In [Part 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1), recall that a function or expression creates a side effect whenever it modifies some state outside its scope, or it has an observable interaction with the outside world.  We don't eliminate them because side effects help us to write useful code.  Instead, we represent them explicitly in the type system to distinguish them from pure computations.  One benefit is that future maintainers will recognize that there are side effects in our code more readily.
 
-There is a particular class produced by the runtime system, called 'native' side effects. Console IO, random number generation, and file IO are examples of native side effects.  I covered console IO and random number generation in Part 1; now we'll learn file IO in PureScript in this tutorial.  But there's more - I'm going to sync back up with Brian’s [tutorial](https://egghead.io/lessons/javascript-composable-error-handling-with-either) by showing how `chain` can be used to compose nested `Either`s together in PureScript.
+There is a particular class produced by the runtime system, called a 'native' side effect. Console IO, random number generation, and file IO are examples of native side effects.  I covered console IO and random number generation in Part 1; now we'll learn file IO in PureScript in this tutorial.  But there's more - I'm going to sync back up with Brian’s [tutorial](https://egghead.io/lessons/javascript-composable-error-handling-with-either) by showing how `chain` can be used to compose nested `Either`s together in PureScript.
 
 ## Can you spot the side effects in JavaScript?
 
