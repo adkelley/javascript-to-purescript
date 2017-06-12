@@ -174,6 +174,6 @@ That’s all for now. Be sure to leave a comment if you have any questions. In t
 
 
 ## Navigation
-[<< Introduction](https://github.com/adkelley/javascript-to-purescript)[< ](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1) Tutorials [ >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05)
+[<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 4 (Part 1) ](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1) | [Tutorial 5 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05)
 
 You may find that the README for the next tutorial is under construction. But if you're an eager beaver and would like to look ahead, then most the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.

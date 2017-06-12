@@ -1,4 +1,4 @@
-# Use bind for composable error handling with nested Eithers
+# Use chain for composable error handling with nested Eithers
 ## Part 1 - Managing Native Side Effects in PureScript
 
 ![series banner](../resources/glitched-abstract.jpg)
@@ -15,9 +15,9 @@ The series outline and javascript code samples were borrowed with permission fro
 
 ## Introduction
 
-In my previous tutorial, I introduced the `Either` functor and showed how to use it to express a series of computations that may or may not succeed.  Now we’re going to practice it by demonstrating how to chain nested multiple `Either` functors using `bind`.  In Part 1 of this tutorial, I take a detour to introduce handling of native side effects in PureScript.  You will need this knowledge to understand what I am doing in Part 2.
+In my previous tutorial, I introduced the `Either` functor and showed how to use it to express a series of computations that may or may not succeed.  Now we’re going to practice it by demonstrating how to chain nested multiple `Either` functors using `chain`.  In Part 1 of this tutorial, I take a detour to introduce handling of native side effects in PureScript.  You will need this knowledge to understand what I am doing in Part 2.
 
-In Part 2, I will follow Brian's [lesson](https://egghead.io/lessons/javascript-composable-error-handling-with-either) on handling nested `Either`s and show you how to take a function that uses `try/catch` and refactor it into a single composed expression using `Either`. Finally, I will introduce the `bind` function (typically called `chain` in JavaScript functional programming) to deal with nested `Either`s resulting from two try/catch calls.
+In Part 2, I will sync back Brian's [lesson](https://egghead.io/lessons/javascript-composable-error-handling-with-either) on handling nested `Either`s and show you how to take a function that uses `try/catch` and refactor it into a single composed expression using `Either`. Finally, I will introduce the `chain` function to deal with nested `Either`s resulting from multiple error tests.
 
 ## Managing native side effects
 
@@ -27,7 +27,7 @@ PureScript has a well-typed and granular API for dealing with side-effects.  It 
 
 ## Code Example 1
 
-Brian’s JavaScript [code examples]((https://egghead.io/lessons/javascript-composable-error-handling-with-either)) involve reading a port number from a JSON file.  So I thought I would create two code examples with a variation on that theme.  In my first example, I generate a random port number and log it to the console.  Consequently, it creates two effects, RANDOM & CONSOLE, and I declare them using the type system.  When you run this example, you should see a port number between 2500 and 7500.
+Brian’s JavaScript [code examples](https://egghead.io/lessons/javascript-composable-error-handling-with-either) involve reading a port number from a JSON file.  So I thought I would create two code examples with a variation on that theme.  In my first example, I generate a random port number and log it to the console.  Consequently, it creates two effects, RANDOM & CONSOLE, and I declare them using the type system.  When you run this example, you should see a port number between 2500 and 7500.
 
 ```haskell
 module Main where
@@ -139,6 +139,6 @@ Moving onto `main`, you will notice that I’ve increased the port number range 
 Congratulations!  With the topic of side effects out of the way, you just cleared a major hurdle toward functional programming in PureScript.  It was enough material to warrant a tutorial, and by giving it this level of attention, I hope you will be comfortable in using them in Part 2.  That’s all and stay tuned for Part 2 where we’ll add the file system to our tool chest of effects and wrestle with handling nested Either expressions.  Stay tuned!
 
 ## Navigation
-[<< Introduction](https://github.com/adkelley/javascript-to-purescript)[< ](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03) Tutorials [ >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05)
+[<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 3 ](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03) | [Tutorial 4 (Part 2) >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2)
 
 You may find that the README for the next tutorial is under construction. But if you're an eager beaver and would like to look ahead, then most the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.
