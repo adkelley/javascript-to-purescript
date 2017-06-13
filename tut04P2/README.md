@@ -8,7 +8,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
-> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 4P1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1)
+> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 4 Part 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his [video](https://egghead.io/lessons/javascript-composable-error-handling-with-either) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript. Finally, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1).
@@ -165,10 +165,6 @@ It makes it very clear as to what side effects `getPort` creates along with the 
 ## Final Points
 
 In my [github repository]((https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2), I've created two versions of `getPort` - one that ignores any errors and returns `Port`, and the other returns `Either Error Port`.  You can play around with the latter by creating JSON or read file errors and view them in the console.  Also, I've added another exception handler to illustrate how to compose multiple `chain` functions together.
-
-### Bind is different from the chain!
-
-This actually tripped me up when I was working on Part1 of this tutorial, because chain can be a synonym for bind in some FP frameworks.  For example, imagine applying a bind operation to an Either construct; for instance `(Right "port: 8888") >>= parsePort`.  Bind will take "port: 8888" out of `Right` and expose the string directly to `parsePort`.  But to our detriment, we lost the context of `Left` or `Right`; namely whether there has been an error or success so far.  So how do we know whether to apply `parsePort`?  We don't, but fortunately, the PureScript compiler will detect this problem when the types wrapped in a `Left` or a `Right` are different.  In contrast, with `chain` we are passing the `Either` constructor intact, so we know to restrain from applying the function, `parsePort` whenever `Left Error` is passed in.
 
 That’s all for now. Be sure to leave a comment if you have any questions. In the next tutorial, I’m going to show more Either examples in PureScript that have been converted from imperative JavaScript. So stay tuned!
 
