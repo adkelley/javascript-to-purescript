@@ -1,5 +1,5 @@
 # Use chain for composable error handling with nested Eithers
-## Part 2 - More side effects, records, and chain
+## Part 2 - File IO, Foreign, and Records
 
 ![series banner](../resources/glitched-abstract.jpg)
 
@@ -89,7 +89,7 @@ The first argument to `chain` is an error test function that takes a polymorphic
 
 ### Records
 
-With the intuition for `chain` under our belt, let's look at the final PureScript code example below.  Skipping the import declarations, the first new piece of syntax is `newtype Port = Port { port :: Int }`.  This newtype has an underlying record type, which is an essential building block in PureScript that mimics JavaScript objects.  This fact makes it my choice for representing our JSON string `{"port": 8888}` in `config.json`.  You can read more about records in [Purescript by Example](https://leanpub.com/purescript/read#leanpub-auto-functions-and-records).  Also,  see [Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) for another example of a `newtype` and its class instances.
+With the intuition for `chain` under our belt, let's look at the final PureScript code example below.  Skipping the import declarations, the first new piece of syntax is `newtype Port = Port { port :: Int }`.  This newtype `Port` has an underlying Object type, which is an essential building block in PureScript that mimics JavaScript objects. This fact makes it my choice for representing our JSON string `{"port": 8888}` in `config.json`.  The `{ ... }` is just syntactic sugar for the Object type constructor `Object ( port  :: Int )`, which takes a row of types to a type.  You can read more about records in [Purescript by Example](https://leanpub.com/purescript/read#leanpub-auto-functions-and-records).  Also,  see [Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) for another example of a `newtype` and its class instances.
 
 On the next line, we create a class instance of `show` for `Port`, which declares how to log the port number to the console. Next up is our `defaultPort`, for cases where there's an exception during one of the error tests.  Then comes `parsePort`, which has the responsibility of parsing the JSON string from `config.json` to our port object.  There's a lot to unpack in this function, so check to ensure you have a full cup of coffee or tea before proceeding.
 
