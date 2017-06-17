@@ -11,7 +11,9 @@
     "purescript-console": "^3.0.0",
     "purescript-foreign": "^4.0.0",
     "purescript-nullable": "^3.0.0",
-    "purescript-ffi-utils": "^2.0.0"
+    "purescript-stringutils": "^0.0.6",
+    "purescript-node-fs": "^4.0.0",
+    "purescript-exceptions": "^3.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"
