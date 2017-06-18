@@ -3,26 +3,24 @@ module Example5 (wrapExample) where
 import Prelude
 
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION, Error, try)
-import Data.Either (Either, either)
+import Control.Monad.Eff.Exception (EXCEPTION, try)
+import Data.Either (either)
 import Data.Example (getPreviewPath)
 import Data.Foreign (Foreign, unsafeFromForeign)
-import Data.Utils (chain, fromNullable)
+import Data.Utils (assignObject2, chain, fromNullable, parseValue)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
 import Node.FS.Sync (readTextFile)
 
--- readFile :: forall eff. String -> Eff (fs :: FS, exception :: EXCEPTION | eff) (Either Error String)
--- readFile pathToFile =
---   try $ readTextFile UTF8 pathToFile
 
--- wrapExample :: Foreign -> String
--- wrapExample example =
---   fromNullable (getPreviewPath example) #
---   -- chain (\path -> readFile $ unsafeFromForeign path :: String) >>=
---   chain (\path -> readFile $ ?hole) >>=
---   either (\_ -> "no example") (\path -> unsafeFromForeign path :: String) #
---   pure
-
-wrapExample :: Foreign -> String
-wrapExample example = "stub"
+wrapExample :: forall eff. Foreign -> Eff (fs :: FS, exception :: EXCEPTION | eff) Foreign
+wrapExample example =
+  fromNullable (getPreviewPath example) #
+  map (\path -> unsafeFromForeign path :: String) >>>
+  either (\_ -> pure example) (\path -> wrapExample' path)
+  where
+    wrapExample' pathToFile =
+      (try $ readTextFile UTF8 pathToFile) >>=
+      chain parseValue >>>
+      either (\_ -> example) (\preview -> assignObject2 example preview) >>>
+      pure

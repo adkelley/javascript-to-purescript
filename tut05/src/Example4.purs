@@ -2,13 +2,8 @@ module Example4 (concatUniq) where
 
 import Prelude
 import Data.String.Utils (filter)
-import Data.Either (Either(..), either)
-
-fromEmptyString :: String -> Either String String
-fromEmptyString value =
-  if (value == "")
-    then Left value
-    else Right value
+import Data.Either (either)
+import Data.Utils (fromEmptyString)
 
 concatUniq :: String -> String -> String
 concatUniq x ys =

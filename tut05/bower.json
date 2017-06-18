@@ -11,9 +11,11 @@
     "purescript-console": "^3.0.0",
     "purescript-foreign": "^4.0.0",
     "purescript-nullable": "^3.0.0",
+    "purescript-strings": "^3.2.1",
     "purescript-stringutils": "^0.0.6",
     "purescript-node-fs": "^4.0.0",
-    "purescript-exceptions": "^3.0.0"
+    "purescript-exceptions": "^3.0.0",
+    "purescript-foreign-generic": "^4.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"
