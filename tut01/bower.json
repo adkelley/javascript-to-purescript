@@ -7,14 +7,14 @@
     "output"
   ],
   "dependencies": {
-    "purescript-prelude": "^2.4.0",
-    "purescript-console": "^2.0.0",
-    "purescript-identity": "^2.0.0",
-    "purescript-strings": "^2.1.0",
-    "purescript-integers": "^2.1.1",
-    "purescript-unsafe-coerce": "^2.0.0"
+    "purescript-prelude": "^3.0.0",
+    "purescript-console": "^3.0.0",
+    "purescript-identity": "^3.0.0",
+    "purescript-strings": "^3.0.0",
+    "purescript-integers": "^3.0.0",
+    "purescript-unsafe-coerce": "^3.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": "^2.0.0"
+    "purescript-psci-support": "^3.0.0"
   }
 }
