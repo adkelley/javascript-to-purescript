@@ -17,10 +17,10 @@ wrapExample :: forall eff. Foreign -> Eff (fs :: FS, exception :: EXCEPTION | ef
 wrapExample example =
   fromNullable (getPreviewPath example) #
   map (\path -> unsafeFromForeign path :: String) >>>
-  either (\_ -> pure example) (\path -> wrapExample' path)
+  either (\_ -> pure example) wrapExample'
   where
     wrapExample' pathToFile =
       (try $ readTextFile UTF8 pathToFile) >>=
       chain parseValue >>>
-      either (\_ -> example) (\preview -> assignObject2 example preview) >>>
+      either (\_ -> example) (assignObject2 example) >>>
       pure

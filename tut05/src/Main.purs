@@ -19,7 +19,6 @@ import Node.FS (FS)
 defaultConfig :: String
 defaultConfig = "{ \"url\": \"postgres:\\/\\/username:password@localhost/myjavascriptdb\"}\n"
 
-
 main :: forall e. Eff (fs :: FS, exception :: EXCEPTION, console :: CONSOLE | e) Unit
 main = do
   log "A collection of Either examples"
@@ -47,4 +46,5 @@ main = do
 
   log "Example 6"
   logShow $ parseDbUrl defaultConfig
+
   log "Game Over"

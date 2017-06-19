@@ -18,20 +18,22 @@ import Data.List.NonEmpty (head)
 
 foreign import assignObject2Impl :: Fn2 Foreign Foreign Foreign
 
+fromNullable' :: forall a. Boolean -> String -> a -> Either Error a
+fromNullable' cond errorMsg value =
+  if cond
+    then Left $ error errorMsg
+    else Right value
+
 fromEmptyString :: String -> Either Error String
 fromEmptyString value =
-  if (value == "")
-    then Left $ error "empty string"
-    else Right value
+  fromNullable' (value == "") "empty string" value
 
 fromNullable :: Foreign -> Either Error Foreign
 fromNullable value =
-  if (isNull value || isUndefined value)
-   then Left $ error "value is null or undefined"
-   else Right value
+  fromNullable' (isNull value || isUndefined value) "null or undefined" value
 
 chain :: forall a b e. (a -> Either e b) ->  Either e a -> Either e b
-chain f  = either (\e -> Left e) (\x -> (f x))
+chain = either Left
 
 parseValue :: String -> Either Error Foreign
 parseValue value =

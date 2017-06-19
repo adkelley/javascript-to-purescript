@@ -16,5 +16,5 @@ isPremium user =
 getPrefs :: Foreign -> String
 getPrefs =
   isPremium >>>
-  map (getPreferences) >>>
-  either (\_ -> defaultPrefs) (\prefs -> "loadPrefs(" <> prefs <> ")")
+  map getPreferences >>>
+  either (\_ -> defaultPrefs) \prefs -> "loadPrefs(" <> prefs <> ")"

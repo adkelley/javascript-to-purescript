@@ -7,6 +7,6 @@ import Data.Utils (fromEmptyString)
 
 concatUniq :: String -> String -> String
 concatUniq x ys =
-  filter (\y -> y == x) ys #
+  filter (_ == x) ys #
   fromEmptyString #
-  either (\_ -> ys <> x) (\_ -> ys)
+  either (\_ -> ys <> x) \_ -> ys

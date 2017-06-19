@@ -10,7 +10,7 @@ import Data.Foreign (unsafeFromForeign)
 import Data.Maybe (Maybe(..))
 import Data.String.Regex (Regex, match, regex)
 import Data.String.Regex.Flags (noFlags)
-import Data.Utils (fromNullable, chain, parseValue)
+import Data.Utils (fromNullable, parseValue)
 import Partial.Unsafe (unsafePartial)
 
 dBUrlRegex :: Regex
@@ -28,6 +28,7 @@ matchUrl r url =
 parseDbUrl :: String -> Array (Maybe String)
 parseDbUrl =
   parseValue >>>
-  chain (\config -> fromNullable $ getDbUrl config) >>>
-  chain (\url -> matchUrl dBUrlRegex $ unsafeFromForeign url :: String) >>>
-  either (\_ -> singleton Nothing) (\matches -> matches)
+  either Left (\config -> fromNullable $ getDbUrl config) >>>
+  map (\url -> unsafeFromForeign url :: String) >>>
+  either Left (matchUrl dBUrlRegex) >>>
+  either (\_ -> singleton Nothing) id
