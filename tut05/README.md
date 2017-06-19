@@ -15,6 +15,39 @@ Welcome to Tutorial 5 in the series **Make the leap from Javascript to PureScrip
 
 ## PureScript code organization
 
+To help keep the examples organized, I placed each code snippet from Brian's tutorial in a separate PureScript file.  Then ExampleX.purs (Examples 1-6) are imported and called by `Main.purs`.  You will find my utility functions, such as `chain` and `fromNullable`, along with their corresponding FFI in the `Data` folder.  Note I've refactored `chain` to be point-free for these examples, so it is worth looking at if you're interested in this approach (for further discussion, see Example 2).  Finally, Example 5 calls for reading a JSON file, so I've created `example.json` and put it in the folder `./src/resources`.
+
+## Utility functions
+
+A few of the examples simulate receiving JSON objects and values over the wire.  So, throughout these examples, we are going handle multiple `Foreign` objects, along with the possibility that these objects may be null or undefined and strings objects may be empty.  
+
+Now in PureScript, unless you're handling `Foreign` objects, there are no `null` or  `undefined` values.  Instead, we typically represent it by the value `Nothing` from the `Maybe` constructor.  Nothing indicates that a returned value does not contain a value, but we'll save further details on the `Maybe` abstraction for a later tutorial.  
+
+### fromNullable and fromEmptyString
+
+A few of the examples simulate receiving JSON objects and values over the wire.  If I were doing this in production, I would likely use [purescript-argonaut](https://github.com/purescript-contrib/purescript-argonaut-core/blob/master/README.md) to parse the JSON and transform the objects into a PureScript Record type.  But I want to keep it simple, so I access the objects and their name/value pairs using the FFI.  Throughout this tutorial, we are going handle multiple `Foreign` objects, along with the possibility that these objects may be null or undefined and string objects may be empty.  
+
+Now in PureScript, unless you're handling `Foreign` objects returned from Javascript or JSON over the wire, there are no `null` or  `undefined` values.  Instead, we typically represent it by the value `Nothing` from the `Maybe` constructor.  `Nothing` indicates that a returned value does not contain a value.  I know this may be confusing, but we'll have to save further details on the `Maybe` abstraction for a later tutorial.  
+
+I've created the function `fromNullable` (see below) that checks whether a `Foreign` object or value is `null` or `undefined` and returns `Either Error Foreign`.  Similarly, `fromString` returns `Either Error Foreign`, depending on whether a string is empty (i.e., string === "").  I'm always looking for opportunities to DRY (Don't Repeat Yourself) my code,  so I abstracted the repeated condition checking from both functions into a function `fromNullable'`.
+
+```haskell
+fromNullable' :: forall a. Boolean -> String -> a -> Either Error a
+fromNullable' cond errorMsg value =
+  if cond
+    then Left $ error errorMsg
+    else Right value
+
+fromEmptyString :: String -> Either Error String
+fromEmptyString value =
+  fromNullable' (value == "") "empty string" value
+
+fromNullable :: Foreign -> Either Error Foreign
+fromNullable value =
+  fromNullable' (isNull value || isUndefined value) "null or undefined" value
+```
+
+
 ## Example 1 - Incoming JSON over the wire
 ```javascript
 const openSite = () =>
