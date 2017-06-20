@@ -10,7 +10,7 @@ import Data.Foreign (unsafeFromForeign)
 import Data.Maybe (Maybe(..))
 import Data.String.Regex (Regex, match, regex)
 import Data.String.Regex.Flags (noFlags)
-import Data.Utils (fromNullable, parseValue)
+import Data.Utils (fromNullable, parseValue, chain)
 import Partial.Unsafe (unsafePartial)
 
 dBUrlRegex :: Regex
@@ -25,10 +25,18 @@ matchUrl r url =
     Nothing -> Left $ error "unmatched url"
     Just x -> Right x
 
-parseDbUrl :: String -> Array (Maybe String)
-parseDbUrl =
+parseDbUrl' :: String -> Array (Maybe String)
+parseDbUrl' =
   parseValue >>>
-  either Left (\config -> fromNullable $ getDbUrl config) >>>
+  chain (\config -> fromNullable $ getDbUrl config) >>>
   map (\url -> unsafeFromForeign url :: String) >>>
-  either Left (matchUrl dBUrlRegex) >>>
+  chain (matchUrl dBUrlRegex) >>>
+  either (\_ -> singleton Nothing) id
+
+parseDbUrl :: String -> Array (Maybe String)
+parseDbUrl s =
+  (parseValue s) >>=
+  (\config -> fromNullable $ getDbUrl config) >>>
+  map (\url -> unsafeFromForeign url :: String) >>=
+  (\r -> matchUrl dBUrlRegex r) #
   either (\_ -> singleton Nothing) id

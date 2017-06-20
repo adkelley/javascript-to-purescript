@@ -2,19 +2,14 @@ module Example2 (getPrefs) where
 
 import Prelude
 
-import Data.Either (Either(..), either)
+import Data.Either (either)
 import Data.Foreign (Foreign)
+import Data.Utils (toEither)
 import Data.User (getPremium, getPreferences, defaultPrefs)
 
 
-isPremium :: Foreign -> Either String Foreign
-isPremium user =
-  if (getPremium user)
-    then Right user
-    else Left "not premium"
-
 getPrefs :: Foreign -> String
-getPrefs =
-  isPremium >>>
+getPrefs user =
+  toEither (getPremium user) "not premium" user #
   map getPreferences >>>
-  either (\_ -> defaultPrefs) \prefs -> "loadPrefs(" <> prefs <> ")"
+  either (\_ -> defaultPrefs) \prefs -> "loadPrefs " <> prefs

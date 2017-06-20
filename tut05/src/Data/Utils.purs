@@ -2,6 +2,7 @@ module Data.Utils
   ( chain
   , fromNullable
   , fromEmptyString
+  , toEither
   , parseValue
   , assignObject2
   ) where
@@ -18,19 +19,19 @@ import Data.List.NonEmpty (head)
 
 foreign import assignObject2Impl :: Fn2 Foreign Foreign Foreign
 
-fromNullable' :: forall a. Boolean -> String -> a -> Either Error a
-fromNullable' cond errorMsg value =
+toEither :: forall a. Boolean -> String -> a -> Either Error a
+toEither cond errorMsg value =
   if cond
     then Left $ error errorMsg
     else Right value
 
 fromEmptyString :: String -> Either Error String
 fromEmptyString value =
-  fromNullable' (value == "") "empty string" value
+  toEither (value == "") "empty string" value
 
 fromNullable :: Foreign -> Either Error Foreign
 fromNullable value =
-  fromNullable' (isNull value || isUndefined value) "null or undefined" value
+  toEither (isNull value || isUndefined value) "null or undefined" value
 
 chain :: forall a b e. (a -> Either e b) ->  Either e a -> Either e b
 chain = either Left

@@ -15,40 +15,41 @@ Welcome to Tutorial 5 in the series **Make the leap from Javascript to PureScrip
 
 ## PureScript code organization
 
-To help keep the examples organized, I placed each code snippet from Brian's tutorial in a separate PureScript file.  Then ExampleX.purs (Examples 1-6) are imported and called by `Main.purs`.  You will find my utility functions, such as `chain` and `fromNullable`, along with their corresponding FFI in the `Data` folder.  Note I've refactored `chain` to be point-free for these examples, so it is worth looking at if you're interested in this approach (for further discussion, see Example 2).  Finally, Example 5 calls for reading a JSON file, so I've created `example.json` and put it in the folder `./src/resources`.
+Each of the examples below show the FP example in JavaScript, followed by its PureScript equivalent.
+In my [Github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05), you will find each code snippet in a separate PureScript file; importing ExampleX.purs and calling it from `Main.purs`.  All my utility functions, including `chain` and `fromNullable`, and their corresponding FFI are in the `Data` folder.  It is worth noting that I refactored `chain` from the [previous tutorial][Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05) to point-free style. So if you're interested in tacit programming then have a look at `chain` and read the discussion on point-free style in `Example 1` below.  Finally, Example 5 requires reading a JSON file, so I have created `example.json` and put it in the folder `./src/resources`.
 
-## Utility functions
+A few of the examples simulate receiving JSON objects and values over the wire.  If I were doing this in production, I would likely use [purescript-argonaut](https://github.com/purescript-contrib/purescript-argonaut-core/blob/master/README.md) to parse the JSON and transform the objects and values into a PureScript Record and basic types respectively.  But I want to keep it simple, so I decided to access the JavaScript objects and their name/value pairs using the FFI.  Furthermore, I typically treat them as `Foreign` types until I print them to the console.
 
-A few of the examples simulate receiving JSON objects and values over the wire.  So, throughout these examples, we are going handle multiple `Foreign` objects, along with the possibility that these objects may be null or undefined and strings objects may be empty.  
-
-Now in PureScript, unless you're handling `Foreign` objects, there are no `null` or  `undefined` values.  Instead, we typically represent it by the value `Nothing` from the `Maybe` constructor.  Nothing indicates that a returned value does not contain a value, but we'll save further details on the `Maybe` abstraction for a later tutorial.  
 
 ### fromNullable and fromEmptyString
 
-A few of the examples simulate receiving JSON objects and values over the wire.  If I were doing this in production, I would likely use [purescript-argonaut](https://github.com/purescript-contrib/purescript-argonaut-core/blob/master/README.md) to parse the JSON and transform the objects into a PureScript Record type.  But I want to keep it simple, so I access the objects and their name/value pairs using the FFI.  Throughout this tutorial, we are going handle multiple `Foreign` objects, along with the possibility that these objects may be null or undefined and string objects may be empty.  
+When handling `Foreign` types derived from Javascript or JSON over the wire, there is always the possibility that they may be null or undefined.   But in PureScript there are no `null` or  `undefined` values, so we typically represent it by the value `Nothing` from the [`Maybe`](https://pursuit.purescript.org/packages/purescript-maybe/3.0.0/docs/Data.Maybe#t:Maybe) type. So think of `Nothing` as something like a type-safe `null`, and we'll save further details on the `Maybe` type for a later tutorial.
 
-Now in PureScript, unless you're handling `Foreign` objects returned from Javascript or JSON over the wire, there are no `null` or  `undefined` values.  Instead, we typically represent it by the value `Nothing` from the `Maybe` constructor.  `Nothing` indicates that a returned value does not contain a value.  I know this may be confusing, but we'll have to save further details on the `Maybe` abstraction for a later tutorial.  
-
-I've created the function `fromNullable` (see below) that checks whether a `Foreign` object or value is `null` or `undefined` and returns `Either Error Foreign`.  Similarly, `fromString` returns `Either Error Foreign`, depending on whether a string is empty (i.e., string === "").  I'm always looking for opportunities to DRY (Don't Repeat Yourself) my code,  so I abstracted the repeated condition checking from both functions into a function `fromNullable'`.
+To match Brian's code examples, I created `fromNullable` to check whether a `Foreign` type is `null` or `undefined`, returning `Either Error Foreign`.  Similarly, `fromString` returns `Either Error String`, depending on whether a string is empty.  I am always looking for opportunities to DRY (Don't Repeat Yourself) out my code and found `fromNullable` and `fromString` to be very similar.  So I abstracted the repetition into a separate function `toEither`.  This method is another example of the benefits of PureScript polymorphism too.  Notice how I was able to make `Right x` a polymorphic type so that it works for both `Foreign`, `String` and perhaps other types in the future.
 
 ```haskell
-fromNullable' :: forall a. Boolean -> String -> a -> Either Error a
-fromNullable' cond errorMsg value =
+toEither :: forall a. Boolean -> String -> a -> Either Error a
+toEither cond errorMsg value =
   if cond
     then Left $ error errorMsg
     else Right value
 
 fromEmptyString :: String -> Either Error String
 fromEmptyString value =
-  fromNullable' (value == "") "empty string" value
+  toEither (value == "") "empty string" value
 
 fromNullable :: Foreign -> Either Error Foreign
 fromNullable value =
-  fromNullable' (isNull value || isUndefined value) "null or undefined" value
+  toEither (isNull value || isUndefined value) "null or undefined" value
 ```
 
 
-## Example 1 - Incoming JSON over the wire
+## Example 1 - Point-Free style (tacit programming)
+
+In PureScript and other FP languages, you'll sometimes that, while the type declaration of a function states that it accepts arguments (or points), its arguments are missing in the implementation.  We call this paradigm point-free or tacit style programming, and it 'sometimes' helps to give a precise definition of the function.  I said 'sometimes' because point-free can also obscure the meaning of a function; particularly when an argument name helps in understanding the function's implementation.
+
+The PureScript example below has been written in a point-free style, as demonstrated by the absence of the function's argument in its application. I chose the point-free style to illustrate this paradigm and to take advantage of function composition (>>>).  But it is debatable whether the fact that it takes a current user remains clear. So, given that your mileage may vary, always proceed with caution when deciding whether to use point-free style.
+
 ```javascript
 const openSite = () =>
     fromNullable(current_user)
@@ -59,14 +60,10 @@ const openSite = () =>
 openSite :: Foreign -> String
 openSite =
   fromNullable >>>
-  chain (\user -> fromNullable $ getName user) >>>
-  map (\name -> unsafeFromForeign name :: String) >>>
-  either
-    (\_ -> "showLogin()")
-    \name -> "renderPage(" <> name <> ")"
+  either (\_ -> "showLogin") \_ -> "renderPage"
 ```
 
-## Example 2 - Point Free style
+## Example 2
 ```javascript
 const getPrefs = user =>
     (user.premium ? Right(user) : Left('not premium'))
@@ -75,17 +72,11 @@ const getPrefs = user =>
 ```
 
 ```haskell
-isPremium :: Foreign -> Either String Foreign
-isPremium user =
-  if (getPremium user)
-    then Right user
-    else Left "not premium"
-
 getPrefs :: Foreign -> String
-getPrefs =
-  isPremium >>>
+getPrefs user =
+  toEither (getPremium user) "not premium" user #
   map getPreferences >>>
-  either (\_ -> defaultPrefs) \prefs -> "loadPrefs(" <> prefs <> ")"
+  either (\_ -> defaultPrefs) \prefs -> "loadPrefs " <> prefs
 ```  
 
 ## Example 3 - Substituting chain with bind
@@ -108,6 +99,34 @@ streetName user =
   map (\name -> unsafeFromForeign name :: String) #
   either (\_ -> "no street") id
 ```  
+
+Whoah! What happened to `chain`?  Well, I have a secret that I've been keeping since the last tutorial - you can replace `chain` with `bind`!  I know, shocking isn't it.  Perhaps I should have come clean earlier, but I felt it was better to stick with Brian's abstraction in the last tutorial, namely `chain`.  So why and when can we replace `chain` with `bind` (using the operator alias `>>=`) you ask?  Let's look at their type declarations to see if that helps to illuminate things:
+
+```haskell
+chain :: forall a b e. (a -> Either e b) -> Either e a -> Either e b
+bind  :: forall a b.   m a               -> (a -> m b) -> m b
+```
+
+Nope, not really.  Hold on a minute - let's try some substitution. First we'll rewrite `chain` by inserting `Left` and `Right`:
+
+```haskell
+chain :: forall a b e.  (a -> Right b) -> Left e  -> Left e
+chain :: forall a b e.  (a -> Right b) -> Right a -> Right b
+```
+
+Then, rewrite `bind` substituting `m a` for `Left a` and `Right a`:
+
+```haskell
+bind :: forall a b. Left a  -> (a -> Right b) -> Left a
+bind :: forall a b. Right a -> (a -> Right b) -> Right b
+```
+
+Interesting, so `bind` is quite similar to `chain` but with the first two arguments flipped.  
+
+So why does this work?  Well, like `chain`, if `bind` sees that the first argument is `Left a` then it just ignores the function application, represented by the second argument, and returns the first argument, `Left a`.  But if the first argument is `Right a` then the second function argument (a -> Right b) is applied, returning `Right b`.  
+
+The next question is 'when can I substitute `chain` with `bind`?'.  Well, these functions are interchangeable.  And, because they are roughly synonymous, you won't find `chain` in the PureScript Prelude.  Take a quick look at Example 6, where I've provided two versions of `parseDbUrl` - one using `chain` and the other using the operator alias for `bind`.  I hope that example will help you to refactor your functions using `chain` to `bind` in the future. So say goodbye to `chain` from here on and long live `bind`!
+
 
 ## Example 4 - Anonymous Function Arguments
 
@@ -150,7 +169,7 @@ wrapExample example =
       pure
 ```
 
-## Example 6 - Chain is just Either under the hood
+## Example 6
 ```javascript
 const parseDbUrl = cfg =>
     tryCatch(() => JSON.parse(cfg))
@@ -172,12 +191,20 @@ matchUrl r url =
     Nothing -> Left $ error "unmatched url"
     Just x -> Right x
 
-parseDbUrl :: String -> Array (Maybe String)
-parseDbUrl =
+parseDbUrl' :: String -> Array (Maybe String)
+parseDbUrl' =
   parseValue >>>
-  either Left (\config -> fromNullable $ getDbUrl config) >>>
+  chain (\config -> fromNullable $ getDbUrl config) >>>
   map (\url -> unsafeFromForeign url :: String) >>>
-  either Left (matchUrl dBUrlRegex) >>>
+  chain (matchUrl dBUrlRegex) >>>
+  either (\_ -> singleton Nothing) id
+
+parseDbUrl :: String -> Array (Maybe String)
+parseDbUrl s =
+  (parseValue s) >>=
+  (\config -> fromNullable $ getDbUrl config) >>>
+  map (\url -> unsafeFromForeign url :: String) >>=
+  (\r -> matchUrl dBUrlRegex r) #
   either (\_ -> singleton Nothing) id
 ```
 
