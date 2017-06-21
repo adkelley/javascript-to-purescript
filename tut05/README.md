@@ -143,7 +143,7 @@ concatUniq x ys =
   either (\_ -> ys <> x) \_ -> ys
 ```
 
-This tip is straightforward and very useful in practice.  In the PureScript example above, notice the expression `filter (_ == x) ys`.  You may be wondering why I didn't write it as `filter (\y -> y == x) ys`.  Well, the former is an anonymous function argument, because it represents an anonymous argument in the operator section of the filter function.  Think of it as a little syntax sugar to help shorten your code.  You'll be pleased to know that it works for Records and other types of expressions as well.  You can learn everything you need to know about anonymous function arguments from @paf31's [blog post](https://github.com/paf31/24-days-of-purescript-2016/blob/master/7.markdown), which was part of his series '24-days-of-purescript-2016'.  
+This tip is straightforward and very useful in practice.  In the PureScript example above, notice the expression `filter (_ == x) ys`.  You may be wondering why I didn't write it as `filter (\y -> y == x) ys`.  Well, the former is an anonymous function argument, because it represents an anonymous argument in the predicate portion of the filter function.  Think of it as a little syntax sugar to help shorten your code.  You'll be pleased to know that it works for Records and other types of expressions as well.  You can learn everything you need to know about anonymous function arguments from @paf31's [blog post](https://github.com/paf31/24-days-of-purescript-2016/blob/master/7.markdown), which was part of his series '24-days-of-purescript-2016'.  
 
 
 ## Example 5 - `let` vs. `where` keywords
@@ -202,7 +202,10 @@ but then it becomes a matter of readability.
 
 For more information on `let` vs. `where`, check out [Let vs. Where](https://wiki.haskell.org/Let_vs._Where) from wiki.haskell.org.  Oh, and you are going to find the syntax of Haskell surprisingly similar to PureScript!  Several PureScripters have commented that they were able to pick up Haskell much more quickly thanks to learning PureScript.
 
-## Example 6
+## Example 6 - Regular expression validators and partial functions
+
+First, before discussing regular expressions in PureScript, my reason for creating the dual code snippets `parseDbUrl` and `parseDbUrl_` is to demonstrate how to port a function that uses `chain` to instead use `bind`.  This code example will be the last time you see `chain`, and to learn why then please review the discussion in Example 2.
+
 ```javascript
 const parseDbUrl = cfg =>
     tryCatch(() => JSON.parse(cfg))
@@ -212,7 +215,7 @@ const parseDbUrl = cfg =>
 ```
 
 ```haskell
-dBUrlRegex :: Regex
+dBUrlRegex :: Partial => Regex
 dBUrlRegex =
   unsafePartial
     case regex "^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$" noFlags of
@@ -224,7 +227,7 @@ matchUrl r url =
     Nothing -> Left $ error "unmatched url"
     Just x -> Right x
 
-parseDbUrl_ :: String -> Array (Maybe String)
+parseDbUrl_ :: Partial => String -> Array (Maybe String)
 parseDbUrl_ =
   parseValue >>>
   chain (\config -> fromNullable $ getDbUrl config) >>>
@@ -232,7 +235,7 @@ parseDbUrl_ =
   chain (matchUrl dBUrlRegex) >>>
   either (\_ -> singleton Nothing) id
 
-parseDbUrl :: String -> Array (Maybe String)
+parseDbUrl :: Partial => String -> Array (Maybe String)
 parseDbUrl s =
   (parseValue s) >>=
   (\config -> fromNullable $ getDbUrl config) >>>
@@ -241,10 +244,18 @@ parseDbUrl s =
   either (\_ -> singleton Nothing) id
 ```
 
+Like JavaScript, PureScript supports regular expressions well - by wrapping JavaScript's very own `RegExp` object!  The types and functions are part of the `purescript-strings` library, located in the module `Data.String.Regex`.   First up is the `Regex` object.
+
+There's a new piece of syntax in `DbUrlRegex` function, namely  `Partial` and `unsafePartial` which, in this instance, allows us to treat a non-exhaustive case expression as a regular case expression (unsafely).  So why did I decide  `unsafePartial`?  Because I tested the regular expression `"^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$"` and I know it works.  So no need to bother returning and dealing with an `Either Error Regex`.  You can also take advantage of `unsafePartial` to return partial functions; again unsafely.  As a consequence of `DbUrlRegex`, that is exactly we are doing in `parseDbUrl`.
+
+As we say in FP land, 'let the types be your guide,' so I call out the fact that `DbUrlRegex` is a partial function and therefore it belongs to the `Partial` class in the type declaration (i.e., `dbUrlRegex :: Partial => Regex`).  This fact propagates all the way back to `main`.  So, I declare that `parseDbUrl` returns a partial function and, consequently, you will find in the `main` code snippet below that I use the `unsafeFromPartial` function to log the result to the console.
+
+One final item - `parseDbUrl` returns `Array (Maybe String)`, so you're probably wondering about the `Maybe` constructor.  Again, as I mentioned in the `fromNullable and `fromEmptyString` section, we'll cover that abstraction in a future tutorial.
+
 ## Main program
 ```haskell
 defaultConfig :: String
-defaultConfig = "{ \"url\": \"postgres:\\/\\/username:password@localhost/myjavascriptdb\"}\n"
+defaultConfig = "{ \"url\": \"postgres:\\/\\/username:password@localhost/mydb\"}\n"
 
 main :: forall e. Eff (fs :: FS, exception :: EXCEPTION, console :: CONSOLE | e) Unit
 main = do
@@ -252,7 +263,6 @@ main = do
 
   log "Example 1"
   log $ openSite getCurrentUser
-  log $ openSite returnNull
 
   log "Example 2"
   log $ getPrefs getCurrentUser
@@ -265,10 +275,12 @@ main = do
   log $ concatUniq "y" "y"
 
   log "Example 5"
+  log "using where keyword in wrapExample"
   example <- wrapExample getCurrentExample
   log $ unsafeFromForeign example :: String
 
   log "Example 6"
+  log "Using bind to help parse the database URL"
   logShow $ parseDbUrl defaultConfig
 
   log "Game Over"

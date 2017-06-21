@@ -15,6 +15,7 @@ import Example4 (concatUniq)
 import Example5 (wrapExample, wrapExample_)
 import Example6 (parseDbUrl, parseDbUrl_)
 import Node.FS (FS)
+import Partial.Unsafe (unsafePartial)
 
 defaultConfig :: String
 defaultConfig = "{ \"url\": \"postgres:\\/\\/username:password@localhost/myjavascriptdb\"}\n"
@@ -50,8 +51,8 @@ main = do
 
   log "Example 6"
   log "Using chain to help parse the database URL"
-  logShow $ parseDbUrl_ defaultConfig
+  logShow $ unsafePartial $ parseDbUrl_ defaultConfig
   log "Using bind to help parse the database URL"
-  logShow $ parseDbUrl defaultConfig
+  logShow $ unsafePartial $ parseDbUrl defaultConfig
 
   log "Game Over"

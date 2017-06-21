@@ -13,7 +13,7 @@ import Data.String.Regex.Flags (noFlags)
 import Data.Utils (fromNullable, parseValue, chain)
 import Partial.Unsafe (unsafePartial)
 
-dBUrlRegex :: Regex
+dBUrlRegex :: Partial => Regex
 dBUrlRegex =
   unsafePartial
     case regex "^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$" noFlags of
@@ -25,7 +25,7 @@ matchUrl r url =
     Nothing -> Left $ error "unmatched url"
     Just x -> Right x
 
-parseDbUrl_ :: String -> Array (Maybe String)
+parseDbUrl_ :: Partial => String -> Array (Maybe String)
 parseDbUrl_ =
   parseValue >>>
   chain (\config -> fromNullable $ getDbUrl config) >>>
@@ -33,7 +33,7 @@ parseDbUrl_ =
   chain (matchUrl dBUrlRegex) >>>
   either (\_ -> singleton Nothing) id
 
-parseDbUrl :: String -> Array (Maybe String)
+parseDbUrl :: Partial => String -> Array (Maybe String)
 parseDbUrl s =
   (parseValue s) >>=
   (\config -> fromNullable $ getDbUrl config) >>>
