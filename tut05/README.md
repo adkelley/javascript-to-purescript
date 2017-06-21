@@ -9,23 +9,23 @@
 
 > [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 4 Part 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2)
 
-Welcome to Tutorial 5 in the series **Make the leap from Javascript to PureScript**.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) where you'll find the Javascript reference for learning FP abstractions, but also how to install and run PureScript. I borrowed (with permission) the series outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his [video](https://egghead.io/lessons/javascript-composable-error-handling-with-either) before tackling the equivalent PureScript abstraction featured in this tutorial.  For this particular tutorial, you should also review his [transcript](https://egghead.io/lessons/javascript-a-collection-of-either-examples-compared-to-imperative-code#/tab-transcript) which has the imperative and FP code examples in Javascript.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript. Finally, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05).
+Welcome to Tutorial 5 in the series **Make the leap from Javascript to PureScript**, and I hope you've enjoyed the learnings thus far.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript. I borrowed (with permission) this series outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-composable-error-handling-with-either) before tackling the equivalent PureScript abstraction featured in this tutorial.  And for this particular tutorial, you should also review his [transcript](https://egghead.io/lessons/javascript-a-collection-of-either-examples-compared-to-imperative-code#/tab-transcript), which has the imperative and FP code examples in Javascript.  Brian covers the featured concepts extremely well, and it's better that you understand its implementation in the comfort of JavaScript. Finally, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05).
 
 
 ## PureScript code organization
 
-Each of the examples below shows the FP example in JavaScript, followed by its PureScript ported equivalent.
-In my [Github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05), you will find each code snippet in a separate PureScript file; importing ExampleX.purs and calling it from `Main.purs`.  All my utility functions, including `chain` and `fromNullable`, and their corresponding FFI are in the `Data` folder.  It is worth noting that I refactored `chain` from the [previous tutorial][Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05) to point-free style. So if you're interested in tacit programming then have a look at `chain` and read the discussion on point-free style in `Example 1` below.  Finally, Example 5 requires reading a JSON file, so I have created `example.json` and put it in the folder `./src/resources`.
+Each of the examples below shows the FP example in JavaScript, followed by its port to PureScript.
+In my [Github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05), you will find each code snippet in a separate PureScript file; importing ExampleX.purs and calling it from `Main.purs`.  All my utility functions, including `chain` and `fromNullable`, and their corresponding FFI are in the `Data` folder.  It is worth noting that I refactored `chain` from the [previous tutorial](Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05) to point-free style. So if you're interested in tacit programming, then have a look at `chain` and read the discussion on point-free style in `Example 1` below.  Finally, Example 5 requires reading a JSON file, so I have created `example.json` and put it in the folder `./src/resources`.
 
-A few of the examples simulate receiving JSON objects and values over the wire.  If I were doing this in production, I would likely use [purescript-argonaut](https://github.com/purescript-contrib/purescript-argonaut-core/blob/master/README.md) to parse the JSON and transform the objects and values into a PureScript Record and basic types respectively.  But I want to keep it simple, so I decided to access the JavaScript objects and their name/value pairs using the FFI.  Furthermore, I typically treat them as `Foreign` types until I print them to the console.
+A few of the examples simulate receiving JSON objects and values over the wire.  If I were doing this in production, I would likely use [purescript-argonaut](https://github.com/purescript-contrib/purescript-argonaut-core/blob/master/README.md) to parse the JSON and transform the objects and values into PureScript Records and basic types respectively.  But I want to keep it simple, so I decided to access the JavaScript objects and their name/value pairs using the FFI.  Furthermore, I typically treat them as `Foreign` types until I print them to the console.
 
 
 ### fromNullable and fromEmptyString
 
-When handling `Foreign` types derived from Javascript or JSON over the wire, there is always the possibility that they may be null or undefined.   But in PureScript there are no `null` or  `undefined` values, so we typically represent it by the value `Nothing` from the [`Maybe`](https://pursuit.purescript.org/packages/purescript-maybe/3.0.0/docs/Data.Maybe#t:Maybe) type. So think of `Nothing` as something like a type-safe `null`, and we'll save further details on the `Maybe` type for a later tutorial.
+When handling `Foreign` types derived from a Javascript function or JSON coming over the wire, there is always the possibility that they may be `null` or `undefined`.   But in PureScript there are no `null` or `undefined` values, so we typically represent this concept by the value `Nothing` from the [`Maybe`](https://pursuit.purescript.org/packages/purescript-maybe/3.0.0/docs/Data.Maybe#t:Maybe) type. Think of `Nothing` as something like a type-safe `null` and, for now, we'll save further details on the `Maybe` type for a later tutorial.
 
-To match Brian's code examples, I created `fromNullable` to check whether a `Foreign` type is `null` or `undefined`, returning `Either Error Foreign`.  Similarly, `fromString` returns `Either Error String`, depending on whether a string is empty.  I am always looking for opportunities to DRY (Don't Repeat Yourself) out my code and found `fromNullable` and `fromString` to be very similar.  So I abstracted the repetition into a separate function `toEither`.  This method is another example of the benefits of PureScript polymorphism too.  Notice how I was able to make `Right x` a polymorphic type so that it works for both `Foreign`, `String` and perhaps other types in the future.
+To match Brian's code examples, I created `fromNullable` to check whether a `Foreign` type is `null` or `undefined`, returning `Either Error Foreign`.  Similarly, `fromString` returns `Either Error String`, depending on whether a string is empty.  I am always looking for opportunities to DRY (Don't Repeat Yourself) out my code and found `fromNullable` and `fromString` to be very similar.  So I abstracted the repetition into a separate function, `toEither`.  This method is another example of the benefits of PureScript's support for polymorphism.  Notice how I was able to make `Right x` a polymorphic type so that it works for both `Foreign`, `String` and other types.
 
 ```haskell
 toEither :: forall a. Boolean -> String -> a -> Either Error a
@@ -46,10 +46,9 @@ fromNullable value =
 
 ## Example 1 - Point-Free style (tacit programming)
 
-In PureScript and other FP languages, you'll sometimes that, while the type declaration of a function states that it accepts arguments (or points), its arguments are missing in the implementation.  We call this paradigm point-free or tacit style programming, and it 'sometimes' helps to give a precise definition of the function.  I said 'sometimes' because point-free can also obscure the meaning of a function; particularly when an argument name helps in understanding the function's implementation.
+In PureScript and other FP languages, you'll frequently find that, while a type declaration of a function states that it accepts arguments (or points), the actual arguments are missing in the implementation.  We call this paradigm point-free or tacit style programming, and it 'sometimes' helps to give a precise definition of the function.  I said 'sometimes' because point-free can also obscure the meaning of a function; particularly when an argument name helps in understanding a function's implementation.
 
-The PureScript example below has been written in a point-free style, as demonstrated by the absence of the function's argument in its application. I chose the point-free style to illustrate this paradigm and to take advantage of function composition (>>>).  But it is debatable whether the fact that it takes a current user remains clear. So, given that your mileage will vary, always proceed with caution when deciding whether to use point-free style.
-
+The PureScript example below has been written in a point-free style.
 ```javascript
 const openSite = () =>
     fromNullable(current_user)
@@ -62,6 +61,10 @@ openSite =
   fromNullable >>>
   either (\_ -> "showLogin") \_ -> "renderPage"
 ```
+
+I chose the point-free style to illustrate this paradigm and to take advantage of function composition. That is, `openSite = fromNullable >>> . . .` vs. `openSite currentUser = (fromNullable currentUser) # . . .`
+
+But it is debatable whether the fact that it takes a current user remains clear. So, given that your mileage will vary, always proceed with caution when deciding whether to use point-free style.
 
 ## Example 2
 ```javascript
@@ -100,14 +103,14 @@ streetName user =
   either (\_ -> "no street") id
 ```  
 
-Whoah! What happened to `chain`?  Well, I have a secret that I've been keeping since the last tutorial - you can replace `chain` with `bind`!  I know, shocking isn't it.  Perhaps I should have come clean earlier, but I felt it was better to stick with Brian's abstraction in the last tutorial, namely `chain`.  So why and when can we replace `chain` with `bind` (using the operator alias `>>=`) you ask?  Let's look at their type declarations to see if that helps to illuminate things:
+Whoah! What happened to `chain`?  Well, I have a secret that I've been keeping since the last tutorial - you can replace `chain` with `bind` (operator alias `>>=`)!  I know, shocking isn't it.  Perhaps I should have come clean earlier, but I felt it was better to stick with Brian's abstraction in the last tutorial, namely `chain`.  So why and when can we replace `chain` with `bind` you ask?  Let's look at their type declarations to see if that helps to illuminate things:
 
 ```haskell
 chain :: forall a b e. (a -> Either e b) -> Either e a -> Either e b
 bind  :: forall a b.   m a               -> (a -> m b) -> m b
 ```
 
-Nope, not really.  Hold on a minute - let's try some substitution. First we'll rewrite `chain` by inserting `Left` and `Right`:
+Nope, not really.  Hold on a minute - let's try some substitution. First we rewrite `chain` by inserting `Left` and `Right`:
 
 ```haskell
 chain :: forall a b e.  (a -> Right b) -> Left e  -> Left e
@@ -121,11 +124,9 @@ bind :: forall a b. Left a  -> (a -> Right b) -> Left a
 bind :: forall a b. Right a -> (a -> Right b) -> Right b
 ```
 
-Interesting, so `bind` is quite similar to `chain` but with the first two arguments flipped.
+Interesting, so `bind` is quite similar to `chain` but with the first two arguments flipped!  Why does this work?  Well, if `bind` sees that the first argument is `Left a` then, like `chain`, it ignores the function application, represented by the second argument. It only passes and returns the first argument, `Left a`, just like `Left e` in `chain`.  But if the first argument is `Right a` then the second function argument (a -> Right b) is applied and `Right b` will be returned.  
 
-So why does this work?  Well, like `chain`, if `bind` sees that the first argument is `Left a` then it just ignores the function application, represented by the second argument, and returns the first argument, `Left a`.  But if the first argument is `Right a` then the second function argument (a -> Right b) is applied, returning `Right b`.  
-
-The next question is 'when can I substitute `chain` with `bind`?'.  Well, these functions are interchangeable.  And, because they are roughly synonymous, you won't find `chain` in the PureScript Prelude.  Take a quick look at Example 6, where I've provided two versions of `parseDbUrl` - one using `chain` and the other using the operator alias for `bind`.  I hope that example will help you to refactor your functions using `chain` to `bind` in the future. So say goodbye to `chain` from here on and long live `bind`!
+The next question is 'when can I substitute `chain` with `bind`?'.  Well, you can see that these functions are interchangeable.  And, because they are roughly synonymous, you won't find `chain` in the PureScript Prelude.  Take a quick look at Example 6, where I've provided two versions of `parseDbUrl` - one using `chain` and the other using the operator alias for `bind`.  That example should help you to go back and refactor any functions using `chain` to `bind`. So say goodbye to `chain` from here on and long live `bind`!
 
 
 ## Example 4 - Anonymous Function Arguments
@@ -143,12 +144,12 @@ concatUniq x ys =
   either (\_ -> ys <> x) \_ -> ys
 ```
 
-This tip is straightforward and very useful in practice.  In the PureScript example above, notice the expression `filter (_ == x) ys`.  You may be wondering why I didn't write it as `filter (\y -> y == x) ys`.  Well, the former is an anonymous function argument, because it represents an anonymous argument in the predicate portion of the filter function.  Think of it as a little syntax sugar to help shorten your code.  You'll be pleased to know that it works for Records and other types of expressions as well.  You can learn everything you need to know about anonymous function arguments from @paf31's [blog post](https://github.com/paf31/24-days-of-purescript-2016/blob/master/7.markdown), which was part of his series '24-days-of-purescript-2016'.  
+This tip is straightforward and very useful in practice.  In the PureScript example above, notice the expression `filter (_ == x) ys`.  You may be wondering why I didn't write it as `filter (\y -> y == x) ys`.  Well, because I'm using an anonymous function argument `-`, which represents an anonymous argument in the predicate portion of the filter function.  Think of `_` as a little syntax sugar to help shorten your code.  You'll be pleased to know that it works for Records and other types of expressions as well.  You can learn everything you need to know about anonymous function arguments from @paf31's [blog post](https://github.com/paf31/24-days-of-purescript-2016/blob/master/7.markdown), which is part of his series '24-days-of-purescript-2016'.  
 
 
 ## Example 5 - `let` vs. `where` keywords
 
-Before discussing the `let` and `where` keywords, let me make mention that this example makes good use of native side effects.  That topic was well covered in Tutorial 4, so if you're still shaky on File IO and exception handling then go back and have a look.
+Before discussing the `let` and `where` keywords, let me make mention that this code snippet makes good use of native side effects.  That topic was well covered in Part 2 of [Tutorial 4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2), so if you're still shaky on File IO and exception handling then go back and have a look.  Now onto the use of  `where` vs. `let` keywords in the duel `wrapExample` snippets.  
 
 ```javascript
 const readFile = x => tryCatch(() => fs.readFileSync(x))
@@ -187,9 +188,9 @@ wrapExample_ example =
     either (\_ -> pure example) wrapExample'
 ```
 
-Now onto a piece of new and interesting syntax - the use of  `where` vs. `let` keywords in the duel `wrapExample` snippets.  We have seen the `where` keyword many times before - at the top of a module to introduce the block of code represented by the module name.  But, so far, I haven't used it inside a function.  The purpose is the same - introduce a new block of code, indenting that code so that the compiler understands that `where` is bound to this syntactic construct.  In the example, you see that `where` is bound to the syntactic construct `wrapExample'`.
+We have seen the `where` keyword many times before.  Its usually at the top of a module for the purpose of delineating the block of code represented by the module name.  But, so far, I haven't used it inside a function.  The purpose is the same - introduce a new block of code, indenting that code so that the compiler understands that `where` is bound to the syntactic construct (i.e., the new block of code).  In the example, you can see that `where` is forever linked to the code that defines `wrapExample' `.
 
-Now let's take a look at `let` (no pun intended).  At first blush, the purpose of `where` and `let` appear to be identical, and this is roughly correct.  But there is a subtle difference!   `let . . . in . . .` is also an expression, and therefore can be written wherever expressions are allowed.  The example best explains this difference. I used `let . . . in . . .` as an expression by inserting it between the `map` and `either ` functions.  I could have gone even further, with the following:
+Now let's take a look at `let` (no pun intended).  At first blush, the purpose of `where` and `let` appear to be identical, and this is roughly correct.  But there is a subtle difference!   `let . . . in . . .` is also an expression, and therefore can be written wherever expressions are allowed.  The code snippet best explains this difference. I used `let . . . in . . .` as an expression by inserting it between the `map` and `either ` functions.  I could have gone even further, with the following:
 
 ```haskell
 map (\path -> unsafeFromForeign path :: String) >>>
@@ -200,11 +201,11 @@ either (\_ -> pure example)
 
 but then it becomes a matter of readability.  
 
-For more information on `let` vs. `where`, check out [Let vs. Where](https://wiki.haskell.org/Let_vs._Where) from wiki.haskell.org.  Oh, and you are going to find the syntax of Haskell surprisingly similar to PureScript!  Several PureScripters have commented that they were able to pick up Haskell much more quickly thanks to learning PureScript.
+For more information on `let` vs. `where`, check out [Let vs. Where](https://wiki.haskell.org/Let_vs._Where) from wiki.haskell.org.  Oh, and you are going to find that the syntax of Haskell is surprisingly similar to PureScript!  I've heard a few PureScripters commenting that they were able to pick up Haskell much more quickly thanks to having learned PureScript first.  Likewise, I learned Haskell first and found I was able to pick up PureScript more rapidly.
 
 ## Example 6 - Regular expression validators and partial functions
 
-First, before discussing regular expressions in PureScript, my reason for creating the dual code snippets `parseDbUrl` and `parseDbUrl_` is to demonstrate how to port a function that uses `chain` to instead use `bind`.  This code example will be the last time you see `chain`, and to learn why then please review the discussion in Example 2.
+FFirst, before discussing regular expressions in PureScript, my reason for creating the dual code snippets `parseDbUrl` and `parseDbUrl_` is to demonstrate how to port a function that uses `chain` to use `bind` instead.  This code snippet will be the last time you will see `chain` in my tutorials. And to learn why then please review the discussion in Example 2.
 
 ```javascript
 const parseDbUrl = cfg =>
@@ -246,11 +247,11 @@ parseDbUrl s =
 
 Like JavaScript, PureScript supports regular expressions well - by wrapping JavaScript's very own `RegExp` object!  The types and functions are part of the `purescript-strings` library, located in the module `Data.String.Regex`.   First up is the `Regex` object.
 
-There's a new piece of syntax in `DbUrlRegex` function, namely  `Partial` and `unsafePartial` which, in this instance, allows us to treat a non-exhaustive case expression as a regular case expression (unsafely).  So why did I decide  `unsafePartial`?  Because I tested the regular expression `"^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$"` and I know it works.  So no need to bother returning and dealing with an `Either Error Regex`.  You can also take advantage of `unsafePartial` to return partial functions; again unsafely.  As a consequence of `DbUrlRegex`, that is exactly we are doing in `parseDbUrl`.
+There's some new pieces of syntax in `DbUrlRegex` function, namely  `Partial` and `unsafePartial`. In this instance, they allow us to treat a non-exhaustive case expression as a regular case expression (unsafely).  So why did I decide  `unsafePartial`?  Because I tested the regular expression `"^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$"` and I know it works!  So no need to bother returning and dealing with an `Either Error Regex`.  You can also take advantage of `unsafePartial` to return partial functions; again unsafely.  And, as a consequence of `DbUrlRegex`, that is exactly what I am doing in `parseDbUrl`.
 
-As we say in FP land, 'let the types be your guide,' so I call out the fact that `DbUrlRegex` is a partial function and therefore it belongs to the `Partial` class in the type declaration (i.e., `dbUrlRegex :: Partial => Regex`).  This fact propagates all the way back to `main`.  So, I declare that `parseDbUrl` returns a partial function and, consequently, you will find in the `main` code snippet below that I use the `unsafeFromPartial` function to log the result to the console.
+'Let the types be your guide' as we say, so I call out the fact that `DbUrlRegex` is a partial function the type declaration and therefore it belongs to the `Partial` class (i.e., `dbUrlRegex :: Partial => Regex`).  This fact propagates all the way back to `main`.  I declare that `parseDbUrl` returns a partial function and, consequently, in the `main` code snippet below, I use the `unsafeFromPartial` function to log the result to the console.
 
-One final item - `parseDbUrl` returns `Array (Maybe String)`, so you're probably wondering about the `Maybe` constructor.  Again, as I mentioned in the `fromNullable and `fromEmptyString` section, we'll cover that abstraction in a future tutorial.
+One final item - `parseDbUrl` returns `Array (Maybe String)`, and so you're probably wondering about the `Maybe` constructor.  Again, as I mentioned in the `fromNullable` and `fromEmptyString` section, we'll cover that abstraction in a future tutorial.
 
 ## Main program
 ```haskell
@@ -286,6 +287,7 @@ main = do
   log "Game Over"
 ```  
 
+That's all for now. In the next Tutorial we're going to learn a new algebraic structure, called Semigroups.  If you are enjoying this series then please recommend this article and/or favor it on social media - the more the merrier.  Till then! 
 
 ## Navigation
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04) Tutorials [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06)
