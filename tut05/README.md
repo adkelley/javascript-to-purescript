@@ -15,7 +15,7 @@ Welcome to Tutorial 5 in the series **Make the leap from Javascript to PureScrip
 
 ## PureScript code organization
 
-Each of the examples below show the FP example in JavaScript, followed by its PureScript equivalent.
+Each of the examples below shows the FP example in JavaScript, followed by its PureScript ported equivalent.
 In my [Github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05), you will find each code snippet in a separate PureScript file; importing ExampleX.purs and calling it from `Main.purs`.  All my utility functions, including `chain` and `fromNullable`, and their corresponding FFI are in the `Data` folder.  It is worth noting that I refactored `chain` from the [previous tutorial][Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut05) to point-free style. So if you're interested in tacit programming then have a look at `chain` and read the discussion on point-free style in `Example 1` below.  Finally, Example 5 requires reading a JSON file, so I have created `example.json` and put it in the folder `./src/resources`.
 
 A few of the examples simulate receiving JSON objects and values over the wire.  If I were doing this in production, I would likely use [purescript-argonaut](https://github.com/purescript-contrib/purescript-argonaut-core/blob/master/README.md) to parse the JSON and transform the objects and values into a PureScript Record and basic types respectively.  But I want to keep it simple, so I decided to access the JavaScript objects and their name/value pairs using the FFI.  Furthermore, I typically treat them as `Foreign` types until I print them to the console.
@@ -48,7 +48,7 @@ fromNullable value =
 
 In PureScript and other FP languages, you'll sometimes that, while the type declaration of a function states that it accepts arguments (or points), its arguments are missing in the implementation.  We call this paradigm point-free or tacit style programming, and it 'sometimes' helps to give a precise definition of the function.  I said 'sometimes' because point-free can also obscure the meaning of a function; particularly when an argument name helps in understanding the function's implementation.
 
-The PureScript example below has been written in a point-free style, as demonstrated by the absence of the function's argument in its application. I chose the point-free style to illustrate this paradigm and to take advantage of function composition (>>>).  But it is debatable whether the fact that it takes a current user remains clear. So, given that your mileage may vary, always proceed with caution when deciding whether to use point-free style.
+The PureScript example below has been written in a point-free style, as demonstrated by the absence of the function's argument in its application. I chose the point-free style to illustrate this paradigm and to take advantage of function composition (>>>).  But it is debatable whether the fact that it takes a current user remains clear. So, given that your mileage will vary, always proceed with caution when deciding whether to use point-free style.
 
 ```javascript
 const openSite = () =>
@@ -79,7 +79,7 @@ getPrefs user =
   either (\_ -> defaultPrefs) \prefs -> "loadPrefs " <> prefs
 ```  
 
-## Example 3 - Substituting chain with bind
+## Example 3 - Say goodbye to chain
 
 ```javascript
 const streetName = user =>
@@ -121,7 +121,7 @@ bind :: forall a b. Left a  -> (a -> Right b) -> Left a
 bind :: forall a b. Right a -> (a -> Right b) -> Right b
 ```
 
-Interesting, so `bind` is quite similar to `chain` but with the first two arguments flipped.  
+Interesting, so `bind` is quite similar to `chain` but with the first two arguments flipped.
 
 So why does this work?  Well, like `chain`, if `bind` sees that the first argument is `Left a` then it just ignores the function application, represented by the second argument, and returns the first argument, `Left a`.  But if the first argument is `Right a` then the second function argument (a -> Right b) is applied, returning `Right b`.  
 
@@ -129,7 +129,6 @@ The next question is 'when can I substitute `chain` with `bind`?'.  Well, these 
 
 
 ## Example 4 - Anonymous Function Arguments
-
 ```javascript
 const concatUniq = (x, ys) =>
     fromNullable(ys.filter(y => y === x)[0])
@@ -144,7 +143,13 @@ concatUniq x ys =
   either (\_ -> ys <> x) \_ -> ys
 ```
 
-## Example 5 - Native Side Effects
+This tip is straightforward and very useful in practice.  In the PureScript example above, notice the expression `filter (_ == x) ys`.  You may be wondering why I didn't write it as `filter (\y -> y == x) ys`.  Well, the former is an anonymous function argument, because it represents an anonymous argument in the operator section of the filter function.  Think of it as a little syntax sugar to help shorten your code.  You'll be pleased to know that it works for Records and other types of expressions as well.  You can learn everything you need to know about anonymous function arguments from @paf31's [blog post](https://github.com/paf31/24-days-of-purescript-2016/blob/master/7.markdown), which was part of his series '24-days-of-purescript-2016'.  
+
+
+## Example 5 - `let` vs. `where` keywords
+
+Before discussing the `let` and `where` keywords, let me make mention that this example makes good use of native side effects.  That topic was well covered in Tutorial 4, so if you're still shaky on File IO and exception handling then go back and have a look.
+
 ```javascript
 const readFile = x => tryCatch(() => fs.readFileSync(x))
 
@@ -164,10 +169,38 @@ wrapExample example =
   where
     wrapExample' pathToFile =
       (try $ readTextFile UTF8 pathToFile) >>=
-      chain parseValue >>>
+      either Left parseValue >>>
       either (\_ -> example) (assignObject2 example) >>>
       pure
+
+wrapExample_ :: forall eff. Foreign -> Eff (fs :: FS, exception :: EXCEPTION | eff) Foreign
+wrapExample_ example =
+  fromNullable (getPreviewPath example) #
+  map (\path -> unsafeFromForeign path :: String) >>>
+  let
+    wrapExample' pathToFile =
+      (try $ readTextFile UTF8 pathToFile) >>=
+      either Left parseValue >>>
+      either (\_ -> example) (assignObject2 example) >>>
+      pure
+  in
+    either (\_ -> pure example) wrapExample'
 ```
+
+Now onto a piece of new and interesting syntax - the use of  `where` vs. `let` keywords in the duel `wrapExample` snippets.  We have seen the `where` keyword many times before - at the top of a module to introduce the block of code represented by the module name.  But, so far, I haven't used it inside a function.  The purpose is the same - introduce a new block of code, indenting that code so that the compiler understands that `where` is bound to this syntactic construct.  In the example, you see that `where` is bound to the syntactic construct `wrapExample'`.
+
+Now let's take a look at `let` (no pun intended).  At first blush, the purpose of `where` and `let` appear to be identical, and this is roughly correct.  But there is a subtle difference!   `let . . . in . . .` is also an expression, and therefore can be written wherever expressions are allowed.  The example best explains this difference. I used `let . . . in . . .` as an expression by inserting it between the `map` and `either ` functions.  I could have gone even further, with the following:
+
+```haskell
+map (\path -> unsafeFromForeign path :: String) >>>
+either (\_ -> pure example)
+  let wrapExample' pathFile = . . .
+  in wrapExample'
+```
+
+but then it becomes a matter of readability.  
+
+For more information on `let` vs. `where`, check out [Let vs. Where](https://wiki.haskell.org/Let_vs._Where) from wiki.haskell.org.  Oh, and you are going to find the syntax of Haskell surprisingly similar to PureScript!  Several PureScripters have commented that they were able to pick up Haskell much more quickly thanks to learning PureScript.
 
 ## Example 6
 ```javascript
@@ -191,8 +224,8 @@ matchUrl r url =
     Nothing -> Left $ error "unmatched url"
     Just x -> Right x
 
-parseDbUrl' :: String -> Array (Maybe String)
-parseDbUrl' =
+parseDbUrl_ :: String -> Array (Maybe String)
+parseDbUrl_ =
   parseValue >>>
   chain (\config -> fromNullable $ getDbUrl config) >>>
   map (\url -> unsafeFromForeign url :: String) >>>

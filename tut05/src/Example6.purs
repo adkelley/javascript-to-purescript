@@ -1,4 +1,4 @@
-module Example6 (parseDbUrl) where
+module Example6 (parseDbUrl, parseDbUrl_) where
 
 import Prelude
 
@@ -25,8 +25,8 @@ matchUrl r url =
     Nothing -> Left $ error "unmatched url"
     Just x -> Right x
 
-parseDbUrl' :: String -> Array (Maybe String)
-parseDbUrl' =
+parseDbUrl_ :: String -> Array (Maybe String)
+parseDbUrl_ =
   parseValue >>>
   chain (\config -> fromNullable $ getDbUrl config) >>>
   map (\url -> unsafeFromForeign url :: String) >>>
