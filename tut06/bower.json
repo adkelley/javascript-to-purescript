@@ -7,13 +7,12 @@
     "output"
   ],
   "dependencies": {
-    "purescript-prelude": "^2.4.0",
-    "purescript-console": "^2.0.0",
-    "purescript-arrays": "^3.2.1",
-    "purescript-preface": "^1.1.0",
-    "purescript-generics-rep": "^4.1.0"
+    "purescript-prelude": "^3.0.0",
+    "purescript-console": "^3.0.0",
+    "purescript-arrays": "^4.0.0",
+    "purescript-generics-rep": "^5.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": "^2.0.0"
+    "purescript-psci-support": "^3.0.0"
   }
 }
