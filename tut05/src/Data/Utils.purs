@@ -20,8 +20,8 @@ import Data.List.NonEmpty (head)
 foreign import assignObject2Impl :: Fn2 Foreign Foreign Foreign
 
 toEither :: forall a. Boolean -> String -> a -> Either Error a
-toEither cond errorMsg value =
-  if cond
+toEither predicate errorMsg value =
+  if predicate
     then Left $ error errorMsg
     else Right value
 
@@ -31,10 +31,11 @@ fromEmptyString value =
 
 fromNullable :: Foreign -> Either Error Foreign
 fromNullable value =
-  toEither (isNull value || isUndefined value) "null or undefined" value
+  toEither (isNull value || isUndefined value)
+    "null or undefined" value
 
 chain :: forall a b e. (a -> Either e b) ->  Either e a -> Either e b
-chain = either Left
+chain f = either (\e -> Left e) (\a -> f a)
 
 parseValue :: String -> Either Error Foreign
 parseValue value =
