@@ -132,9 +132,9 @@ instance bindEither :: Bind (Either e) where
   bind = either (\e _ -> Left e) (\a f -> f a)
 ```
 
-Interesting, so `bind` is quite similar to my implementation of `chain`, but with the first two arguments flipped!  Why does this work?  Well, if `bind` sees that the first argument is `Left e` then, like `chain`, it ignores the the second function argument `(\a -> f a)`, and returns the first argument, `Left e`. But if the first argument is `Right a` then the second function argument is applied. Finally, because `f a -> Either e b`, then `Either e b` will be returned.  
+Interesting, so `bind` is quite similar to my implementation of `chain`, but with the first two arguments flipped!  Why does this work?  Well, if `bind` sees that the first argument is `Left e` then, like `chain`, it ignores the the second function argument `(\a f -> f a)`, and returns the first argument, `Left e`. But if the first argument is `Right a` then the second function argument is applied. Finally, because `f a -> Either e b`, then `Either e b` will be returned.  
 
-The next question is 'when can I substitute `chain` with `bind`?  Well, for all intents and purposes, they’re interchangeable! Consequently, you won't find a class instance of `chain` in `Either.purs`.  Take a quick look at Example 6, where I've provided two versions of `parseDbUrl` - one using `chain` and the other using `bind`.  That example should help you to go back and refactor any functions using `chain` to `bind`. So . . . say goodbye to `chain` from here on and long live `bind`!
+The next question is 'when can I substitute `chain` with `bind`?  Well, for all intents and purposes, they’re interchangeable! Consequently, you won't find a class instance of `chain` in `Either.purs`.  Take a quick look at Example 6, where I've provided two versions of `parseDbUrl` - one using `chain` and the other using `bind`.  That example should help you to go back and refactor any functions using `chain` to `bind`. So . . . say goodbye to `chain` and long live `bind`!
 
 
 ## Example 4 - Anonymous Function Arguments
@@ -153,7 +153,7 @@ concatUniq x ys =
   either (\_ -> ys <> x) \_ -> ys
 ```
 
-This tip is straightforward and very useful in practice.  In the PureScript example above, notice the expression `filter (_ == x) ys`.  You may be wondering why I didn't write it as `filter (\y -> y == x) ys`.  Well, because I'm using an anonymous function argument `_`, which represents an anonymous argument in the predicate portion of the filter function.  Think of `_` as a little syntax sugar that helps to shorten your code.  You'll be pleased to know that it works for Records and other types of expressions as well.  You can learn everything you need to know about anonymous function arguments in this [blog post](https://github.com/paf31/24-days-of-purescript-2016/blob/master/7.markdown), which is part of the series '24-days-of-purescript-2016'.  
+This tip is straightforward and very useful in practice.  In the PureScript example above, notice the expression `filter (_ == x) ys`.  You may be wondering why I didn't write it as `filter (\y -> y == x) ys`.  Well, because I'm using an anonymous function argument `_`, represented in the predicate portion of the filter function.  Think of `_` as a little syntax sugar that helps to shorten your code.  You'll be pleased to know that anonymous function arguments work for Records and other types of expressions, as well.  You can learn everything you need to know about them in this [blog post](https://github.com/paf31/24-days-of-purescript-2016/blob/master/7.markdown), which is part of the series '24-days-of-purescript-2016'.  
 
 
 ## Example 5 - `let` vs. `where` keywords
@@ -197,7 +197,7 @@ wrapExample_ example =
     either (\_ -> pure example) wrapExample'
 ```
 
-We have seen the `where` keyword many times before.  It is usually at the top of a module for the purpose of delineating the block of code represented by the module name.  But, so far, I haven't used it inside a function.  The purpose is the same - introduce a new block of code, indenting that code so that the compiler understands that `where` is bound to the syntactic construct (i.e., the new block of code).  In the example, you can see that `where` is forever linked to the code that defines `wrapExample' `.
+We have seen the `where` keyword many times before.  It is usually at the top of a module, for the purpose of delineating the block of code represented by the module name.  But, so far, I haven't used it inside a function.  The purpose is the same - introduce a new block of code, indenting that code so that the compiler understands that `where` is bound to the syntactic construct (i.e., the new block of code).  In the example, you can see that `where` is forever linked to the code that defines `wrapExample' `.
 
 Now, take a look at `let`.  At first blush, the purpose of `where` and `let` appear to be identical, and this is roughly correct.  But there is a subtle difference!   `let . . . in . . .` is also an expression, and therefore can be written wherever expressions are allowed.  The code snippet best explains this difference. I used `let . . . in . . .` as an expression by inserting it between the `map` and `either ` functions.  I could have gone even further, with the following:
 
@@ -254,9 +254,9 @@ parseDbUrl s =
   either (\_ -> singleton Nothing) id
 ```
 
-Like JavaScript, PureScript supports regular expressions well - by wrapping JavaScript's very own `RegExp` object!  The types and functions are part of the `purescript-strings` library, located in the module `[Data.String.Regex](https://pursuit.purescript.org/packages/purescript-strings/3.2.1/docs/Data.String.Regex#t:Regex)`.   First up is the `Regex` object.
+Like JavaScript, PureScript supports the use of regular expressions very well - by wrapping JavaScript's very own `RegExp` object!  The types and functions are part of the `purescript-strings` library, located in the module `[Data.String.Regex](https://pursuit.purescript.org/packages/purescript-strings/3.2.1/docs/Data.String.Regex#t:Regex)`.   First up is the `Regex` object.
 
-There's some new pieces of syntax in the `DbUrlRegex` function, namely  `Partial` and `unsafePartial`. In this instance, they allow us to treat a non-exhaustive case expression as a regular case expression (unsafely).  So why did I decide  `unsafePartial`? I tested the regular expression `"^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$"` and I know it works for the limited purpose of demonstration in this tutorial!  So no need to bother returning and dealing with an `Either Error Regex`.  You can also take advantage of `unsafePartial` to return partial functions; again unsafely.  And, as a consequence of `DbUrlRegex`, that is exactly what I am doing in `parseDbUrl`.
+There's some new pieces of syntax in the `DbUrlRegex` function, namely  `Partial` and `unsafePartial`. In this instance, they allow us to treat a non-exhaustive case expression as a regular case expression (unsafely).  So why did I decide  `unsafePartial`? I tested the regular expression `"^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$"` and I know it works for the sole purpose of demonstration in this tutorial!  So no need to bother returning and dealing with an `Either Error Regex`.  You can also take advantage of `unsafePartial` to return partial functions; again unsafely.  And, as a consequence of `DbUrlRegex`, that is exactly what I am doing in `parseDbUrl`.
 
 You’ll often hear from functional programmers the phrase, ‘Let the types be your guide’. So I call out, in the type declaration, the fact that `DbUrlRegex` is a partial function, and therefore it belongs to the `Partial` class (i.e., `dbUrlRegex :: Partial => Regex`).  This fact propagates all the way back to `main`.  I declare that `parseDbUrl` returns a partial function and, consequently, in the `main` code snippet below, I use the `unsafeFromPartial` function to log the result to the console.
 
