@@ -226,6 +226,6 @@ That's all for now, next time we’ll cover how to use `chain` (i.e., `bind` in 
 
 
 ## Navigation
-[<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02) | [> Tutorial 4 ](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04p1)
+[<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02) | [> Tutorial 4 ](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1)
 
 You may find that the README for the next tutorial is under construction. But if you're an eager beaver and would like to look ahead, then most of the code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.  
