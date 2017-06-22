@@ -6,7 +6,7 @@ import Data.Either (Either(..))
 import Data.List (List(..), filter, (:))
 import Data.String.Regex (Regex, parseFlags, regex, replace)
 import Partial.Unsafe (unsafePartial)
-import Prelude (Unit, add, bind, map, mod, ($), (/=))
+import Prelude (Unit, add, map, mod, discard, ($), (/=))
 
 inc :: Int -> Int
 inc = add 1
