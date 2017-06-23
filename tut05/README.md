@@ -158,7 +158,7 @@ This tip is straightforward and very useful in practice.  In the PureScript exam
 
 ## Example 5 - `let` vs. `where` keywords
 
-Before discussing the `let` and `where` keywords, let me mention that this code snippet makes good use of native side effects.  That topic was well covered in Part 2 of [Tutorial 4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2), so if you're still shaky on File IO and exception handling then go back and have a look.  Now onto the use of  `where` vs. `let` keywords in the duel `wrapExample` snippets.  
+Before discussing the `let` and `where` keywords, let me mention that this code snippet makes good use of native side effects.  That topic was well covered in [Part 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2) of Tutorial 4, so if you're still shaky on File IO and exception handling then go back and have a look.  Now onto the use of  `where` vs. `let` keywords in the duel `wrapExample` snippets.  
 ### JavaScript
 ```javascript
 const readFile = x => tryCatch(() => fs.readFileSync(x))
@@ -210,7 +210,7 @@ either (\_ -> pure example)
 
 But, then it becomes a matter of readability.  
 
-For more information on `let` vs. `where`, check out [Let vs. Where](https://wiki.haskell.org/Let_vs._Where) from wiki.haskell.org.  Oh, and you are going to find that the syntax of Haskell is surprisingly similar to PureScript!  I've heard a few PureScripters commenting that they were able to pick up Haskell much more quickly, thanks to having learned PureScript first.  Likewise, I learned Haskell first and found I was able to pick up PureScript more rapidly.
+For more information on `let` vs. `where`, check out [Let vs. Where](https://wiki.haskell.org/Let_vs._Where) from wiki.haskell.org.  Oh, and you are going to find that the syntax of Haskell is surprisingly similar to PureScript!  I've heard a few PureScripters commenting that they were able to pick up Haskell much more quickly, thanks to having learned PureScript first.  Likewise, I began learning Haskell first and found I was able to pick up PureScript more rapidly.
 
 ## Example 6 - Regular expression validators and partial functions
 
@@ -258,7 +258,7 @@ Like JavaScript, PureScript supports the use of regular expressions very well - 
 
 There's some new pieces of syntax in the `DbUrlRegex` function, namely  `Partial` and `unsafePartial`. In this instance, they allow us to treat a non-exhaustive case expression as a regular case expression (unsafely).  So why did I decide  `unsafePartial`? I tested the regular expression `"^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$"` and I know it works for the sole purpose of demonstration in this tutorial!  So no need to bother returning and dealing with an `Either Error Regex`.  You can also take advantage of `unsafePartial` to return partial functions; again unsafely.  And, as a consequence of `DbUrlRegex`, that is exactly what I am doing in `parseDbUrl`.
 
-You’ll often hear from functional programmers the phrase, ‘Let the types be your guide’. So I call out, in the type declaration, the fact that `DbUrlRegex` is a partial function, and therefore it belongs to the `Partial` class (i.e., `dbUrlRegex :: Partial => Regex`).  This fact propagates all the way back to `main`.  I declare that `parseDbUrl` returns a partial function and, consequently, in the `main` code snippet below, I use the `unsafeFromPartial` function to log the result to the console.
+You’ll often hear from functional programmers the phrase, ‘Let the types be your guide’. So, with that mantra in mind, `DbUrlRegex` is a partial function, so I declare that it belongs to the `Partial` class (i.e., `dbUrlRegex :: Partial => Regex`).  This fact propagates all the way back to `main`.  I declare that `parseDbUrl` returns a partial function and, consequently, in the `main` code snippet below, I use the `unsafeFromPartial` function to log the result to the console.
 
 One final item - `parseDbUrl` returns `Array (Maybe String)`, and so you're probably wondering about the `Maybe` constructor.  As I mentioned in the `fromNullable` and `fromEmptyString` section, we'll cover that abstraction in a future tutorial.
 
