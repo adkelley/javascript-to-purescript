@@ -7,14 +7,14 @@
     "output"
   ],
   "dependencies": {
-    "purescript-prelude": "^2.5.0",
-    "purescript-console": "^2.0.0",
-    "purescript-monoid": "^2.2.0",
-    "purescript-folds": "^2.0.0",
-    "purescript-foldable-traversable": "^2.2.0",
-    "purescript-maps": "^2.1.2"
+    "purescript-prelude": "^3.0.0",
+    "purescript-console": "^3.0.0",
+    "purescript-monoid": "^3.0.0",
+    "purescript-folds": "^3.0.0",
+    "purescript-foldable-traversable": "^3.0.0",
+    "purescript-maps": "^3.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": "^2.0.0"
+    "purescript-psci-support": "^3.0.0"
   }
 }

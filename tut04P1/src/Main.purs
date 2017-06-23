@@ -16,7 +16,7 @@ isInvalidPort portNumber =
   (portNumber < validPorts.min || portNumber > validPorts.max)
 
 throwWhenBadPort :: Int
-                 -> forall eff. Eff (err :: EXCEPTION | eff) Unit
+                 -> forall eff. Eff (exception :: EXCEPTION | eff) Unit
 throwWhenBadPort portNumber =
   when (isInvalidPort portNumber) $ throwException errorMessage
   where
@@ -31,7 +31,7 @@ catchWhenBadPort portNumber =
   where
     printException e = log $ message e
 
-main :: Eff (console :: CONSOLE, random :: RANDOM, err :: EXCEPTION) Unit
+main :: Eff (console :: CONSOLE, random :: RANDOM, exception :: EXCEPTION) Unit
 main = do
   log "Use chain for composable error handling with nested Eithers - Part 1"
   

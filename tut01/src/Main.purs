@@ -6,7 +6,7 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Char (fromCharCode, toLower)
 import Data.Int (fromString)
-import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Maybe (fromMaybe)
 import Data.String (singleton, trim)
 
 -- Javascript - const Box = x => ({})

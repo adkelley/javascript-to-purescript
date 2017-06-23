@@ -164,7 +164,7 @@ It makes it very clear as to what side effects `getPort` creates along with the 
 
 ## Final Points
 
-In my [github repository]((https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2), I've created two versions of `getPort` - one that ignores any errors and returns `Port`, and the other returns `Either Error Port`.  You can play around with the latter by creating JSON or read file errors and view them in the console.  Also, I've added another exception handler to illustrate how to compose multiple `chain` functions together.
+In my [github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2), I've created two versions of `getPort` - one that ignores any errors and returns `Port`, and the other returns `Either Error Port`.  You can play around with the latter by creating JSON or read file errors and view them in the console.  Also, I've added another exception handler to illustrate how to compose multiple `chain` functions together.
 
 That’s all for now. Be sure to leave a comment if you have any questions. In the next tutorial, I’m going to show more Either examples in PureScript that have been converted from imperative JavaScript. So stay tuned!
 
