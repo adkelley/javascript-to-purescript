@@ -291,7 +291,7 @@ main = do
 
   log "Example 6"
   log "Using bind to help parse the database URL"
-  logShow $ parseDbUrl defaultConfig
+  logShow $ unsafePartial $ parseDbUrl defaultConfig
 
   log "Game Over"
 ```  
