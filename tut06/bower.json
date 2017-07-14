@@ -10,7 +10,7 @@
     "purescript-prelude": "^3.0.0",
     "purescript-console": "^3.0.0",
     "purescript-arrays": "^4.0.0",
-    "purescript-generics-rep": "^5.0.0"
+    "purescript-const": "^3.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"
