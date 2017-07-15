@@ -41,24 +41,24 @@ main = do
   logShow $ ([1, 2] <> [3, 4]) <> [5, 6]
 
   log "\nIntegers:"
-  logShow $ (Sum 1 <> Sum 2) <> Sum 3
+  logShow $ (Sum 1 <> Sum 2) <> Sum 3  -- (Sum 6)
   log "Associativity law:"
-  logShow $ (Sum 1 <> Sum 2) <> Sum 3 == Sum 1 <> (Sum 2 <> Sum 3)
+  logShow $ (Sum 1 <> Sum 2) <> Sum 3 == Sum 1 <> (Sum 2 <> Sum 3)  -- true
 
   log "\nBooleans:"
-  logShow $ append (All true) (All false)
+  logShow $ All true <> All false -- (All false)
   log "Associativity law:"
-  logShow $ ((All true) <> (All true)) <> (All true) == (All true) <> ((All true) <> (All true))
+  logShow $ (All true <> All true) <> All true == All true <> (All true <> All true) -- true
 
   log "\nFirst"
-  logShow $ (First "blah") <> ((First "icecream") <> (First "meta-programming"))
+  logShow $ First "a" <> First "b" <> First "c"  -- (First "a")
   log "Associativity law:"
-  logShow $ ((First "blah") <> (First "icecream")) <> (First "meta-programming") == (First "blah") <> ((First "icecream") <> (First "meta-programming"))
+  logShow $ (First "a" <> First "b") <> First "c" == First "a" <> (First "b" <> First "c") -- true
 
   log "\nPureScript equilivents from Data.Monoid.X"
   log "Additive == Sum"
-  logShow $ Additive 1 <> Additive 2
-  logShow $ Additive 1.0 <> Additive 2.0
+  logShow $ Additive 1 <> Additive 2  -- (Addivitive 3)
+  logShow $ Additive 1.0 <> Additive 2.0  -- (Addivive 3.0)
   log "Conj == All"
-  logShow $ append (Conj true) (Conj false)
-  logShow $ (Conj true) <> ((Conj true) <> (Conj true))
+  logShow $ Conj true <> Conj false  -- (Conj false)
+  logShow $ Conj true <> (Conj true <> Conj true)  -- (Conj true)

@@ -26,7 +26,7 @@ In his talk, he explains that programming languages form an algebra, not unlike 
 
 ## Semigroups come from abstract algebra
 
-Are you still with me?  To reiterate what I wrote in my introduction, don't let this, or any other mathematical name, scare you from learning functional programming.  If we keep the names (e.g., Semigroup), then we benefit from a whole lot of information derived from the mathematics, namely the types and their laws!  If we understand the types (i.e., list, string, int, etc.) and their laws (e.g., associativity, identity, etc.), then it helps us to reason about our program.   
+Are you still with me?  To reiterate what I wrote in my introduction, don't let this, or any other mathematical name, scare you from learning functional programming.  If we keep the names (e.g., Semigroup), then we benefit from a whole lot of information derived from the mathematics, namely the types and their laws!  If we understand the types (i.e., list, string, int, etc.) and their laws (e.g., associativity, identity, etc.), then it helps us tremedously to reason about our program.   
 
 A Semigroup is a type together with a binary operation `<>` that satisfies the associativity law.  If we unpack this definition further - a binary operation takes two elements from our type and produces another element of the same type.  Moreover, if you think long enough, you'll see that a binary operation is just a method of function composition.  I like to think of binary operations like concatenation, where we smash two objects together to get a third object.  In PureScript, this is called append, with  `(<>)` as its infix operator.  Note that Brian uses `concat` in his examples but, to help reduce cognitive load, I'll use append in both JavaScript and PureScript.
 
@@ -63,7 +63,7 @@ derive newtype instance eqSum :: Eq a => Eq (Sum a)
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   log "\nIntegers:"
-  logShow $ (Sum 1 <> Sum 2) <> Sum 3  -- 6
+  logShow $ (Sum 1 <> Sum 2) <> Sum 3  -- (Sum 6)
   log "Associativity law:"
   logShow $ (Sum 1 <> Sum 2) <> Sum 3 == Sum 1 <> (Sum 2 <> Sum 3)  -- true
 ```
@@ -99,10 +99,9 @@ derive instance eqAll :: Eq a => Eq (All a)
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
-  logShow $ append (All true) (All false) -- false
+  logShow $ All true <> All false -- (All false)
   log "Associativity law:"
-  logShow $ ((All true) <> (All true)) <> (All true) ==
-             (All true) <> ((All true) <> (All true))    -- true
+  logShow $ (All true <> All true) <> All true == All true <> (All true <> All true) -- true
 ```
 
 There's not much difference between the `All` and `Sum` newtypes and their instance declarations. But if you are lost, then read the `Sum` section again and don't hesitate to leave a question in the comments.  We merely swapped out numbers for booleans, and our append operation has become `&&` instead of `+`.  Though, there is that new type class constraint `BooleanAlgebra`.  Well, it's just another math term to describe types that behave like boolean values.   I'm down for getting easy wins and, compared to Semigroup and Semiring, I believe BooleanAlgebra is much easier to remember.
@@ -121,7 +120,7 @@ const First = x =>
      'First(${x})'
 })
 
-const res = First("blah").concat(First("ice cream")).concat(First("meta-programming")) // First("blah")
+const res = First("a").concat(First("b")).concat(First("c")) // First("a")
 ```
 
 ```haskell
@@ -134,10 +133,9 @@ derive instance eqFirst :: Eq a => Eq (First a)
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main =
-  logShow $ (First "blah") <> ((First "icecream") <> (First "meta-programming")) -- (First "blah")
+  logShow $ First "a" <> (First "b" <> First "c") -- (First "a")
   log "Associativity law:"
-  logShow $ ((First "blah") <> (First "icecream")) <> (First "meta-programming") ==
-             (First "blah") <> ((First "icecream") <> (First "meta-programming"))  -- true
+  logShow $ (First "a" <> First "b") <> First "c" == First "a" <> (First "b" <> First "c")  -- true
 ```
 
 Here again, there's not much difference between `First` and `Sum` newtype and instance declarations.  We merely swapped out numbers for a generic type, be it a string, number, pick your poison.  And our append operation ignores every argument except for the first.
