@@ -16,11 +16,11 @@ All of the code examples and the markdown for this article are on [Github](https
 
 ## Symbols, Operations & Laws - Oh My!
 
-I must admit that writing this tutorial was difficult at first.  I kept wondering whether I might turn some readers off by making a definite connection between programming languages and mathematics.   Why?  Well, there seems to be this meme going around that programming is not math; that you don't need math to program.
+I must admit that writing this tutorial was difficult at first.  I kept wondering whether I might turn some readers off by making a definitive connection between programming languages and mathematics.   Why?  Well, there seems to be this meme going around that programming is not math; that you don't need math to program.
 
 For example, I saw a recent tweet related to learning PureScript where the poster asked, as a thought experiment, whether it would be better to promote a simpler PureScript by ditching the category theory.   For example, rename the categories to something more user-friendly, like `Monoid => AssociativeConcattableWithIdentity`.  I believe this kind of thinking is wrong!  If we don't embrace math in programming, then we are denying the most powerful tool for understanding what we are doing.  
 
-Instead, we need to do a whole lot better in explaining the connection between programming languages and mathematics.  Fortunately, from time to time, someone gets it right by teaching it simply so that virtually anyone who wants to learn, can learn. And when they do, we should be promoting these people by singing their praises from the highest mountains.  So here's my nominee for the "Make it simple but not simpler" hall of fame. His name is Chris Taylor @cmtaylor, and he gave an excellent talk titled "[The Algebra of Algebraic Data Types](https://www.youtube.com/watch?v=YScIPA8RbVE)."  If you haven't seen his talk, then you should set my tutorial aside for a moment and watch it.  It helped to give me the confidence to move forward to write this tutorial.
+Instead, we need to do a whole lot better in explaining the connection between programming languages and mathematics.  Fortunately, from time to time, someone gets it right by teaching it simply so that virtually anyone who wants to learn, can learn. And when they do, we should be promoting these people by singing their praises from the highest mountains.  So here's my nominee for the "Make it simple but not simpler" hall of fame. His name is Chris Taylor @cmtaylor, and he gave an excellent talk titled "[The Algebra of Algebraic Data Types](https://www.youtube.com/watch?v=YScIPA8RbVE)."  If you haven't seen his talk, then you should set my tutorial aside for a moment and watch it.
 
 In his talk, he explains that programming languages form an algebra, not unlike the algebra we learned in school.  We learned that symbols are 0, 1, 2, x, y, z, etc.; operations are +, -, \*, ÷, etc.; and laws are 0 + x = x, etc.  So how does this translate to PureScript?  Well, in PureScript the types are an algebra.  The symbols are the types themselves (Int, Boolean, String, etc.).  The operations are the type constructors (Maybe, Either, etc.).  And the laws . . . , well I don't know what all the laws are for the PureScript algebra.  But, we can certainly look at smaller subsets of the language, which is my long and winded way of introducing the topic of this tutorial - Semigroups!
 
@@ -28,7 +28,7 @@ In his talk, he explains that programming languages form an algebra, not unlike 
 
 Are you still with me?  To reiterate what I wrote in my introduction, don't let this, or any other mathematical name, scare you from learning functional programming.  If we keep the names (e.g., Semigroup), then we benefit from a whole lot of information derived from the mathematics, namely the types and their laws!  If we understand the types (i.e., list, string, int, etc.) and their laws (e.g., associativity, identity, etc.), then it helps us tremedously to reason about our program.   
 
-A Semigroup is a type together with a binary operation `<>` that satisfies the associativity law.  If we unpack this definition further - a binary operation takes two elements from our type and produces another element of the same type.  Moreover, if you think long enough, you'll see that a binary operation is just a method of function composition.  I like to think of binary operations like concatenation, where we smash two objects together to get a third object.  In PureScript, this is called append, with  `(<>)` as its infix operator.  Note that Brian uses `concat` in his examples but, to help reduce cognitive load, I'll use append in both JavaScript and PureScript.
+A Semigroup is a type together with a binary operation `<>` that satisfies the associativity law.  If we unpack this definition further - a binary operation takes two elements from our type and produces another element of the same type.  Moreover, if you think long enough, you'll see that a binary operation is just a method of function composition.  I like to think of binary operations like concatenation, where we mash two objects together to get a third object.  In PureScript, this is called `append`, with  `(<>)` as its infix operator.  Note that Brian uses `concat` in his examples but, to help reduce cognitive load, I'll use `append` in both JavaScript and PureScript.
 
 Good examples of `<>` on Semigroups include addition, multiplication.  The associativity law states that given elements a, b and c from our type, then `a <> (b <> c) = (a <> b) <> c`.  Notice I didn't include subtraction!  It is not a Semigroup because it doesn't satisfy the associativity law.  Meaning, `a - (b - c)` is not equal to `(a - b) - c`.   The string type and its binary operation of append is another good example of a Semigroup.   Checking whether the associativity law holds, we find that `("foo" <> "bar") <> "baz"` is equal to `"foobarbaz"` and `"foo" <> ("bar" <> "baz")` is also equal to `"foobarbaz"`.
 
@@ -36,7 +36,7 @@ Simple, right?  I hope you're now wondering what all the fuss is about.  So with
 
 ## Examples of Types with Semigroups
 
-Let's stick with append as our binary operation or method of function composition for the following examples.  Below, we create our first type constructor `Sum` that takes two elements of the same type and adds them together to create another element of the same type.  
+Let's stick with append as our binary operation or method of function composition (whichever you like) for the following examples.  Below, we create our first type constructor `Sum` that takes two elements of the same type and adds them together to create another element of the same type.  
 
 ### Sum
 ```javascript
@@ -62,19 +62,19 @@ derive newtype instance eqSum :: Eq a => Eq (Sum a)
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
-  log "\nIntegers:"
+  log "Integers:"
   logShow $ (Sum 1 <> Sum 2) <> Sum 3  -- (Sum 6)
   log "Associativity law:"
   logShow $ (Sum 1 <> Sum 2) <> Sum 3 == Sum 1 <> (Sum 2 <> Sum 3)  -- true
 ```
 
-In his [tutorial](https://egghead.io/lessons/javascript-combining-things-with-semigroups) on Semigroups, Brian uses deconstruction in `Sum`'s append method to expose the other sum `y`.  If you're not clear about the JavaScript code example, then please review his tutorial. More interesting (yes, I'm biased) is the PureScript example.  We define our newtype constructor `Sum` and the three type class instances that we use to show, append and prove associativity.  I covered newtype constructors in my very [first tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01/src/README.md).  But to elaborate further, they are a special case of [algebraic data types](https://leanpub.com/purescript/read#leanpub-auto-algebraic-data-types) that define one constructor only, and that constructor must take exactly one argument.  In this example, `Sum` is the constructor,  and its one argument is the generic type `a`.  I chose a [generic](https://en.wikipedia.org/wiki/Generic_programming#Genericity_in_Haskell) type because we can add multiple types of numbers, like integers, floats, and natural numbers. Next, we define our instance declarations.
+In his [tutorial](https://egghead.io/lessons/javascript-combining-things-with-semigroups) on Semigroups, Brian uses deconstruction in `Sum`'s append method to expose the other sum `y`.  If you're not clear about the JavaScript code example, then please review his tutorial. More interesting (yes, I'm biased) is the PureScript example.  We define our newtype constructor `Sum` and the three type class instances that we use to show, append and prove associativity.  I covered newtype constructors in my very [first tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01/src/README.md).  But to elaborate further, they are a special case of [algebraic data types](https://leanpub.com/purescript/read#leanpub-auto-algebraic-data-types) that define one constructor only, and that constructor must take exactly one argument.  In this example, `Sum` is the constructor,  and its one argument is the [generic](https://en.wikipedia.org/wiki/Generic_programming#Genericity_in_Haskell) type `a`.  I chose a generic type because we can add multiple types of numbers, like integers, floats, and natural numbers. Next, we define our instance declarations.
 
-First up is the `Show` type class, which tells the PureScript compiler how we want to display our results.  Next, is our `Semigroup` which says how we intend to smash two type elements together to derive our third element.  When summing numbers together, I naturally chose addition to be the append operation.  Also, I introduced a type class constraint that we haven't seen until now - `Semiring`.  Here again, PureScript uses a well-defined term from abstract algebra that describes type elements that you can add or multiply together.  I am using it to constrain my generic type `a` to types that can be added or multiplied.   And finally, there is the matter of associativity.  To prove that `Sum` is associative, I derive an instance of the `Eq` type class (i.e., equality) to show in my examples that the left and right sides of my expression are equal.  That is, `(Sum 1 <> Sum 2) <> Sum 3 == Sum 1 <> (Sum 2 <> Sum 3)`.
+First up is the `Show` type class, which tells the PureScript compiler how we want to display our results.  Using type deconstruction, we extract the value from the constructor.  Next, is our `Semigroup` which declares addition as our operation for mashing two type elements together to derive our third element. Also, I introduced a type class constraint that we haven't seen until now - `Semiring`.  Here again, PureScript uses a well-defined term from abstract algebra that describes type elements that you can add or multiply together.  And finally, there is the matter of associativity.  To prove that `Sum` is associative, I derive an instance of the `Eq` type class (i.e., equality) to show in my examples that the left and right sides of my expression are equal.  That is, `(Sum 1 <> Sum 2) <> Sum 3 == Sum 1 <> (Sum 2 <> Sum 3)`.
 
 ### All
 
-Are there other Semigroups that we can define besides `Sum`?  Absolutely!  Take for instance booleans, `true && false = false` which indicates that we can smash two boolean types together to get a third boolean.  As for the associativity law, well, `(true && false) && true == true && (false && true)`, so I think we are onto something.  So let's define our next Semigroup type constructor using booleans and call it `All`.
+This next Semigroup allows us to mash two boolean types together to get a third boolean -- `true && false = false`.  But, when creating a custom Semigroup constructor, make sure you check the associativity law. Well, `(true && false) && true == true && (false && true)`, so I think we are onto something.  Let's define our next Semigroup type constructor using booleans and call it `All`.
 
 ```javascript
 const All = x =>
@@ -108,7 +108,7 @@ There's not much difference between the `All` and `Sum` newtypes and their insta
 
 ### First
 
-And finally, let's make a somewhat odd Semigroup that we'll call `First`.  Remember that Strings are a Semigroup where `"a" <> "b" <> "c" = "abc"`.  But what if our append operation was structured to retain only the first argument?  That is `First("a") <> First("b") <> First("c") = First("a")`.  Does that still constitute a Semigroup?  Let's check it by applying the associativity law - `(First("a") <> First("b")) <> First("c") == (First("a") <> First("b")) <> First("c") == First("a")`.  Yes, me thinks we have a `Semigroup`, so let's code it up.
+And finally, let's make a somewhat odd Semigroup that we'll call `First`.  Remember that Strings are a Semigroup where `"a" <> "b" <> "c" = "abc"`.  But what if our append operation was structured to retain only the first argument?  That is `First "a" <> First "b" <> First "c" = First "a"`.  Does that still constitute a Semigroup?  Let's check it by applying the associativity law - `(First "a" <> First "b") <> First "c" == (First "a" <> First "b") <> First "c" == First "a"`.  Yes, me thinks we have a `Semigroup`, so let's code it up.
 
 ```javascript
 const First = x =>
@@ -138,7 +138,7 @@ main =
   logShow $ (First "a" <> First "b") <> First "c" == First "a" <> (First "b" <> First "c")  -- true
 ```
 
-Here again, there's not much difference between `First` and `Sum` newtype and instance declarations.  We merely swapped out numbers for a generic type, be it a string, number, pick your poison.  And our append operation ignores every argument except for the first.
+Here again, there's not much difference between `First` and `Sum` newtype and instance declarations.  We merely swapped out numbers for a generic type, be it a string, number, or pick your poison.  And our append operation ignores every argument except for the first.
 
 ## Semigroup modules in PureScript
 
