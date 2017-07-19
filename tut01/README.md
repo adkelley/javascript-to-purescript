@@ -114,7 +114,7 @@ You can ignore `extendBox`. Simply `comonadBox` needs it to do its magic. Otherw
 At last, we're ready to solve the problem of returning the next character from a given number string.  Just like our JavaScript example:
 ```javascript
 const nextCharForNumberString = str =>
-  Box[str]
+  Box(str)
   .map(s => s.trim())
   .map(s => new Number(s))
   .map(i => i + 1)

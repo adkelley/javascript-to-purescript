@@ -1,5 +1,5 @@
 {
-  "name": "video06",
+  "name": "video07",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -10,7 +10,8 @@
     "purescript-prelude": "^3.0.0",
     "purescript-console": "^3.0.0",
     "purescript-arrays": "^4.0.0",
-    "purescript-generics-rep": "^5.0.0"
+    "purescript-generics-rep": "^5.0.0",
+    "purescript-strings": "^3.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"

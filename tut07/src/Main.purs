@@ -1,63 +1,68 @@
 module Main where
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
 import Prelude
 
--- Create types with Semigroups
-newtype Sum a = Sum a
-instance showSum :: Show a => Show (Sum a) where
-  show (Sum x) = "(Sum " <> show x <> ")"
-instance semigroupSum :: Semiring a => Semigroup (Sum a) where
-  append (Sum a) (Sum b) = Sum (a + b)
+import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Console (CONSOLE, log)
+import Data.Foldable (foldr)
+import Data.Maybe (Maybe(..))
+import Data.Maybe.First (First(..))
+import Data.Monoid.Additive (Additive(..))
+import Data.Monoid.Conj (Conj(..))
 
-
-newtype All a = All a
-instance showAll :: Show a => Show (All a) where
-  show (All x) = "(All " <> show x <> ")"
-instance semigroupAll :: BooleanAlgebra a => Semigroup (All a) where
-  append (All a) (All b) = All (a && b)
-
-newtype First a = First a
-instance showFirst :: Show a => Show (First a) where
-  show (First x) = "(First " <> show x <> ")"
-instance semigroupFirst :: Semigroup (First a) where
-  append (First a) _ = (First a)
-
--- Account (left of the equals sign) is a data constructor
--- Account (right of the equals sign) is a type constructor
-data Account = Account
-  { name    :: First String
-  , isPaid  :: All Boolean
-  , points  :: Sum Int
+type Account = Record
+  ( name    :: First String
+  , isPaid  :: Conj Boolean
+  , points  :: Additive Int
   , friends :: Array String
-  }
+  )
+-- type Account =
+--   { name    :: First String
+--   , isPaid  :: Conj Boolean
+--   , points  :: Additive Int
+--   , friends :: Array String
+--   }
+
 
 showAccount :: Account -> String
-showAccount
-  (Account { name, isPaid, points, friends }) =
-  "{ name: "  <> show name    <> ",\n  " <>
-  "isPaid: "  <> show isPaid  <> ",\n  " <>
-  "points: "  <> show points  <> ",\n  " <>
-  "friends: " <> show friends <> "  }"
+showAccount { name, isPaid, points, friends } =
+  foldr (<>) ""
+    [ "{ name: ", show name, ",\n  "
+    , "isPaid: ", show isPaid, ",\n  "
+    , "points: ", show points, ",\n  "
+    , "friends: ", show friends, "  }"
+    ]
 
-concatAccount :: Account -> Account -> Account
-concatAccount
-  (Account { name: a1, isPaid: b1, points: c1, friends: d1 })
-  (Account { name: a2, isPaid: b2, points: c2, friends: d2 }) =
-  (Account { name: a1 <> a2, isPaid: b1 <> b2, points: c1 <> c2, friends: d1 <> d2 })
+appendAccount :: Account -> Account -> Account
+appendAccount
+  { name: a1, isPaid: b1, points: c1, friends: d1 }
+  { name: a2, isPaid: b2, points: c2, friends: d2 } =
+  { name: a1 <> a2, isPaid: b1 <> b2, points: c1 <> c2, friends: d1 <> d2 }
 
-makeAccount :: (First String) -> (All Boolean) -> (Sum Int) -> (Array String) -> Account
-makeAccount name isPaid points friends = (Account { name, isPaid, points, friends })
+infixr 5 appendAccount as ++
+
+makeAccount :: String -> Boolean -> Int -> Array String -> Account
+makeAccount name isPaid points friends =
+ { name: First maybeBlank, isPaid: Conj isPaid, points: Additive points, friends: friends}
+ where
+   maybeBlank =
+     if (name /= "")
+       then Just name
+       else Nothing
 
 acct1 :: Account
-acct1 = makeAccount (First "Alex") (All true) (Sum 10) ["Franklin"]
+acct1 = makeAccount "" true 10 ["Andy"]
 
 acct2 :: Account
-acct2 = makeAccount (First "Alex") (All false) (Sum 2) ["Gatsby"]
+acct2 = makeAccount "Nico" false 2 ["Lou"]
+
+acct3 :: Account
+acct3 = makeAccount "Christa Päffgen" true 3 ["John", "Sterling"]
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   -- semigroups are concatable and associative
   log "Semigroup examples"
-  log $ showAccount $ acct1 `concatAccount` acct2
+  log $ showAccount $ acct1 ++ acct2 ++ acct3
+  log $ showAccount $ foldr (++) acct1 [acct2, acct3]
+  log $ showAccount $ acct1 `appendAccount` acct2 `appendAccount` acct3
