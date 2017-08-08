@@ -3,12 +3,13 @@ module Main where
 import Prelude
 
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Foldable (foldr)
 import Data.Maybe (Maybe(..))
 import Data.Maybe.First (First(..))
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
+import Data.Musician (makeMusician, makePerson, setGenre)
 
 type Account = Record
   ( name    :: First String
@@ -16,12 +17,6 @@ type Account = Record
   , points  :: Additive Int
   , friends :: Array String
   )
--- type Account =
---   { name    :: First String
---   , isPaid  :: Conj Boolean
---   , points  :: Additive Int
---   , friends :: Array String
---   }
 
 
 showAccount :: Account -> String
@@ -43,9 +38,9 @@ infixr 5 appendAccount as ++
 
 makeAccount :: String -> Boolean -> Int -> Array String -> Account
 makeAccount name isPaid points friends =
- { name: First maybeBlank, isPaid: Conj isPaid, points: Additive points, friends: friends}
+ { name: First maybeBlankName, isPaid: Conj isPaid, points: Additive points, friends: friends}
  where
-   maybeBlank =
+   maybeBlankName =
      if (name /= "")
        then Just name
        else Nothing
@@ -59,10 +54,17 @@ acct2 = makeAccount "Nico" false 2 ["Lou"]
 acct3 :: Account
 acct3 = makeAccount "Christa Päffgen" true 3 ["John", "Sterling"]
 
+
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
+  log "Record examples"
+  logShow $ _.firstName {firstName: "Imogen", lastName: "Heap", age: (Just 39)}
+  logShow $ _.age $ makePerson "Imogen" "Heap" (Just 39)
+  let immy = makeMusician "Imogen" "Heap" Nothing "Electronic"
+  logShow $ _.genre immy
+  logShow $ _.genre $ setGenre "Alternative" immy
   -- semigroups are concatable and associative
-  log "Semigroup examples"
+  log "\nSemigroup examples"
   log $ showAccount $ acct1 ++ acct2 ++ acct3
   log $ showAccount $ foldr (++) acct1 [acct2, acct3]
   log $ showAccount $ acct1 `appendAccount` acct2 `appendAccount` acct3
