@@ -14,19 +14,19 @@ Welcome to Tutorial 7 in the series **Make the leap from Javascript to PureScrip
 
 If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07).  Finally, If you are enjoying this series then please help me to tell others by recommending this article and/or favoring it on social media
 
-## Robot Voice: SHALL WE PLAY A GAME?
-Imagine we've developed an online game and one of our players,  Nico has made three accounts accidentally; issuing a ticket to merge them into one.  Well, my first reaction is to ban Nico permanently. Regrettably, even in my own imaginary games company, that decision is well above my pay grade. So we'll just have to figure out how to accommodate Nico's request.
+## Robot Voice: Shall we play a game?
+Imagine we've developed an online game and one of our players,  Nico has made three accounts accidentally; issuing a support ticket to merge them into one account.  Well, my first reaction is to ban Nico permanently for negligence. Regrettably, even in my own imaginary games company, that decision is well above my pay grade. So we'll just have to figure out how to accommodate Nico's request.
 
-Anytime you see the words merge, combine, consolidate, etc. in a user story; you should be thinking Semigroups immediately.  So, let's help poor Nico out by combining her credentials with the aid of our Semigroup types from [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06).  But instead of merely presenting the code and calling it a day, I'll make this tutorial a little more interesting by introducing a few new constructs in PureScript; starting with Records.
+Anytime you see the words merge, combine, consolidate, etc. in a user story; you should be thinking Semigroups immediately.  So, let's help poor Nico out by combining his/her credentials with the aid of our Semigroup types from [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06).  But instead of merely presenting the code and calling it a day, I'll make this tutorial a little more interesting by introducing a few new constructs in PureScript; starting with Records.
 
-## Record quick start
+## PureScript records overview
 If you're a JavaScript developer, then you're probably using Objects on a daily basis.  You know, those name:value pairs we call properties; enclosed in braces. I'm sure you've seen them, but just in case:
 
 ```javascript
 var immy = { firstName: "Imogen", lastName: "Heap", age: 39 };
 ```
 
-And by migrating to PureScript, perhaps you've already shed a tear or two; contemplating that sad and tearful goodbye to your dear old friend. Well, dry those tears and put your big boy (or girl) pants back on, because PureScript just waved hello with its `Record` type constructor.  Porting this code snippet we get:
+And by migrating to PureScript, perhaps you've already shed a tear or two; contemplating that sad and tearful goodbye to your dear old friend, Object. Well, dry those tears and put your big boy (or girl) pants back on, because PureScript just waved hello with its `Record` type constructor.  Porting this code snippet we get:
 
 ```haskell
 type Person =
@@ -52,10 +52,14 @@ type Person r =
   , age       :: Int
   | r
   }
+```
+Shazam!  But let's go over a couple of 'minor' changes from the first example of `Person`.  By declaring `Person r`, I am *instantiating* that `Person` may contain extra record fields `r`.  Thus `Person` has become a *row-polymorphic* record (or extensible record type).  And, as an example, I'm doing that by creating the type `Musician` as an extension of  `Person r`, with the additional field `genre`.
 
+```haskell
 type Musician = Person ( genre :: String )
 ```
-Shazam!  But let's go over a couple of 'minor' changes from the first example.  By declaring `Person r`, I am *instantiating* that `Person` may contain extra record fields `r`.  Thus `Person` has become a *row-polymorphic* record (or extensible record type).  And we do that by creating the type `Musician` as an extension of  `Person r`, with the additional field `genre`.  Be careful to use parenthesis when creating a record extension, since `r` has to be a row kind, not a record type.  Now that we have defined an extension `Musician`, let's create one of my favorites:
+
+Be careful to use parenthesis when creating a record extension, since `r` has to be a row kind, not a record type.  Now that we have defined an extension `Musician`, let's create one of my favorites:
 
 ```haskell
 immy :: Musician
@@ -67,7 +71,7 @@ immy =
   }
 ```  
 
-What does this all mean?  Well, if this looks unfamiliar to you then recall that we covered the similar concept of extensible effects when we discussed native side-effects in [Tutorial 4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1).  To review:
+What does it all mean?  Well, if this looks unfamiliar to you then recall that we covered the similar concept of extensible effects when we discussed native side-effects in [Tutorial 4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1).  To review:
 
 ```haskell
 main :: forall e. Eff (console :: CONSOLE | e) Unit
@@ -83,40 +87,29 @@ makeMusician :: String -> String -> Int -> String -> Musician
 makeMusician = { firstName: _, lastName: _, age: _ , genre: _ }
 ```
 
-And for one last magic power, Record updates are available just like in Haskell:
+And for one last magic power, a shorthand for Record updates:
 
 ```haskell
 setGenre :: String -> Musician -> Musician
 setGenre g m = m { genre = g }
 ```
 
-```haskell
-main :: forall e. Eff (console :: CONSOLE | e) Unit
-main = do
-  let ih = makeMusician "Imogen" "Heap" 39 "Electronic"
-  logShow $ _.genre ih
-  logShow $ _.genre $ setGenre "Alternative" ih
-```
-
 I have included these examples in my [github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07), so feel free to try them yourself.
 
-Wow!  We covered a lot of ground here, but there's lots more to learn.  I encourage you to have a look at the [documentation](https://github.com/purescript/documentation/blob/master/language/Records.md) and also [Chapter 8.14]https://leanpub.com/purescript/read#leanpub-auto-objects-and-rows in PureScript by Example.
+Wow! We covered a lot of ground here, but there's lots more to learn about records in PureScript.  So I encourage you to have a look at the [documentation](https://github.com/purescript/documentation/blob/master/language/Records.md) and also [Chapter 8.14](https://leanpub.com/purescript/read#leanpub-auto-objects-and-rows) in PureScript by Example.
 
 ## Say hello to Additive, Conj, and First
-
-As mentioned in [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06), PureScript already has Semigroup constructors that copy the functionality of `Sum` & `All`. They're named `Additive` and `Conj` from the modules [Data.Monoid.Additive](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Additive#t:Additive) and [Data.Monoid.Conj](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Conj#t:Conj), respectively.  So I'm going to retire `Sum` & `All` in favor of the `Additive` and `Conj` from here on.
+As mentioned in [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06), PureScript already has Semigroup constructors that copy the functionality of `Sum` & `All`. They're named `Additive` and `Conj` from the modules [Data.Monoid.Additive](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Additive#t:Additive) and [Data.Monoid.Conj](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Conj#t:Conj), respectively.  So I'm going to retire `Sum` & `All` from Tutorial 6 in favor of the `Additive` and `Conj` from here on.
 
 I am also retiring the Semigroup `First` in favor of [Data.Maybe.First](https://pursuit.purescript.org/packages/purescript-maybe/3.0.0/docs/Data.Maybe.First). But this type signature is a little different from the `First` we saw in Tutorial 6.  Fortunately, it's relatively easy to modify our original implementation.  Plus, it allows me to introduce a major type constructor `Maybe` (sometimes called `Option` in other FP languages), which is the subject of our next in-depth look.
 
-## Maybe I will, and Maybe I won't
-
-Imagine we decide to augment our `Person` record from above by giving the user the option to withhold their age.  After all, my mother taught me that it is impolite to ask someone their age - right?  Well, the `Maybe` type constructor is an excellent way to make optional cases like this one explicit.  Now we could just assign a 0 to `age` or leave it blank, but that's not how we roll in PureScript.  So, instead of confusing readers of our program, let make this change explicit in our code.  As we can see below, the Maybe constructor has two potential values, `Nothing` or `Just a`.
+## Maybe I will, Maybe I won't
+Imagine we decide to augment our `Person` record from above by giving the user the option to withhold their age.  After all, my mother taught me that it is impolite to ask someone their age - right?  Well, the `Maybe` type constructor is an excellent way to make optional cases like this one explicit; creating clarity and preventing confusion by readers of our code. As we can see below, the Maybe constructor has two potential values, `Nothing` or `Just a`.
 
 ```haskell
 data Maybe a = Nothing | Just a
 ```
-You can think of this as something like a type-safe `null`, where `Nothing` is `null` and `Just a`
-is the non-null value `a`.  So, augmenting the `age` type in our `Person` record, we get:
+You can think of `Maybe` as something like a type-safe `null`, where `Nothing` is `null` and `Just a` is the non-null value of type `a`.  So, augmenting the `age` type in our `Person` record, we get:
 
 ```haskell
 type Person =
@@ -136,27 +129,32 @@ makePerson = { firstName: _, lastName: _, age: _ }
 Finally, here's our function assignment:
 
 ```haskell
-makePerson "Imogen" "Heap" (Just 39)
-makePerson "Imogen" "Heap" Nothing
+makePerson "Keith" "Emerson" Nothing
+makePerson "Greg" "Lake" Nothing
+makePerson "Carl" "Palmer" (Just 67)
 ```
 
-Note that `Maybe` is also a functor,  so `map` (covered in Tutorial TK link) works like a charm:
+Note that `Maybe` is also a functor (and other abstractions covered in future tutorials), so `map` (covered in [Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07) works like a charm:
 
 ```haskell
 isOverForty :: Maybe Int -> Maybe Boolean
-isOverForty = map (\x -> testForty x) where
-  testForty age = if age > 40 then true else false
+isOverForty = map (_ > 40)
 ```
 
-If the argument to `overForty` is `Nothing` then `map` will skip the `testForty` and return `Nothing`; otherwise, run `testForty` and return `Just true` or `Just false`.
+If the argument to `isOverForty` is `Nothing` then `map` will skip the anonymous function and return `Nothing`; otherwise, execute the comparison expression and return `Just true` or `Just false`.  Note that pattern matching (more on this in the next section) would have worked just as well:
 
-Now that we've introduced records, the `Maybe` type constructor, and retired `Sum`, `All` and `First`, we're ready to solve the problem of merging Nico's multiple game accounts using Semigroups.
+```haskell
+isOverForty :: Maybe Int -> Maybe Boolean
+isOverForty (Just age) = Just (age > 40)
+isOverForty _ = Nothing
+```
+
+At last, we've introduced records, the `Maybe` type constructor, and retired `Sum`, `All` and `First` semigroups from Tutorial 6 for their PureScript library counterparts.  Now we're ready to solve the problem of merging Nico's multiple game accounts using Semigroups.
 
 ## Merging multiple records using Semigroups
+To repeat what we want to accomplish in the main topic of this tutorial: we have a user, Nico, who has accidentally created three separate accounts on our site and has subsequently issued a support ticket to merge them.  How do we go about closing this ticket?
 
-To repeat what we want to accomplish in the main topic of this tutorial: we have a user, Nico, who has accidentally created three separate accounts on our site, and has subsequently issued a ticket to merge them together.  How do we go about closing this ticket?
-
-One nice trick with semigroups is that if you have a data structure that is entirely made up of semigroups, then that data structure is also a semigroup.  Thus, to append two or more of these data structures together, we append each of the objects that make up these semigroups.  
+One nice property of semigroups is that if you have a record whose objects are semigroups, then that record is also a semigroup.  Thus, to append two or more record semigroups together, we append each of the objects that make up these data structures.  
 
 Now, after covering records in detail, I hope it is no surprise that I'm using this construct to represent a user account:
 
@@ -182,20 +180,20 @@ showAccount { name, isPaid, points, friends } =
     ]
 ```    
 
-### Pattern Matching
+Let's cover these new constructs one at a time.
 
-In many FP languages, pattern matching is an integral part of development.  In `showAccount`, we used it to match values against the field names of `Account`.   But there are other variations on pattern matching that you should be made aware.  For example, say we want to write a recursive function to find the sum of integers in a list.
+### Pattern Matching
+In many FP languages, pattern matching is an integral part of development.  In `showAccount`, we used it to match values against the field names of `Account`.   But there are other variations on pattern matching that you should be made aware. For example, let's rewrite `isOverForty` from the previous section:
 
 ```haskell
-sum :: List Int -> Int
-sum Nil = 0
-sum (x : xs) = x + sum xs
+isOverForty :: Maybe Int -> Maybe Boolean
+isOverForty (Just age) = Just (age > 40)
+isOverForty _ = Nothing
 ```
 
-We define `sum` as a function that pattern matches on two data constructors `Nil` and `(x : xs)`.  The behavior of `sum` will be different based on the pattern match.  If it is `Nil` then were at the end of the list, so add `0` to the value computed from the last recursive call to `sum` and terminate; otherwise, continue to pattern match by deconstructing the head and tail of the list, (`x : xs`).  At each step, we add `x` (the head of the list) and recursively call `sum` with `xs` (the tail of the list) until reaching the end of the list.
+But, in this case, I still prefer the `map` implementation above for its succinctness.  
 
 ### Folds
-
 In `showAccount`, I used the function fold right (`foldr`) to concatenate my labels and contents of `Account` into one big string.  Otherwise, my function would have looked like this:
 
 ```haskell
@@ -207,20 +205,15 @@ showAccount { name, isPaid, points, friends } =
   "friends: " <> show friends <> "  }"
 ```
 
-Like pattern matching, folds are ubiquitous in FP and will become an integral part of your development in PureScript. We use them to reduce any structure that is foldable, e.g., lists and arrays, into a single object.  Let's look at the type signature for `foldr`.  The type signature is saying that we have a foldable structure `f`, an initial value `b`, and a function that takes `a` and `b` and returns `b`.
+Not only is this ugly, but it violates the DRY (Don't repeat yourself) principle by repeating virtually the same concatenation pattern four times! Fortunately, we can DRY this up with the help of a fold.  
+
+Like pattern matching, folds are ubiquitous in FP.  We use them to reduce any structure that is foldable, as in concatenating a list or array of strings into a single string.  Below is the type signature for `foldr`:
 
 ```haskell
-foldr :: forall a b f. Foldable f => (a -> b -> b) -> b -> f a -> b
+foldr :: forall a b s. Foldable s => (a -> b -> b) -> b -> s a -> b
 ```
 
-Take a look our recursive `sum` function from before, because you may see some similarities.  Is it possible to turn this recursive function into a fold?  Absolutely!
-
-```haskell
-sum' :: List Int -> Int
-sum' xs = foldr (\z x -> z + x) 0 xs
-```
-
-Typically, we refactor `sum` to be *point-free* by removing `xs`, but I've left it in for demonstration purposes.  So how does `foldr` evaluate?  Well, let's look underneath the hood, and then it will be clear:
+For example, you can think of a fold on lists (e.g., 1 : 2 : 3 : Nil)  as replacing  the Nil at the end of the list `l` with the value `b`.  Then, replace each cons `(:)` with the binary function `(a -> b -> b)`.  So how does `foldr` evaluate?  Well, let's create a recursive implementation on a list, and then it will be clear:
 
 ```haskell
 foldr :: forall a b. (a -> b -> b) -> b -> List a -> b
@@ -230,15 +223,35 @@ foldr f z xs =
     (x : xs) -> f x foldr f z xs
 ```    
 
-You should see that `foldr` is right-associative, which means how the associativity of an operator is grouped in the absence of parenthesis.  Putting the parenthesis back in, we get: `(x : xs) -> f x (foldr f z xs)`.  Another thing to pay attention is the real potential of blowing your stack.  For a very large list, before ever making its first evaluation, the number of recursive calls that are pushed onto the stack will be great.  So if there is that potential, then you may want to switch to `foldl`.
+You should see that `foldr` is right-associative, which means how we group the associativity of an operator in the absence of parenthesis.  Putting the parenthesis in, we get: `(x : xs) -> f x (foldr f z xs)`.
+
+For a concrete example, let the List `(1 : 2 : 3 : Nil)` be our foldable structure `s`;  `(+)` be the function `(a -> b -> b)`; and `0` be the specific value `b`. Then, by recursively parenthesizing we get: `(+) 1 ((+) 2 ((+) 3 0))`.
+
+Just as `foldr` is right-associative, there is a fold function that is left-associative, namely `foldl` (duh).  It has the same type signature, but the recursive implementation is different and will produce a different output depending on whether the binary function `(a -> b -> b)` is associative.
 
 ```haskell
-foldl f z []     = z
-foldl f z (x:xs) = let z' = z `f` x
-                   in foldl f z' xs
+foldl :: forall a b. (a -> b -> b) -> b -> List a -> b
+foldl f z xs =
+  case xs of
+    Nil -> z
+   (x:xs) = let z' = f z x
+            in foldl f z' xs
 ```                   
-PureScript's expression evaluation is strict, not lazy.  So, with `foldl`, you don't have to worry about lazy evaluation allocating a large number `z` variables (i.e., z1, z2, z3, . . ., zn) onto the heap.  Instead, the evaluation of `z` will be performed at each step of the fold.
+In the case of `(+)` there will be no difference because addition is associative.  But, if the binary operator is not associative, (e.g., subtraction) then we will get a different answer depending on whether you use `foldl` or `foldr`; so be careful.
 
+`foldl: ((-) ((-) ((-) 0 1) 2) 3) = -6 /= foldr: (-) 1 ((-) 2 ((-) 3 0)) = 2`
+
+### appendAccount
+
+```haskell
+appendAccount :: Account -> Account -> Account
+appendAccount
+  { name: a1, isPaid: b1, points: c1, friends: d1 }
+  { name: a2, isPaid: b2, points: c2, friends: d2 } =
+  { name: a1 <> a2, isPaid: b1 <> b2, points: c1 <> c2, friends: d1 <> d2 }
+
+infixr 5 appendAccount as ++
+```
 
 
 ## Navigation

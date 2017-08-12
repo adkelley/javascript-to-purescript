@@ -12,7 +12,8 @@
     "purescript-arrays": "^4.0.0",
     "purescript-generics-rep": "^5.0.0",
     "purescript-strings": "^3.0.0",
-    "purescript-maybe": "^3.0.0"
+    "purescript-maybe": "^3.0.0",
+    "purescript-lists": "^4.9.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"

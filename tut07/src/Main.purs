@@ -4,7 +4,8 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Data.Foldable (foldr)
+import Data.Foldable (foldl, foldr)
+import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
 import Data.Maybe.First (First(..))
 import Data.Monoid.Additive (Additive(..))
@@ -54,15 +55,25 @@ acct2 = makeAccount "Nico" false 2 ["Lou"]
 acct3 :: Account
 acct3 = makeAccount "Christa Päffgen" true 3 ["John", "Sterling"]
 
-
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: ∀ e. Eff (console :: CONSOLE | e) Unit
 main = do
   log "Record examples"
   logShow $ _.firstName {firstName: "Imogen", lastName: "Heap", age: (Just 39)}
   logShow $ _.age $ makePerson "Imogen" "Heap" (Just 39)
   let immy = makeMusician "Imogen" "Heap" Nothing "Electronic"
+  logShow $ _.age immy
   logShow $ _.genre immy
   logShow $ _.genre $ setGenre "Alternative" immy
+
+  log "\nFold Examples on a list (1 : 2 : 3 : Nil)"
+  let list = 1 : 2 : 3 : Nil
+  log "Associative binary operator, result from foldl & foldr will be equal"
+  logShow $ foldl (+) 0 list == foldr (+) 0 list
+  log "Non-associative binary operator, result from foldl & foldr will not be equal"
+  logShow $ foldl (-) 0 list /= foldr (-) 0 list
+
+
+
   -- semigroups are concatable and associative
   log "\nSemigroup examples"
   log $ showAccount $ acct1 ++ acct2 ++ acct3
