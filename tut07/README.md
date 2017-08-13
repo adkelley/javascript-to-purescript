@@ -1,4 +1,4 @@
-# Semigroup Examples (DRAFT)
+# Semigroup Examples
 
 ![series banner](../resources/glitched-abstract.jpg)
 
