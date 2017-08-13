@@ -2,14 +2,14 @@
 
 ![series banner](../resources/glitched-abstract.jpg)
 
-> *This is* **Tutorial 7** *in the series* **Make the leap from JavaScript to PureScript** *. Be sure*
+> *This is* **Tutorial 7** *in the series* **Make the leap from JavaScript to PureScript**. Be sure*
 > *to read the series introduction where I cover the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
 > [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06)
 
-Welcome to Tutorial 7 in the series **Make the leap from Javascript to PureScript** and I hope you're enjoying it thus far.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript. I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
+Welcome to Tutorial 7 in the series **Make the leap from Javascript to PureScript** and I hope you're enjoying it thus far.  In this tutorial we’re going to run through a few semigroup examples, using the powers we learned in [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06).  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript. I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-semigroup-examples) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and it's better that you understand its implementation in the comfort of JavaScript.
 
 If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07).  Finally, If you are enjoying this series then please help me to tell others by recommending this article and/or favoring it on social media
@@ -17,7 +17,7 @@ If you read something that you feel could be explained better, or a code example
 ## Robot Voice: Shall we play a game?
 Imagine we've developed an online game and one of our players Nico, has made three accounts accidentally; issuing a support ticket to merge them into one account.  Well, my first reaction is to ban Nico permanently for negligence. Regrettably, even in my own imaginary games company, that decision is well above my pay grade. So we'll just have to figure out how to accommodate Nico's request.
 
-Anytime you see the words merge, combine, consolidate, etc. in a user story; you should be thinking Semigroups immediately.  So, let's help poor Nico out by combining his or her credentials with the aid of our Semigroup types from [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06).  But instead of merely presenting the code and calling it a day, I'll make this tutorial a little more interesting by introducing a few new syntax constructs in PureScript; starting with Records.
+Anytime you see the words merge, combine, consolidate, etc. in a user story; you should be thinking Semigroups immediately.  So, let's help poor Nico out by combining his or her credentials with the aid of our Semigroup type constructors from [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06).  But instead of merely presenting the code and calling it a day, I'll make this tutorial a little more interesting by introducing a few new syntax constructs in PureScript; starting with Records.
 
 ## PureScript records overview
 If you are a professional frontend developer, then it is likely you're using JavaScript objects on a daily basis.  You know, those name:value pairs we call properties, enclosed in braces? I'm sure you've seen them, but just in case:
@@ -71,7 +71,7 @@ immy =
   }
 ```  
 
-What does it all mean?  Well, if this looks unfamiliar to you then recall that we covered the similar concept of extensible effects when we discussed native side-effects in [Tutorial 4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1).  To review:
+What does it all mean?  Well, if this looks unfamiliar to you then recall that we covered the similar concept of extensible effects when we discussed native side-effects in [Tutorial 4 Part 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1).  To review:
 
 ```haskell
 main :: forall e. Eff (console :: CONSOLE | e) Unit
@@ -99,7 +99,7 @@ I have included these examples in my [github repository](https://github.com/adke
 Wow! We covered a lot of ground here, but there's lots more to learn about records in PureScript.  So I encourage you to have a look at the [documentation](https://github.com/purescript/documentation/blob/master/language/Records.md) and also [Chapter 8.14](https://leanpub.com/purescript/read#leanpub-auto-objects-and-rows) in PureScript by Example.
 
 ## Say hello to Additive, Conj, and First
-As mentioned in [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06), PureScript already has Semigroup constructors that copy the functionality of `Sum` & `All`. They're named `Additive` and `Conj` from the modules [Data.Monoid.Additive](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Additive#t:Additive) and [Data.Monoid.Conj](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Conj#t:Conj), respectively.  So I'm going to retire `Sum` & `All` from Tutorial 6 in favor of the `Additive` and `Conj` from here on.
+As mentioned in [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06), PureScript already has Semigroup constructors that copy the functionality of `Sum` & `All`. They're named `Additive` and `Conj` from the modules [Data.Monoid.Additive](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Additive#t:Additive) and [Data.Monoid.Conj](https://pursuit.purescript.org/packages/purescript-monoid/3.0.0/docs/Data.Monoid.Conj#t:Conj), respectively.  So I'm going to retire `Sum` & `All` in favor of the `Additive` and `Conj` from here on.
 
 I am also retiring the Semigroup `First` in favor of [Data.Maybe.First](https://pursuit.purescript.org/packages/purescript-maybe/3.0.0/docs/Data.Maybe.First). But this type signature is a little different from the `First` we saw in Tutorial 6.  Fortunately, it's relatively easy to modify our original implementation.  Plus, it allows me to introduce a major type constructor `Maybe` (sometimes called `Option` in other FP languages), which is the subject of our next in-depth look.
 
@@ -134,7 +134,7 @@ makePerson "Greg" "Lake" Nothing
 makePerson "Carl" "Palmer" (Just 67)
 ```
 
-Note that `Maybe` is also a functor (and other abstractions covered in future tutorials), so `map` (covered in [Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07) works like a charm:
+Note that `Maybe` is also a functor (and other abstractions covered in future tutorials), so `map` (covered in [Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) works like a charm:
 
 ```haskell
 isOverForty :: Maybe Int -> Maybe Boolean
@@ -187,7 +187,7 @@ isOverForty _ = Nothing
 But, in this case, I still prefer the `map` implementation above for its succinctness.  
 
 ### Folds
-In `showAccount`, I used the function fold right (`foldr`) to concatenate my field labels and values in `Account` into one big string.  Otherwise, my function might have looked like this:
+In `showAccount` (listed above), I used the function fold right (`foldr`) to concatenate my field labels and values in `Account` into one big string.  Otherwise, my function might have looked like this:
 
 ```haskell
 showAccount :: Account -> String
@@ -198,7 +198,7 @@ showAccount { name, isPaid, points, friends } =
   "friends: " <> show friends <> "  }"
 ```
 
-Not only is this ugly, but it violates the DRY (Don't repeat yourself) principle, by repeating virtually the same concatenation pattern four times! Fortunately, we can DRY this up with the help of a fold.
+Not only is this ugly, but it violates the DRY (Don't repeat yourself) principle, by repeating virtually the same concatenation pattern four times! Fortunately, we DRYed this up with the help of a fold.
 
 Like pattern matching, folds are ubiquitous in FP.  We use them to reduce any structure that is foldable, as in concatenating a list or array of strings into a single string.  Below is the type signature for `foldr`:
 
@@ -252,7 +252,7 @@ infixr 5 appendAccount as ++
 
 The function `appendAccount` will take two `Account`s and merge them to return a new `Account`.  Again, we use pattern matching to deconstruct the field's values from their labels.  Once we have deconstructed the values from the two records, then we create a new record by concatenating them.
 
-Keep in mind that we declared `Account` to be a record whose fields are defined by the semigroup constructors, `First`, `Conj`, `Additive` and Array.  So if you forgot what will be the result of each concatenation, make sure that you review [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06).
+Keep in mind that we declared `Account` to be a record whose fields are defined by the semigroup constructors, `First`, `Conj`, `Additive` and `Array`.  So if you forgot what will be the result of each concatenation, make sure that you review [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06).
 
 Finally, notice I've declared an infix operator alias `(++)` for calling `appendAccount`.  I set the operator's precedence to 5, to match the precedence of `(<>)`.  Now, to merge three accounts, instead of writing
 
@@ -262,7 +262,7 @@ acct1 `appendAccount` acct2 `appendAccount` acct3
 I can write the shorthand version `acct1 ++ acct2 ++ acct3`. And finally, using `foldr`, we can DRY this up with `foldr (++) acct1 [acct2, acct3]`, which would come in handy if the number of accounts to merge was great.
 
 ## Summary
-In this tutorial, we looked at a practical application of semigroups by merging multiple user account records.  Along the way, I also introduced some new constructs including, folds, pattern matching, and records.  Folds are a nice way to encapsulate recursive functions on lists or arrays that have the familiar `x:xs` pattern.  They can also help to DRY up your code.  So whenever you see an expression with the same binary operator (e.g., `<>`) used multiple times, then consider refactoring it with a proper fold.  
+In this tutorial, we looked at a practical application of semigroups by merging multiple user account records.  Along the way, I also introduced some new constructs including, folds, pattern matching, and records.  Folds are a nice way to encapsulate recursive functions on lists or arrays that have the familiar `x:xs` pattern, and they can also help to DRY up your code.  So whenever you see an expression with the same binary operator (e.g., `<>`) used multiple times, then consider refactoring it with a proper fold.  
 
 In addition to its magic powers of deconstruction, pattern matching also makes your code simpler to read.  The order is important when specifying patterns in recursive functions, so be sure to add your base case first, followed by more specific patterns, and then the general ones last.
 
