@@ -1,34 +1,21 @@
 module Main where
 
 import Prelude
+
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Data.BooleanAlgebra (tt)
-import Data.Monoid (class Monoid, mempty)
-
-newtype Sum a = Sum a
-instance showSum :: Show a => Show (Sum a) where
-  show (Sum x) = "(Sum " <> show x <> ")"
-instance semigroupSum :: Semiring a => Semigroup (Sum a) where
-  append (Sum a) (Sum b) = Sum (a + b)
-instance monoidSum :: Semiring a => Monoid (Sum a) where
-  mempty = Sum zero
-
-
-newtype All a = All a
-instance showAll :: Show a => Show (All a) where
-  show (All x) = "(All " <> show x <> ")"
-instance semigroupAll :: BooleanAlgebra a => Semigroup (All a) where
-  append (All a) (All b) = All (a && b)
-instance monoidAll :: BooleanAlgebra a => Monoid (All a) where
-  mempty = All tt
-
+import Data.Foldable (foldr)
+import Data.Monoid (mempty)
+import Data.Monoid.Additive (Additive(..))
+import Data.Monoid.Conj (Conj(..))
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   -- semigroups are concatable and associative
   log "Ensure failsafe combination using monoids"
-  log $ "alex"
-  logShow $ (Sum 1) <> (Sum 2) <> mempty
-  logShow $ (All true) <> (All false) <> mempty
-  logShow $ (All true) <> (All true) <> mempty
+  -- logShow $ (Additive 1) <> (Additive 2) <> (Additive 3) <> mempty
+  logShow $ foldr (<>) mempty $ map Additive [1, 2, 3]
+  -- (Conj true) <> (Conj false) <> mempty
+  logShow $ foldr (<>) mempty $ map Conj [true, false, true]
+  logShow $ foldr (<>) mempty $ map Conj [true, true, true]
+  -- logShow $ (Conj true) <> (Conj true) <> mempty
