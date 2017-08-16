@@ -19,14 +19,13 @@ type Account = Record
   , friends :: Array String
   )
 
-
 showAccount :: Account -> String
 showAccount { name, isPaid, points, friends } =
   foldr (<>) ""
-    [ "{ name: ", show name, ",\n  "
-    , "isPaid: ", show isPaid, ",\n  "
-    , "points: ", show points, ",\n  "
-    , "friends: ", show friends, "  }"
+    [ "{\n", "name: ", show name, "\n"
+    , "isPaid: ",  show isPaid, "\n"
+    , "points: ",  show points, "\n"
+    , "friends: ", show friends, "\n}"
     ]
 
 appendAccount :: Account -> Account -> Account

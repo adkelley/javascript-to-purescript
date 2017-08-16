@@ -166,10 +166,10 @@ We also want a function to log the contents of an `Account` to the console.  As 
 showAccount :: Account -> String
 showAccount { name, isPaid, points, friends } =
   foldr (<>) ""
-    [ "{ name: ", show name, ",\n  "
-    , "isPaid: ", show isPaid, ",\n  "
-    , "points: ", show points, ",\n  "
-    , "friends: ", show friends, "  }"
+    [ "{\n", "name: ", show name, "\n"
+    , "isPaid: ",  show isPaid, "\n"
+    , "points: ",  show points, "\n"
+    , "friends: ", show friends, "\n}"
     ]
 ```    
 
@@ -262,7 +262,9 @@ acct1 `appendAccount` acct2 `appendAccount` acct3
 I can write the shorthand version `acct1 ++ acct2 ++ acct3`. And finally, using `foldr`, we can DRY this up with `foldr (++) acct1 [acct2, acct3]`, which would come in handy if the number of accounts to merge was great.
 
 ## Summary
-In this tutorial, we looked at a practical application of semigroups by merging multiple user account records.  Along the way, I also introduced some new constructs including, folds, pattern matching, and records.  Folds are a nice way to encapsulate recursive functions on lists or arrays that have the familiar `x:xs` pattern, and they can also help to DRY up your code.  So whenever you see an expression with the same binary operator (e.g., `<>`) used multiple times, then consider refactoring it with a proper fold.  
+In this tutorial, we looked at a practical application of semigroups by merging multiple user account records.  Along the way, I also introduced some new constructs including, folds, pattern matching, and records.  You'll find a complete version of the solution in my [github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07)
+
+Folds are a nice way to encapsulate recursive functions on lists or arrays that have the familiar `x:xs` pattern, and they can also help to DRY up your code.  So whenever you see an expression with the same binary operator (e.g., `<>`) used multiple times, then consider refactoring it with a proper fold.  
 
 In addition to its magic powers of deconstruction, pattern matching also makes your code simpler to read.  The order is important when specifying patterns in recursive functions, so be sure to add your base case first, followed by more specific patterns, and then the general ones last.
 
