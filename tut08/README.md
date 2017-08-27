@@ -24,10 +24,10 @@ Additive x <> Additive y == Additive (x + y)
 ```
 You may recall that we used it in Tutorial 7 to help merge Nico’s game accounts by adding her `points` from each account.  
 
-There is another interesting property with `Additive` that manifests itself when you add an element to zero.  If we have Additive ( 1 + 0), we get back (Additive 1), Additive (2 + 0) returns (Additive 2), and so on.  Thus anything plus zero will return that thing.  Here, zero is the called identity or neutral element for `Additive`, meaning whenever we append one or more numbers with zero, we get back their sum.  You'll see why this is important shortly, but first let's cover the identity elements for the other semigroups covered in Tutorial 7.
+There is another interesting property with `Additive` that manifests itself when you add an element to zero.  If we have Additive (1 + 0), we get back (Additive 1), Additive (2 + 0) returns (Additive 2), and so on.  Thus anything plus zero will return that thing.  Here, zero is the called identity or neutral element for `Additive`, meaning whenever we append one or more numbers with zero, we get back their sum.  You'll see why this is important shortly.  But first, let's introduce the identity elements for the other semigroups covered in Tutorial 7.
 
 ### Determining the identity element
-Now consider `Conj` from [Data.Monoid.Conj](https://pursuit.purescript.org/packages/purescript-monoid/3.1.0/docs/Data.Monoid.Conj), whose append method is logical conjunction:
+Consider `Conj` from [Data.Monoid.Conj](https://pursuit.purescript.org/packages/purescript-monoid/3.1.0/docs/Data.Monoid.Conj), whose append method is logical conjunction:
 
 ```haskell
 Conj x <> Conj y == Conj (x && y)
@@ -61,22 +61,22 @@ Monoids are semigroups with an identity element.  That's it - really!  That is a
 For a more formal definition of this and other algebraic terms, one of the most approachable tutorial series for functional programmers is from [Bartosz Milewski](https://bartoszmilewski.com).  So, after you’ve run through my code examples below, and made some of your own, I encourage you to carve out some time each week to explore what he has to say on these topics.
 
 ### Not every semigroup gets a promotion
-Are there semigroups that don't have an identity element?  You bet!  In [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06), I used my own, custom implementation of `First`, instead of [Data.Maybe.First](https://pursuit.purescript.org/packages/purescript-maybe/3.0.0/docs/Data.Maybe.First).  My `First` semigroup in Tutorial 6 ignored every element within an append operation, except for the first argument, returning that element regardless.  But what if the first argument was an empty array or list?  Well, that will just blow up in our faces because we don't have any value to return as our first argument.
+Are there semigroups that don't have an identity element?  You bet!  In [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06), I used my own, custom implementation of `First`, instead of [Data.Maybe.First](https://pursuit.purescript.org/packages/purescript-maybe/3.0.0/docs/Data.Maybe.First).  My `First` semigroup in Tutorial 6 ignored every element within an append operation, except for the first argument, returning that element regardless.  But what if the first argument is an empty array or list?  Well, that will just blow up in our faces because we don't have any value to return as our first argument.
 
 If you are skeptical (and you should be), then go back to the code in [Tutorial 6](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06/src/Main.purs) and add the following to the `main` function.  It's an attempt to log the result of appending an empty array with a non-empty one.  You'll find that it won't even compile.
 ```haskell
 logShow $ (First null) <> (First [1])
 ```
-So, sadly, `First` from Tutorial 6 stays a semigroup because it doesn't have an identity element.  The upside is, in contrast to JavaScript, that you're finding this out at compile time instead of run time where the stakes are much higher.
+So, sadly, `First` from Tutorial 6 stays a semigroup because it doesn't have an identity element.  The upside is, in contrast to JavaScript, that you are finding this out at compile time instead of run time where the stakes are much higher.
 
-But, what about `First` from the module `Data.Maybe.First`? You may recall I used this version in Tutorial 7.  You'll find that the code below compiles and returns `(First (Just [1]))`.  
+But, what about `First` from the module `Data.Maybe.First`? You may recall I used this version in Tutorial 7.  You will find that the code below compiles and returns `(First (Just [1]))`.  
 ```haskell
 logShow $ (First Nothing) <> (First (Just [1]))
 ```
 Because this implementation of `First` has the identity element `Nothing`, it just earned its monoid badge - congratulations `First`!
 
 ##   Monoid usage and examples
-Monoids are useful because you can perform 'safe' operations with them.  For example, let's say our code returns an empty list of the `Additive` type then, instead of blowing up, the value returned will be zero.  In summary, for the three monoids we've covered so far, `mempty` returns the following:
+Monoids are useful because you can perform 'safe' operations with them.  For example, let's say our code returns an empty list of the `Additive` type. Then, instead of blowing up, the value returned will be zero.  In summary, for the three monoids we've covered so far, `mempty` returns the following:
 
 ```haskell
   logShow $ mempty :: Additive Int -- (Additive 0)
@@ -87,7 +87,7 @@ Monoids are useful because you can perform 'safe' operations with them.  For exa
 Note the inline type assignment (e.g., `mempty :: Additive Int`) within our PureScript code. It is a handy feature for declaring the type of generic type constructs such as `mempty`.
 
 ### Code examples
-We'll keep the code light and easy in this tutorial; giving a few examples of appending the identity element (i.e., `mempty`) to the monoids Additive, Conj, and First.  In the next tutorial, we'll add several more monoids to our tool belt and give examples of how you can take advantage of them in your code.
+We'll keep the code light and easy in this tutorial; giving a few examples of appending the identity element (i.e., `mempty`) to the monoids `Additive`, `Conj`, and `First`.  In the next tutorial, we'll add several more monoids to our tool belt and give examples of how you can take advantage of them in your code.
 
 ```haskell
 -- logs (Additive 6)
@@ -113,7 +113,7 @@ As shown below, we can use a type constructor as our first argument `(a -> b) ` 
 ```haskell
 map :: forall a b. (a -> b) -> f a -> f b
 ```
-Here is a concrete type declaration of `map` using `Array` with the `Additive` monoid:
+Here is a concrete declaration of `map` using `Array` with the `Additive` monoid:
 ```haskell
 map :: (Int -> Additive Int) -> Array Int -> Array (Additive Int)
 ```
@@ -125,7 +125,7 @@ forall x. mempty <> x = x <> mempty = x
 ```
 The above means that if you append a monoid with its identity element, then you get back the monoid with that element. The value of the identity element, `mempty` will depend on the monoid.  For example, in the case of the `Additive` monoid, the value of `mempty` is zero.
 
-In the next tutorial, we will look at several new monoids and how to advantage of them in our code.  Finally, if you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  I'll be starting a "Hot Tips in PureScript" series soon, so follow me on twitter [@adkelley](https://twitter.com/adkelley) for the latest details.  Till then!
+In the next tutorial, we will look at several new monoids and how to advantage of them in our code.  Finally, if you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My twitter handle is [@adkelley](twitter.com/adkelley).  Till then!
 
 ## Navigation
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07) Tutorials [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut09)
