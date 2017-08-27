@@ -4,6 +4,7 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Data.Array (null)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
 
@@ -54,6 +55,10 @@ main = do
   logShow $ First "a" <> First "b" <> First "c"  -- (First "a")
   log "Associativity law:"
   logShow $ (First "a" <> First "b") <> First "c" == First "a" <> (First "b" <> First "c") -- true
+  -- This won't compile because First is not a monoid (See tutorial 8)
+  --logShow $ (First null) <> (First [1])
+  -- This does compile
+  logShow $ (First [1]) <> (First [2])
 
   log "\nPureScript equilivents from Data.Monoid.X"
   log "Additive == Sum"

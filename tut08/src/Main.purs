@@ -11,17 +11,20 @@ import Data.Monoid (mempty)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
 
+
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   -- semigroups are concatable and associative
   log "Ensure failsafe combination using monoids"
-  -- logShow $ (Additive 1) <> (Additive 2) <> (Additive 3) <> mempty
+  log "\nAdditive"
+  logShow $ mempty :: Additive Int -- (Additive 0)
+  logShow $ foldr (<>) mempty [Additive 1, Additive 2, Additive 3]
+  -- DRYing the above up
   logShow $ foldr (<>) mempty $ map Additive [1, 2, 3]
-  -- (Conj true) <> (Conj false) <> Conj true <> mempty
-  logShow $ foldr (<>) mempty $ map Conj [true, false, true]
-  -- logShow $ (Conj true) <> (Conj true) <> (Conj true) <> mempty
+  log "\nConj"
+  logShow $ mempty :: Conj Boolean -- (Conj true)
+  logShow $ foldr (<>) mempty $ map Conj [true, true, false]
   logShow $ foldr (<>) mempty $ map Conj [true, true, true]
-  -- logShow First (Just 1) <> First (Just 2) <> First (Just 3) <> mempty
-  logShow $ foldr (<>) mempty $ map First [Just 1, Just 2, Just 3]
-  -- logShow First Nothing <> First Nothing <> First (Just 3) <> mempty
-  logShow $ foldr (<>) mempty $ map First [Nothing, Nothing, Just 3]
+  log "\nFirst"
+  logShow $ mempty :: First Int -- First (Nothing)
+  logShow $ mempty <> (First (Just [1]))
