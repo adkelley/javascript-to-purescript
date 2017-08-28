@@ -1,0 +1,23 @@
+{
+  "name": "tut09",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^3.1.0",
+    "purescript-console": "^3.0.0",
+    "purescript-monoid": "^3.1.0",
+    "purescript-arrays": "^4.0.0",
+    "purescript-orders": "^3.0.0",
+    "purescript-either": "^3.1.0",
+    "purescript-newtype": "^2.0.0",
+    "purescript-foldable-traversable": "^3.6.0",
+    "purescript-strings": "^3.3.1"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^3.0.0"
+  }
+}
