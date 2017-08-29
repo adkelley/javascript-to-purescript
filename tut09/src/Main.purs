@@ -6,7 +6,7 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Array (filter)
 import Data.Either (Either(..))
-import Data.Foldable (all, find, foldMapDefaultR, foldr)
+import Data.Foldable (all, and, find, foldMapDefaultR, foldr, sum)
 import Data.Maybe (Maybe(..))
 import Data.Monoid (mempty)
 import Data.Monoid.Additive (Additive(..))
@@ -19,6 +19,7 @@ import Data.Ord.Min (Min(..))
 import Data.String (length)
 import Data.String.Regex (Regex, match, regex)
 import Data.String.Regex.Flags (RegexFlags(..), RegexFlagsRec)
+import Data.Tuple (Tuple(..), fst, snd)
 import Partial.Unsafe (unsafePartial)
 
 type Stats = { page :: String
@@ -56,8 +57,15 @@ hasVowels s =
 longWord :: String -> Boolean
 longWord s = length s > 4
 
+
+-- longWord and hasVowels are both predicates so that means
+-- you can use && or || via the heyting algebra too if you
+-- stick with concrete booleans
+-- both = longWord && hasVowels
 both :: String -> Boolean
-both s = unwrap $ foldr (<>) mempty $ Conj <$> ([longWord, hasVowels] <*> [s])
+both s = unwrap $ foldMapDefaultR Conj $ [longWord, hasVowels] <*> [s]
+
+
 
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
@@ -74,16 +82,19 @@ main = do
   logShow $ foldMapDefaultR Disj [false, false, true]
   log "\n PS Conj =~ JS All"
   logShow $ mempty :: Conj Boolean -- (Conj true)
-  logShow $ foldr (<>) mempty $ Conj <$> [true, true, true]
+  logShow $ foldMapDefaultR Conj [true, true, true]
   log "\n PS Max =~ JS Max"
   logShow $ mempty :: Max Int -- (Max -2147483648)
-  logShow $ foldr (<>) mempty $ Max <$> [1, 2, 3]
+  logShow $ foldMapDefaultR Max [1, 2, 3]
   log "\n PS Min =~ JS Min"
   logShow $ mempty :: Min Int -- (Min 2147483647)
-  logShow $ foldr (<>) mempty $ Min <$> [1, 2, 3]
+  logShow $ foldMapDefaultR Min [1, 2, 3]
   log "\n PS Either =~ JS Either"
-  logShow $ foldr (<>) mempty $ (\x -> (Additive $ checkViews x.views)) <$> stats
+  logShow $ foldMapDefaultR (\x -> Additive $ checkViews x.views) stats
   log "\n PS find uses Maybe instead of Either"
-  logShow $ find (\x -> x > 4) [3, 4, 5, 6, 7]
+  logShow $ find (_ > 4) [3, 4, 5, 6, 7]
   log "\n PS hasVowels && longWord"
   logShow $ filter both ["gym", "bird", "lilac"]
+  log "\n PS Tuple =~ JS Pair"
+  logShow $ sum [(Tuple 1 2), (Tuple 3 4)]
+  logShow $ and [(Tuple true false), (Tuple true false)]
