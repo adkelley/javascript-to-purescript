@@ -93,13 +93,15 @@ We'll keep the code light and easy in this tutorial; giving a few examples of ap
 -- logs (Additive 6)
 logShow $ foldr (<>) mempty $ map Additive [1, 2, 3]
 -- logs (Conj false)  
-logShow $ foldr (<>) mempty $ map Conj [true, true, false]
+logShow $ foldr (<>) mempty $ Conj <$> [true, true, false]
 -- logs First ((Just 1))
-logShow $ foldr (<>) mempty $ map First [Nothing, Just 1, Just 2]
+logShow $ foldr (<>) mempty $ First <$> [Nothing, Just 1, Just 2]
 ```
 
 ### Using map to construct semigroups
-In the examples above, to keep things 'DRY' (i.e., Don't Repeat Yourself), I am leveraging our old friend `map` to take an array of concrete types (e.g., Int, Number, etc.)  and turn them into an array of semigroups before folding them.  If we don't use `map` then the first example above would look like this:
+In the examples above, to keep things 'DRY' (i.e., Don't Repeat Yourself), I am leveraging our old friend `map` to take an array of concrete types (e.g., Int, Number, etc.)  and turn them into an array of semigroups before folding them.  In the second and third examples, I'm using map's infix operator `<$>`.  You'll see `<$>` often, so it is important you are aware of this idiomatic alternative.  In the next tutorial, I’ll show you how to shorten this expression even further.
+
+If we don't use `map` then the first example above would look like this:
 
 ```haskell
 -- (Additive 6)
