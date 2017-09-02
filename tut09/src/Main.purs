@@ -6,7 +6,7 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Array (filter)
 import Data.Either (Either(..))
-import Data.Foldable (all, and, find, foldMapDefaultR, foldr, sum)
+import Data.Foldable (all, and, find, foldMap, foldr, sum)
 import Data.Maybe (Maybe(..))
 import Data.Monoid (mempty)
 import Data.Monoid.Additive (Additive(..))
@@ -59,42 +59,38 @@ longWord s = length s > 4
 
 
 -- longWord and hasVowels are both predicates so that means
--- you can use && or || via the heyting algebra too if you
--- stick with concrete booleans
--- both = longWord && hasVowels
-both :: String -> Boolean
-both s = unwrap $ foldMapDefaultR Conj $ [longWord, hasVowels] <*> [s]
-
-
+-- you can use && or || via the heyting algebra
+both :: Conj String -> Conj Boolean
+both = map (longWord && hasVowels)
 
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
-  log "A curated collection of Monoids and their uses"
-  log "\n PS Additive =~ JS Sum"
+  log "A curated collection of monoids and their uses"
+  log "\nPS Additive =~ JS Sum"
   logShow $ mempty :: Additive Int -- (Additive 0)
-  logShow $ foldMapDefaultR Additive [1, 2, 3]
-  log "\n PS Multiplicative =~ JS Product"
+  logShow $ foldMap Additive [1, 2, 3]
+  log "\nPS Multiplicative =~ JS Product"
   logShow $ mempty :: Multiplicative Int -- (Multiplicative 1)
-  logShow $ foldMapDefaultR Multiplicative [1, 2, 3]
-  log "\n PS Disj =~ JS Any"
+  logShow $ foldMap Multiplicative [1, 2, 3]
+  log "\nPS Disj =~ JS Any"
   logShow $ mempty :: Disj Boolean -- (Disj false)
-  logShow $ foldMapDefaultR Disj [false, false, true]
-  log "\n PS Conj =~ JS All"
+  logShow $ foldMap Disj [false, false, true]
+  log "\nPS Conj =~ JS All"
   logShow $ mempty :: Conj Boolean -- (Conj true)
-  logShow $ foldMapDefaultR Conj [true, true, true]
-  log "\n PS Max =~ JS Max"
+  logShow $ foldMap Conj [true, true, true]
+  log "\nPS Max =~ JS Max"
   logShow $ mempty :: Max Int -- (Max -2147483648)
-  logShow $ foldMapDefaultR Max [1, 2, 3]
-  log "\n PS Min =~ JS Min"
+  logShow $ foldMap Max [1, 2, 3]
+  log "\nPS Min =~ JS Min"
   logShow $ mempty :: Min Int -- (Min 2147483647)
-  logShow $ foldMapDefaultR Min [1, 2, 3]
-  log "\n PS Either =~ JS Either"
-  logShow $ foldMapDefaultR (\x -> Additive $ checkViews x.views) stats
-  log "\n PS find uses Maybe instead of Either"
+  logShow $ foldMap Min [1, 2, 3]
+  log "\nPS Either =~ JS Either"
+  logShow $ foldMap (\x -> Additive $ checkViews x.views) stats
+  log "\nPS find uses Maybe instead of Either"
   logShow $ find (_ > 4) [3, 4, 5, 6, 7]
-  log "\n PS hasVowels && longWord"
-  logShow $ filter both ["gym", "bird", "lilac"]
-  log "\n PS Tuple =~ JS Pair"
+  log "\nPS hasVowels && longWord"
+  logShow $ filter (unwrap <<< both) $ Conj <$> ["gym", "bird", "lilac"]
+  log "\nPS Tuple =~ JS Pair"
   logShow $ sum [(Tuple 1 2), (Tuple 3 4)]
   logShow $ and [(Tuple true false), (Tuple true false)]
