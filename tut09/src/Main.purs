@@ -6,8 +6,9 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Array (filter)
 import Data.Either (Either(..))
-import Data.Foldable (all, and, find, foldMap, foldr, sum)
+import Data.Foldable (and, find, foldMap, sum)
 import Data.Maybe (Maybe(..))
+import Data.Maybe.First (First(..))
 import Data.Monoid (mempty)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
@@ -19,12 +20,13 @@ import Data.Ord.Min (Min(..))
 import Data.String (length)
 import Data.String.Regex (Regex, match, regex)
 import Data.String.Regex.Flags (RegexFlags(..), RegexFlagsRec)
-import Data.Tuple (Tuple(..), fst, snd)
+import Data.Tuple (Tuple(..))
 import Partial.Unsafe (unsafePartial)
 
-type Stats = { page :: String
-             , views :: Maybe Int
-             }
+type Stats =
+  { page :: String
+  , views :: Maybe Int
+  }
 
 stats :: Array Stats
 stats = [ { page: "Home",  views: (Just 1) }
@@ -79,12 +81,15 @@ main = do
   log "\nPS Conj =~ JS All"
   logShow $ mempty :: Conj Boolean -- (Conj true)
   logShow $ foldMap Conj [true, true, true]
+  log "\nPS First =~ JS First"
+  logShow $ mempty :: First Int -- Nothing
+  logShow $ foldMap First [Nothing, Just 1, Nothing] -- First ((Just 1))
   log "\nPS Max =~ JS Max"
   logShow $ mempty :: Max Int -- (Max -2147483648)
-  logShow $ foldMap Max [1, 2, 3]
+  logShow $ foldMap Max [1, 2, 3] -- (Max 3)
   log "\nPS Min =~ JS Min"
   logShow $ mempty :: Min Int -- (Min 2147483647)
-  logShow $ foldMap Min [1, 2, 3]
+  logShow $ foldMap Min [1, 2, 3]  -- (Min 1)
   log "\nPS Either =~ JS Either"
   logShow $ foldMap (\x -> Additive $ checkViews x.views) stats
   log "\nPS find uses Maybe instead of Either"

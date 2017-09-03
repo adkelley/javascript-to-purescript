@@ -61,39 +61,48 @@ foldMap Additive [1, 2, 3]
 Nice!  Now that's out of the way, let's have a look those monoids.
 
 ## Monoid examples
-By now, I hope you have looked at Brian's [video](https://egghead.io/lessons/javascript-a-curated-collection-of-monoids-and-their-uses).  I've created a table below which shows the name of the monoid in JavaScript and its equivalent name in PureScript.
-| JavaScript | PureScript     |
-|------------|----------------|
-| Sum        | Additive       |
-| Product    | Multiplicative |
-| Any        | Disj           |
-| All        | Conj           |
-| Max        | Max            |
-| Min        | Min            |
-| First      | First*         |
+By now, I hope you have looked at Brian's [video](https://egghead.io/lessons/javascript-a-curated-collection-of-monoids-and-their-uses).  I've created a table below which shows the name of the monoid in JavaScript (from Brian's video) and its equivalent name in PureScript.
 
+| JavaScript 	| PureScript     	|
+|------------	|----------------	|
+| Sum        	| Additive       	|
+| Product    	| Multiplicative 	|
+| Any        	| Disj           	|
+| All        	| Conj           	|
+| Max        	| Max            	|
+| Min        	| Min            	|
+| First      	| First<sup>1</sup>         	|
+| Pair      	| Tuple         	|
+
+<sup>1</sup>As discussed above, `First` in PureScript is different than Brian's implementation of `First` in JavaScript.  The PureScript implementation uses the `Maybe` constructor to promote it to a monoid using `Nothing` as the identity element.
+
+Now let's get started on these monoids:
 
 ```haskell
--- Sum -> "
 logShow $ mempty :: Additive Int -- (Additive 0)
-logShow $ foldMapDefaultR Additive [1, 2, 3]
+logShow $ foldMap Additive [1, 2, 3]  -- (Additive 6)
 ```
-So `Additive` from the module [Data.Monoid.Additive](https://pursuit.purescript.org/packages/purescript-monoid/3.1.0/docs/Data.Monoid.Additive#t:Additive) is equivalent to Brian's `Sum` constructor in JavaScript.  I call this out in the comment `-- Additive =~ Sum` so that you can follow along with the video.  The next line shows that the identity element for `Additive` is zero.
+The first line above logs the identity element (Additive 0), while the next line records the result (Additive 6) of reducing the array to a single monoid.  I will use the same approach for the remainder of the examples below
 
 Now, using the same format as above:
 ```haskell
--- Multiplicative =~ Product
 logShow $ mempty :: Multiplicative Int -- (Multiplicative 1)
-logShow $ foldMapDefaultR Multiplicative [1, 2, 3]
-```
-This constructor is similar
-```haskell
--- Conj =~ All
-logShow $ mempty :: Conj Boolean -- (Conj true)
-logShow $ foldMapDefaultR Conj [true, true, true]
+logShow $ foldMap Multiplicative [1, 2, 3] -- (Multiplicative 6)
 ```
 ```haskell
--- Disj =~ Any"
 logShow $ mempty :: Disj Boolean -- (Disj false)
-logShow $ foldMapDefaultR Disj [false, false, true]
+logShow $ foldMap Disj [false, false, true] -- (Disj true)
 ```
+```haskell
+logShow $ mempty :: Conj Boolean -- (Conj true)
+logShow $ foldMap Conj [true, true, true]  -- (Conj true)
+```
+```haskell
+logShow $ mempty :: Max Int -- (Max -2147483648)
+logShow $ foldMap Max [1, 2, 3] -- (Max 3)
+```
+```haskell
+logShow $ mempty :: Min Int -- (Min 2147483647)
+logShow $ foldMap Min [1, 2, 3] -- (Min 1)
+```
+As for `Max` and `Min`, a further explanation of their resprective identity elements is in order.  For `Max`, the neutral element is the minimum safe `Int`, which is -2147483648.  Why, because `Int` is a 32-bit signed binary integer, so this is the smallest value representable.  Thus, if we `foldMap` `Max` on an empty array, the return value will be `mempty` == -2147483648.  And, vice-versa, for `Min`, the neutral element is the maximum safe `Int`, which is 2147483647.  So again, if we `foldMap` `Min` on an empty array, the return value will be `mempty` == 2147483647.  
