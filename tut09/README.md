@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
-> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 7](https://github.com/adkelley/javascript-to-purescript/tree/master/tut07)
+> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 8](https://github.com/adkelley/javascript-to-purescript/tree/master/tut08)
 
 Welcome to Tutorial 9 in the series **Make the leap from Javascript to PureScript** and I hope you're enjoying it thus far.  In this tutorial, we're going to break the topic of monoids wide open by increasing our vocabulary and showing how to put them to good use in production.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript. I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-a-curated-collection-of-monoids-and-their-uses) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and it's better you understand its implementation in the comfort of JavaScript.
@@ -24,7 +24,7 @@ newtype Additive a = Additive a
 instance semigroupAdditive :: Semiring a => Semigroup (Additive a) where
   (Additive a) <> (Additive b)  = Additive (a + b)
 ```
-So what are the types that belong to `Additive`?  Well, the constraint above says that the type `a` must belong to the `Semiring` class.  It restricts the values to be of type `Number`, `Int`, `Unit`, and..., don't forget, functions that return a `Semiring`.
+So what are the types that belong to `Additive`?  Well, the constraint above says that the type `a` must belong to the `Semiring` class.  It restricts the value `a` to be of type `Number`, `Int`, `Unit`, and..., don't forget, functions that return a `Semiring`.
 
 Now that we have defined `semigroup`, we've almost got our `monoid` definition in the bag. All that is left is to explain is the `identity element`.  This element is a neutral value, such that whenever we append one or more elements to it, we get back those elements.  For addition, the identity element is `zero`, because `1 + 2 + 0 = 1 + 2,  2 + 3 + 0 = 2 + 3`, etc.  In PureScript, we use `mempty` (monoid empty) to reference the identity element of a monoid.
 
@@ -84,11 +84,9 @@ I mentioned in Tutorial 8 that I would show you how to reduce the syntax needed 
 ```haskell
 foldr (<>) mempty $ map Additive [1, 2, 3]
 ```
-This pattern is soooooo prevalent in FP, so pay close attention. We map a monoid constructor (e.g., `Additive`) to elements contained in a foldable structure (e.g.,`Array`) and reduce them to a single monoid value by appending them to the identity element `mempty`.
+This pattern is soooooo prevalent in FP, so pay close attention. We map a monoid constructor (e.g., `Additive`) to elements contained in a foldable structure (e.g.,`Array`) and reduce them to a single monoid by appending them to the identity element `mempty`.
 
-Whenever you see an overly complicated expression like the one above then, you may have a 'code smell' that's in need of a deodorizer!  Well, thankfully there is a freshener for this expression, and it is called `foldMap`.  We can also map a chain of multiple functions together with our monoid constructor too.  And I'll show you how to compose them in the section [Monoids gone wild!](#monoids-gone-wild).
-
-Let's take a look at the type declaration for `foldMap`:
+Whenever you see an overly complicated expression like the one above then, you may have a 'code smell' that's in need of a deodorizer!  Well, thankfully there is a freshener for this expression, and it is called `foldMap`.  Let's take a look at the type declaration:
 ```haskell
 foldMap ::  forall a m.  Monoid m => (a -> m) -> f a -> m
 ```
@@ -158,7 +156,7 @@ foldMap (Additive <<< fromNothing <<< _.views) badStats
 ```
 Working from the top down in the example above, we have a [Record](https://github.com/adkelley/javascript-to-purescript/tree/master/tut06) of type `Stats` that we use to compute the number of views for each page on our website. We've also added a safety mechanism by using the `Maybe` constructor with our `views` field.  In case of some unforeseen event, like the database is down, we can assign `views` to `Nothing` and handle the error downstream.  Next, we store the stats in an array (in this case `badStats`), and we'll later use this container to fold the views and derive the total for all the web pages.
 
- So how to deal with the possibility of views becoming `Nothing` due to a technical error? Well, that is the purpose of `fromNothing`, which takes a `Maybe` value and turns it into an `Either` type.  Why is it necessary? Well if you recall from [Tutorial 3](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03), a `Left` value is a good way to stop a `fold` operation right in its tracks.  In our `foldMap` expression, we are composing three functions `Additive(fromNothing(_.views))` that define the `Map` part of our `foldMap`. Using `badStats` as our test array, as soon as `foldMap` encounters `Additive (Left "Nothing")` then our append operation stops and `foldMap` returns with the error; allowing us to deal with it as we please.
+ So how to deal with the possibility of views becoming `Nothing` due to a technical error? Well, that is the purpose of `fromNothing`, which takes a `Maybe` value and turns it into an `Either` type.  Why is it necessary? Well if you recall from [Tutorial 3](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03), a `Left` value is a good way to stop a `fold` operation right in its tracks.  In our `foldMap` expression, we are composing three functions `( Additive ( fromNothing ( _.views )))` that define the `Map` part of our `foldMap`. Remember that `_.views` is our record accessor function. Using `badStats` as our test array, as soon as `foldMap` encounters `Additive (Left "Nothing")` then our append operation stops and `foldMap` returns with the error; allowing us to deal with it as we please.
 
 ### Find me an agent
 In his JavaScript [video](https://egghead.io/lessons/javascript-a-curated-collection-of-monoids-and-their-uses) Brian showed us how to combine `First` and `Either` to find the first element in a list that satisfies a predicate.  As you might imagine, this is a common task, so PureScript has a similar version of `find` in the [Data.Foldable](https://pursuit.purescript.org/packages/purescript-foldable-traversable/3.4.0/docs/Data.Foldable#v:find) module. Note that, instead of `Either`, `Data.Foldable.find` uses the `Maybe` constructor to return the first element satisfying the predicate (i.e., `Just a`) or `Nothing`.  
@@ -166,13 +164,19 @@ In his JavaScript [video](https://egghead.io/lessons/javascript-a-curated-collec
 You won't learn anything if I use `Data.Foldable.find`, so let's construct our version `find` using the constructors we have at hand, namely `foldMap` and `First`.
 
 ```haskell
-find :: ∀ c a. Foldable c => (a -> Boolean) -> c a -> Maybe a
+find ∷ ∀ c a. Foldable c ⇒ (a → Boolean) → c a → Maybe a
 find f = unwrap <<< foldMap (First <<< maybeBool f)
 
 find (_ > 4) [3, 4, 5, 6, 7] -- (Just 5)
 ```
 
-Notice `find` works with any `Foldable` data structure, such as an `Array` or `List`. It illustrates that polymorphism is your friend; especially for utility functions like this one, so use it whenever possible. Also, if you like, start taking advantage of the ability to use Unicode characters, i.e., `∀` instead of `forall`.  You can use them in names, operators, and syntax, and you will find more information on this topic [here](https://github.com/paf31/24-days-of-purescript-2016/blob/master/2.markdown).  I'm also using `point free` programming (covered in [Tutorial 5](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03)) by dropping the `xs` in `find f xs = unwrap <<< foldMap (First <<< maybeBool f) xs`. Finally, `maybeBool` does what it says - it tests a value against a predicate `f` and returns `(Just a)` or `Nothing` depending on whether the result of `f` is `true` or `false`.
+Notice `find` works with any `Foldable` data structure, such as an `Array` or `List`. It illustrates why polymorphism is your friend; especially for reusable functions, so use it whenever possible. Also, if you like, start taking advantage of the ability to use Unicode characters in your code, i.e., `∀` instead of `forall`.  You can use them in names, operators, and syntax, and you will find more information on this topic [here](https://github.com/paf31/24-days-of-purescript-2016/blob/master/2.markdown).  I'm also using point free programming (covered in Tutorial 5) above by dropping the xs from below:
+
+ ```haskell
+ find f xs = unwrap <<< foldMap (First <<< maybeBool f) xs`
+ ```
+
+ Finally, `maybeBool` does what it says - it tests a value against a predicate `f` and returns `(Just a)` or `Nothing` depending on whether the result of `f` is `true` or `false`.
 
 ### Filtering on multiple predicates
 Amongst Brian's curated examples of monoids, this next one is my favorite.  We've got two predicates, `hasVowels` and `longWord`, and we want to filter a list of strings down to just those that satisfy both predicates.  Here's how we solve it:
@@ -211,7 +215,7 @@ Let's again start from the top and work our way down.  We're going to evaluate a
 
 Next, `hasVowels` will test the words against the regular expression, unwrapping the `Maybe` constructor and returning a boolean. And yes, I agree that dealing with regular expressions in PureScript can seem overly verbose compared to JavaScript. But it's all about avoiding mishaps that will burn you at runtime.
 
-We'll skip over `longWord` since that should be self-explanatory.  Up next is my favorite function in the example, `multiple`.  Brian's implementation (i.e., `both`), is limited to two predicates. I was a little more ambitious with `multiple` by allowing multiple predicates, and polymorphic monoids & foldable structures - oh my! We have our familiar `foldMap` expression with the mapping function `compose m`.  "What's this?" you ask?  Well `compose` is located in the prelude package and it's the function behind the operator alias `(<<<)`.  For the first filter operation, the composition is `Conj(hasVowels(longWord(w)))` where `w` is each word in the `ws` array `["gym", "bird", "lilac"]`.  I'm also using `point-free` again by dropping the `ws`.
+We'll skip over `longWord` since that should be self-explanatory.  Up next is my favorite function in the example, `multiple`.  Brian's implementation (i.e., `both`), is limited to two predicates. I was a little more ambitious with `multiple` by allowing multiple predicates, and polymorphic monoids & foldable structures - oh my! We have our familiar `foldMap` expression with the mapping function `compose m`.  "What's this?" you ask?  Well `compose` is located in the prelude package and it's the function behind the operator alias `(<<<)`.  For the first filter operation, the composition is `( Conj ( hasVowels ( longWord ( w )))` where `w` is each word in the `ws` array `["gym", "bird", "lilac"]`.  I'm also using `point-free` again by dropping the `ws`.
 
 Finally, we've reached our filter expression.  The only thing worth mentioning here is that `filter` requires a boolean predicate, so we unwrap the boolean value from the monoid (e.g., `Conj`) by composing `multiple` with `unwrap`.  The first filter will result in `["lilac"]`, while the second uses the `Disj` monoid to return `["bird", "lilac"]`.
 

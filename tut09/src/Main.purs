@@ -21,7 +21,7 @@ import Data.Ord.Min (Min(..))
 import Data.String (length)
 import Data.String.Regex (Regex, match, regex)
 import Data.String.Regex.Flags (RegexFlags(..), RegexFlagsRec)
-import Data.Tuple (Tuple(..), fst, snd)
+import Data.Tuple (Tuple(..))
 import Partial.Unsafe (unsafePartial)
 
 type Stats =
