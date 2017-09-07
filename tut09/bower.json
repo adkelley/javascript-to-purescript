@@ -15,7 +15,8 @@
     "purescript-either": "^3.1.0",
     "purescript-newtype": "^2.0.0",
     "purescript-foldable-traversable": "^3.6.0",
-    "purescript-strings": "^3.3.1"
+    "purescript-strings": "^3.3.1",
+    "purescript-filterable": "^2.4.1"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"
