@@ -10,12 +10,13 @@ import Data.Filterable (maybeBool)
 import Data.Foldable (class Foldable, foldMap)
 import Data.Maybe (Maybe(..))
 import Data.Maybe.First (First(..))
+import Data.Maybe.Last (Last(..))
 import Data.Monoid (class Monoid, mempty)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
 import Data.Monoid.Disj (Disj(..))
 import Data.Monoid.Multiplicative (Multiplicative(..))
-import Data.Newtype (unwrap)
+import Data.Newtype (class Newtype, unwrap)
 import Data.Ord.Max (Max(..))
 import Data.Ord.Min (Min(..))
 import Data.String (length)
@@ -74,8 +75,19 @@ multiple ∷ ∀ m a b c. Foldable c ⇒ Monoid m ⇒ (a -> m)
 multiple m = foldMap (compose m)
 
 -- mimics find in Data.Foldable
-find :: ∀ c a. Foldable c => (a -> Boolean) -> c a -> Maybe a
-find f = unwrap <<< foldMap (First <<< maybeBool f)
+-- find :: ∀ c a. Foldable c => (a -> Boolean) -> c a -> Maybe a
+-- find f = unwrap <<< foldMap (First <<< maybeBool f)
+
+-- A generalization of the above that works with both First and Last
+find :: ∀  a c m
+        .  Newtype m (Maybe a)
+        => Foldable c
+        => Monoid m
+        => (Maybe a -> m)
+        -> (a -> Boolean)
+        -> c a
+        -> Maybe a
+find m f = unwrap <<< foldMap (m <<< maybeBool f)
 
 toSumAll :: Tuple Int Boolean -> Tuple (Additive Int) (Conj Boolean)
 toSumAll (Tuple a b) = Tuple (Additive a) (Conj b)
@@ -112,7 +124,8 @@ main = do
   logShow $ foldMap (Additive <<< fromNothing <<< _.views) goodStats
   logShow $ foldMap (Additive <<< fromNothing <<< _.views) badStats
   log "\nThis find uses Maybe instead of Either"
-  logShow $ find (_ > 4) [3, 4, 5, 6, 7]
+  logShow $ find First (_ > 4) [3, 4, 5, 6, 7, 2, 8]
+  logShow $ find Last  (_ > 4) [3, 4, 5, 6, 7, 2, 8]
   log "\nPS hasVowels && longWord"
   logShow $ filter (unwrap <<< multiple Conj [hasVowels, longWord]) ["gym", "bird", "lilac"]
   logShow $ filter (unwrap <<< multiple Disj [hasVowels, longWord]) ["gym", "bird", "lilac"]

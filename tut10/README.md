@@ -1,14 +1,27 @@
-# Make the Leap from Javascript to PureScript Series (DRAFT)
+# Unbox types with foldMap
 
-## 10 - xx
+![series banner](../resources/glitched-abstract.jpg)
 
-This is the second tutorial in the series **Make the leap from Javascript to PureScript**.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) where you'll find the Javascript reference for learning FP abstractions, but also how to install and run PureScript. The series outline and javascript code samples have been borrowed from the egghead.io course [Professor Frisby Introduces Composable Functional Javascript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean). I assume that you've watched Brian's [video](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box) and PureScript, together with Bower and Pulp have been installed.  That is you're familiar with the **Box** abstraction you're able to enter `bower update && pulp run` to load the library dependencies, compile the program, and run the code.  Let's go!
+> *This is* **Tutorial 9** *in the series* **Make the leap from JavaScript to PureScript**. Be sure*
+> *to read the series introduction where I cover the goals & outline, and the installation,*
+> *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
+> *once-per-week. So come back often, there is a lot more to come!*
 
-## Abstraction
+> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 9](https://github.com/adkelley/javascript-to-purescript/tree/master/tut09)
 
-## Diving into the code
+Welcome to Tutorial 10 in the series **Make the leap from Javascript to PureScript** and I hope you're enjoying it thus far.  In this tutorial, we're going to break the topic of monoids wide open by increasing our vocabulary and showing how to put them to good use in production.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript. I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-a-curated-collection-of-monoids-and-their-uses) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and it's better you understand its implementation in the comfort of JavaScript.
 
+You will find the markdown and all code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley)
+
+## Review foldMap
+## Additional monoids
+Dual, Last, Ordering, etc.
+## Ablien monoid
+Abelian monoid is a monoid that is also commutative, like addition and multiplication (but not lists or strings, for which order is significant). You can also just say commutative monoid or, if you prefer, not talk about them at all. But do spread the word about monoids.
+## Group
+## Testing in PureScript
+## Quickcheck
 
 ## Navigation
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut09) Tutorials [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11)

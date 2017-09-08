@@ -12,7 +12,8 @@
     "purescript-monoid": "^3.0.0",
     "purescript-folds": "^3.0.0",
     "purescript-foldable-traversable": "^3.0.0",
-    "purescript-maps": "^3.0.0"
+    "purescript-maps": "^3.0.0",
+    "purescript-group": "^3.1.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"

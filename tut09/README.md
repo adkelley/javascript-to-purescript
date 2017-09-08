@@ -59,7 +59,7 @@ instance semigroupFirst :: Semigroup (First a) where
 instance monoidFirst :: Monoid (First a) where
   mempty = First Nothing
 ```
-Did you catch the `first@` syntax?  When pattern matching, `first` now refers to the entire type `(First (Just a) )`.  So, instead of retyping a long `(First (Just a) )` on the right-hand side, I can type `first`.  This shortener is also handy when passing the type to a function.
+Did you catch the `first@` syntax?  When pattern matching, the @ sign means “Read As”, so `first` now refers to the entire expression `(First (Just a) )`.  So, instead of retyping a long `(First (Just a) )` on the right-hand side, I can type `first`.  This shortener is also handy when passing the expression to a function.
 
 ## Meet the monoids
 In the last tutorial, I kept our list of monoids limited to three because it helped us to stay focused on the "what are monoids and what do they do?" part of learning.  This tutorial is all about introducing you to the wide variety of monoids available in functional programming, along with examples of their usage.  I'll again cover `Additive`, `Conj`,  and `First` for good measure. Then I will add `Disj`, `Multiplicative`, `Max`, `Min`, and `Tuple` to the family.  There are much more, but this will get you started, and you might just come up with a few of your own (did anyone say `Last`?).
