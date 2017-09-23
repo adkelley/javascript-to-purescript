@@ -256,3 +256,8 @@ Perhaps this is not the most elegant solution, but it serves as a good example o
 In this tutorial, we expanded our vocabulary of monoids to include `Multiplicative`, `Disj`, `Max`, `Min` and `Tuple`. We also explored a few examples of how to use them in practice.  We found that `foldMap` gives us some syntax sugar sweetness when you need to map and reduce over a foldable structure of values. Finally, I would be negligent if I didn't mention that arrays, lists, and strings are monoids too.  Each has an identity element, and the append method satisfies the associative law. But I'll leave as an exercise for the reader to determine the identity element for each.  
 
 Once again, whether or not you're finding these tutorials helpful in making the leap from JavaScript to PureScript then give me clap, drop me a comment, or post a tweet. My twitter handle is [@adkelley](https://twitter.com/adkelley).  I believe any feedback is good feedback and helpful toward making these tutorials better in the future.  Till next time.
+
+## Navigation
+[<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut08) **Tutorials** [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10)
+
+You may find that the README for the next tutorial is under construction. But if you're an eager beaver and would like to look ahead, then all the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.  
