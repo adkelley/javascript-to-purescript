@@ -144,10 +144,14 @@ a * b * c == c * b * a  -- communitive
 ```
 As Steven Syrek mentions in his [blog post](https://medium.com/@sjsyrek/five-minutes-to-monoid-fe6f364d0bba) - "You can also just say commutative monoid or, if you prefer, not talk about them at all. But do spread the word about monoids." I couldn't agree with him more.  So post the following in your favorite FP subreddit: "TIL Abelian Monoids are monoids that are not only associative, but they're also communitive!"  And thou shalt receive high praise from thine FP overlords 😉.
 
+## Bonus - You should write some tests!
+We'll be covering testing in PureScript in the next tutorial, so here's a [preview](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10/test/Main.purs) for those who would like to get a head start.
+
 ## Summary
 In this tutorial, we ended our brief but spectacular journey exploring the power of monoids. We learned that the `foldMap` expression for folding monoids, is essentially a combination of `map`, `foldr`, and `mempty`.  We also added a few more monoids to our toolbox, with the observation that we can use the same monoid in several different instances (e.g., `Dual`).  We saw the newtype `(a → a)` is represented by the monoid `Endo`, whose append operation is function composition and the identity value `id`.  And we ended with the `abelian monoid`, which is simply a monoid that is also communitive (e.g., `Multiplicative`).
 
 Once again, whether or not you’re finding these tutorials helpful in making the leap from JavaScript to PureScript then give me clap, drop me a comment, or post a tweet. My twitter handle is @adkelley. I believe any feedback is good feedback and helpful toward making these tutorials better in the future. Till next time.
+
 
 ## Navigation
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut09) Tutorials [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11)
