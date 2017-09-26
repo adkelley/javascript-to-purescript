@@ -4,7 +4,6 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Data.Array (fold)
 import Data.Foldable (class Foldable, foldMap)
 import Data.Group (ginverse)
 import Data.List (List(..), foldr, (:))
@@ -14,7 +13,6 @@ import Data.Monoid (class Monoid, mempty)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Dual (Dual(..))
 import Data.Monoid.Endo (Endo(..))
-import Data.Monoid.Multiplicative (Multiplicative(..))
 import Data.Newtype (unwrap)
 import Data.Tuple (Tuple(..), fst, snd)
 
@@ -31,7 +29,7 @@ main = do
   logShow $ foldMap id [(Additive 1), (Additive 2), (Additive 3)]
   logShow $ foldMap Additive [1, 2, 3]
 
-  log "\nWorking with Tuples, then use 'fst' or 'snd'"
+  log "\nWorking with Tuples of different types, then use 'fst' or 'snd'"
   logShow $ foldMap (Additive <<< snd) [Tuple "brian" 1, Tuple "sarah" 2] -- (Additive 3)
   logShow $ foldMap (Dual <<< fst) [Tuple "Brian" 1, Tuple " and " 2, Tuple "Sarah" 3] -- (Dual "Sarah and Brian")
 
@@ -62,7 +60,7 @@ main = do
   logShow $ mempty :: (Last Int)
   logShow $ foldMap Last [(Just 1), Nothing, (Just 2)] -- (Just 2)
 
-  log "\nfoldMap for monoids is foldr and map combined"
+  log "\nfoldMap for monoids is foldr, mempty and map combined"
   let ms = map Additive (1 : 2 : 3 : Nil)
   let fs = foldr (<>) mempty
   logShow $ fs ms == foldMap Additive (1 : 2 : 3 : Nil) -- true
