@@ -24,7 +24,7 @@ You should be asking “why is mapping over Box better than using ordinary funct
    or function x = foo <<< bar <<< baz <<< quux $ x
    or function x = (quux >>> baz >>> bar >>> foo) x
 ```
-Apply ($), backward composition (<<<), or forward composition (<<<) - they all return the same result. So choose which ever is easier for you to understand.  
+Apply ($), backward composition (<<<), or forward composition (>>>) - they all return the same result. So choose which ever is easier for you to understand.  
 
 Now, using composition on ordinary functions, let’s refactor `nextCharForNumberString` from [tut01/src/Main.purs](https://github.com/adkelley/javascript-to-purescript/blob/master/tut01/src/Main.purs).  I chose forward composition (>>>) because I prefer showing long transformation chains starting with the first transformation. I'll often put them on separate lines to make them more readable, and I prefer [pointfree](https://wiki.haskell.org/Pointfree) style (i.e., not mentioning the argument `str`) whenever possible.
 
