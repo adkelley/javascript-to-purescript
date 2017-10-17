@@ -15,12 +15,12 @@ Welcome to Tutorial 11 in the series **Make the leap from Javascript to PureScri
 In this tutorial, we are going to cover Lazy evaluation, which is a technique for keeping your code pure, by deferring evaluation along with any side effects until it's time to return a value.  Lazy evaluation has a few more benefits as we'll see shortly.  We'll also look at how PureScript handles such things as type-safety and currying when transcompiling to JavaScript.
 
 I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-unboxing-things-with-foldable) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts exceptionally well, and it's better you understand its implementation in the comfort of JavaScript.
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-delaying-evaluation-with-lazybox) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts exceptionally well, and it's better you understand its implementation in the comfort of JavaScript.
 
 You will find the markdown and all code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley).
 
 ## Lazy evaluation
-Lazy evaluation, also known as `call by need`, is a program execution model that defers the computation of expressions in your program until you need them.  Also, once you evaluate a lazy expression, the result is often "memoized" to ensure that it is computed only once.  Meaning, if the value is required again later in your program then, instead of re-evaluating it, the runtime will access the stored result from cache.
+Lazy evaluation, also known as `call by need`, is a program execution model that defers the computation of expressions in your program until you need them.  Also, when you evaluate a lazy expression, the result is often "memoized" to ensure that it is computed only once.  Meaning, if the value is required again later in your program then, instead of re-evaluating it, the runtime will access the stored result from cache.
 
 As you might imagine, this approach can reduce the running time of a function because it avoids repeated evaluations.  Another advantage is that you can take data structures, such as an array, and assume their range is infinite.  Then, generate as many items as you need from the sequence without expressly bothering about its size.
 
@@ -83,11 +83,11 @@ const LazyBox = g =>
 })
 
 const result = LazyBox(() =>  '     64    ')
-                         .map(abba => abba.trim())
-                         .map(trimmed => new Number(trimmed))
-                         .map(number => number + 1)
-                         .map(x => String.fromCharCode(x))
-                         .fold(x => x.toLowerCase())
+               .map(abba => abba.trim())
+               .map(trimmed => new Number(trimmed))
+               .map(number => number + 1)
+               .map(x => String.fromCharCode(x))
+               .fold(x => x.toLowerCase())
 ```
 
 So, how is this accomplished in PureScript?  Well, when it comes to lazy evaluation, there is no need to define it ourselves.  Instead, there is the `Lazy` class, which represents types that allow the evaluation of values to be deferred.  Moreover, its comes chalk full of instances including `map`.  So we can quickly port `LazyBox` to `Lazy` in PureScript with the following code example:
@@ -110,9 +110,9 @@ main = do
 ```
 Besides the `Lazy` class, the two functions you should understand are `defer` and `force`.  The `defer` function does what you expect.  Just like our JavaScript example, it creates a Lazy value by assigning the concrete type `a` to an anonymous function.  The type signature for `defer` is:
 ```haskell
-defer :: forall a. (Unit -> a)  -> Lazy a
+defer :: forall a. (Unit -> a) -> Lazy a
 ```
-Brian mentions in his tutorial that this gives us "purity by virtue of laziness," because you'll never observe the effects by using `map` or any other instance belonging to the `Lazy` class until we apply `force`.  This delay in the evaluation of an expression is known as a `thunk`, a word that you'll often hear in functional programming.  The `force` function` has the type signature:
+Brian mentions in his tutorial that this gives us "purity by virtue of laziness," because you'll never observe the effects by using `map` or any other instance belonging to the `Lazy` class until you apply `force`.  This delay in the evaluation of an expression is known as a `thunk`, a word that you'll often hear in functional programming.  The `force` function has the type signature:
 
 ```haskell
 force :: forall a. Lazy a -> a
