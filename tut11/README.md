@@ -2,7 +2,7 @@
 
 ![series banner](../resources/glitched-abstract.jpg)
 
-> *This is* **Tutorial11** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
+> *This is* **Tutorial 11** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
 > *to read the series introduction where I cover the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
@@ -137,23 +137,21 @@ Can I use the same code in PureScript? Well, sort of . . .
 
 ```haskell
 module Problem2
-  (solution
-    ) where
+  (solution) where
 
 import Prelude
+
+import Control.Lazy (defer)
 import Data.Foldable (sum)
 import Data.Int (even)
-import Data.Lazy (Lazy, defer)
-import Data.List.Lazy (List(List), Step(Cons), takeWhile, filter)
+import Data.List.Lazy (List, filter, takeWhile, (:))
 
-lazyCons :: forall a. a -> Lazy (List a) -> List a
-lazyCons a b = List (map (Cons a) b)
 
 lazyFibList :: Int -> Int -> List Int
-lazyFibList f1 f2 = lazyCons f1 (defer \_ -> lazyFibList f2 (f1 + f2))
+lazyFibList f1 f2 = f1 : defer \_ -> lazyFibList f2 (f1 + f2)
 
 solution :: Int -> Int
-solution maxFib = sum $ filter even $ takeWhile (_ < maxFib) (lazyFibList 1 2)
+solution maxFib = sum $ filter even $ takeWhile (_ < maxFib) $ lazyFibList 1 2
 
 main = do
      log $ "Problem 2: " <> show (solution 4000000)
@@ -182,3 +180,6 @@ Once again, whether or not you’re finding these tutorials helpful in making th
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10) **Tutorials** [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut12)
 
 You may find that the README for the next tutorial is under construction. But if you're an eager beaver and would like to look ahead, then all the of code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) have been ported to PureScript already. But I may amend them as I write the accompanying tutorial markdown.
+
+---
+20171022: Updated the PureScript example in the Practical uses for Lazy section to utilize [Sam Thomson's](https://medium.com/@samthomson) suggestion of [Control.Lazy.defer](https://pursuit.purescript.org/packages/purescript-control/3.3.0/docs/Control.Lazy#v:defer)
