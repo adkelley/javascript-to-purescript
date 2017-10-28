@@ -1,6 +1,6 @@
 # Capture Side Effects in a Task
 
-![series banner](../resources/glitched-abstract.jpg)
+![Series banner](../resources/glitched-abstract.jpg)
 
 > *This is* **Tutorial 12** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
 > *to read the series introduction where I cover the goals & outline, and the installation,*
@@ -18,6 +18,8 @@ I borrowed (with permission) the outline and javascript code samples from the eg
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-delaying-evaluation-with-lazybox) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts exceptionally well, and it's better you understand its implementation in the comfort of JavaScript.
 
 You will find the markdown and all code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley).
+
+## Mimicing Task with Continuation Passing Style
 
 ## Navigation
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11) Tutorials [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13)
