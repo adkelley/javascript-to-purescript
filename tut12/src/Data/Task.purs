@@ -3,11 +3,11 @@ module Data.Task
   , taskOf
   , taskRejected
   , taskCont
-  , taskString
   , taskFork
   ) where
 
 import Prelude
+
 import Control.Monad.Cont (Cont, cont)
 import Data.Either (Either(..), either)
 
@@ -22,9 +22,5 @@ taskRejected = Left
 taskCont :: forall a r. (Task a a) -> Cont r (Task a a)
 taskCont t = cont $ \k -> k t
 
-taskString :: Task Int Int -> Task String String
-taskString (Left e) = Left (show e)
-taskString (Right x) = Right (show x)
-
-taskFork :: Task String String -> String
-taskFork = either ("error: " <> _) ("success: " <> _)
+taskFork :: forall a. Show a => Task a a -> String
+taskFork = either (\e -> "error: " <> show e) (\x -> "success: " <> show x)
