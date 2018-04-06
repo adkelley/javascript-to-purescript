@@ -2,6 +2,8 @@ module Data.Pythagoras
   ( pythagoras
   , pythagorasCPS
   , pythagorasCont
+  , addCPS
+  , addCont
   )
   where
 
@@ -27,7 +29,7 @@ pythagorasCPS :: forall r. Int -> Int -> ((Int -> r) -> r)
 pythagorasCPS x y = \k ->
   squareCPS x $ \xSquared ->
   squareCPS y $ \ySquared ->
-  addCPS xSquared ySquared $ k
+  (addCPS xSquared ySquared) k
 
 addCont :: forall r. Int -> Int -> Cont r Int
 addCont x y =
