@@ -13,7 +13,7 @@
 ## Introduction
 Welcome to Tutorial 12 in the series **Make the leap from Javascript to PureScript**.  I hope you're enjoying it thus far.  If you're new to this series, then be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript.
 
-In this tutorial, we are going to create a structure called `Task` that mimics [data.task](http://folktalegithubio.readthedocs.io/en/latest/api/data/task/index.html?highlight=task) from the [Folktale](http://folktalegithubio.readthedocs.io/en/latest/index.html) libraries developed for generic functional programming in JavaScript.  In Brian's [video tutorial](https://egghead.io/lessons/javascript-capturing-side-effects-in-a-task), he used `Task` from this library to show how, among other things, it can model side-effects explicitly within the structure through lazy evaluation (footnote) (see [Tutorial 12]((https://medium.com/@kelleyalex/delay-evaluation-with-lazybox-4e71987ecc7a)).  This way, the programmer has full knowledge of and can encapsulate delayed computations, latency, or anything that isn't pure in one place.
+In this tutorial, we are going to create a structure called `Task` that mimics [data.task](http://folktalegithubio.readthedocs.io/en/latest/api/data/task/index.html?highlight=task) from the [Folktale](http://folktalegithubio.readthedocs.io/en/latest/index.html) libraries developed for generic functional programming in JavaScript.  In Brian's [video tutorial](https://egghead.io/lessons/javascript-capturing-side-effects-in-a-task), he used `Task` from this library to show how, among other things, it can model side-effects explicitly within the structure through lazy evaluation (see [Tutorial 12]((https://medium.com/@kelleyalex/delay-evaluation-with-lazybox-4e71987ecc7a)).  This way, the programmer has full knowledge of and can encapsulate delayed computations, latency, or anything that isn't pure in one place.
 
 ## Modeling Task in PureScript
 I should let you in on the punch line right up front - there is no explicit structure named `Task` in PureScript.  So, instead, we're going to model it ourselves using two approaches, Continuation Passing Style (CPS) and using the Asynchronous effect monad `Aff`, covering each in great detail.  We'll start with CPS for this tutorial and save `Aff` for the next, which fits perfectly with Brian's [subsequent tutorial](https://egghead.io/lessons/javascript-using-task-for-asynchronous-actions) on using `Task` for asynchronous actions.
@@ -21,11 +21,11 @@ I should let you in on the punch line right up front - there is no explicit stru
 ## Continuation Passing Style (CPS)
 Before we jump into modeling the `Task` structure using Continuation Passing Style (CPS), I'm not going to assume that you encountered this style of programming before.  So here's a little primer or perhaps a refresher for those who are already familiar with CPS.  
 
-In functional programming, CPS is a style of programming functions that, instead of returning a result, pass it onto a `continuation`.  Here, a `continuation` is basically "what happens next" in the control flow.  A function written in CPS will take one extra argument, which is the continuation.  For example, it could be a continuation representing `success` or `failure`, similar to the `Either` constructor from [Tutorial 3](https://medium.com/@kelleyalex/tutorial-3-enforce-a-null-check-with-composable-code-branching-using-either-a73bacaec498).  If you watched Brian's [video](https://egghead.io/lessons/javascript-capturing-side-effects-in-a-task) (and you should), you saw how success and failure were represented by `Task.of` and `Task.rejected` respectively.
+In functional programming, CPS is a style of programming functions that, instead of returning a result, passes it onto a *continuation*.  Here, a *continuation* is basically "what happens next" in the control flow.  A function written in CPS will take one extra argument, which is the continuation.  For example, it could be a continuation representing `success` or `failure`, similar to the `Either` constructor from [Tutorial 3](https://medium.com/@kelleyalex/tutorial-3-enforce-a-null-check-with-composable-code-branching-using-either-a73bacaec498).  If you watched Brian's [video](https://egghead.io/lessons/javascript-capturing-side-effects-in-a-task) (and you should), you saw how success and failure were represented by `Task.of` and `Task.rejected` respectively.
 
-Now CPS is not only used for expressing a success or failure continuation, but you can also to suspend a computation.  This approach keeps your code pure, by deferring evaluation along with any side effects until it's time to return a value.  We saw in Brian video how he withheld the `fork` call to accomplish this suspension, suggesting the caller of our application do it.  This way, they're in charge of the fork, plus all the side-effects that go along with it.   We'll see implement `fork` in our `Task` constructor shortly.  But first, I want to show some examples of CPS that I shamelessly copied from [Haskell/Continuation passing style](https://en.wikibooks.org/wiki/Haskell/Continuation_passing_style) and ported to PureScript.  
+Now CPS is not only used for expressing a success or failure continuation, but you can also to suspend a computation.  This approach keeps your code pure, by deferring evaluation along with any side effects until it's time to return a value.  We saw in Brian's video how he withheld the `fork` call to accomplish this suspension, suggesting the caller of our application do it.  This way, they're in charge of the fork, plus all the side-effects that go along with it.   We'll see an implementation of `fork` in our `Task` constructor examples shortly.  But first, I want to show some examples of CPS that I shamelessly copied from [Haskell/Continuation passing style](https://en.wikibooks.org/wiki/Haskell/Continuation_passing_style) and ported to PureScript.
 
-In each of the code snippets below, I'll first show the `direct style` which is opposite of CPS and the style in which we usually program.  I'll follow the direct style code with the solution using `continuations`, and finally there's the solution using the continuation monad, `Cont`.  Now we haven't covered monads, one of the most [confusing topics](https://wiki.haskell.org/What_a_Monad_is_not) in functional programming, and I don’t want to address them at this time.  However, I would be negligent in not showing `Cont` to you now, because it helps to remove the long chains of nested lambdas we see in prototypical CPS, as shown below.
+In each of the code snippets below, I'll first show the *direct style* which is the opposite of CPS; the style in which we usually program.  I'll follow this direct style code with a solution using `continuations`, and finally there's a solution using the continuation monad, `Cont`.  Now we haven't covered monads, which is one of the most [confusing topics](https://wiki.haskell.org/What_a_Monad_is_not) in functional programming.  And I don’t want to address them at this time.  However, I would be negligent in not showing `Cont` to you now, because it helps to remove the long chains of nested lambdas we see in prototypical CPS, as shown below.
 
 ### Example: Pythagoras using direct style
 ```haskell
@@ -56,14 +56,15 @@ pythagorasCPS x y = \k ->
 main =  pythagorasCPS 3 4 \k ->
     log $ "Pythagoras with continuations: " <> show k
 ```
-Ok, there's a lot to unpack here.  First, in each of the CPS function, notice the `((Int -> r) -> r)` in the type declarations.  This type represents a suspended computation, where the `(Int -> r)` argument is the continuation function, and the second `r` is its result.  It's how we bring the computation to a conclusion.  
+Ok, there's a lot to unpack here.  First, in each of the CPS functions, notice the `((Int -> r) -> r)` in the type declaration.  This type represents a suspended computation, where the `(Int -> r)` argument is the continuation function, and the second `r` is its result.  It's how we bring the computation to a conclusion.
 
-Let's work our way up this code listing, starting from `main`.  We call `pythagorasCPS 3 4`, putting the result into the function (`\k -> ...`); our side-effect that logs the result of `pythagorasCPS 3 4` to the console.  Note - this is our top-level/program continuation `k`.  Then:
+
+Let's work our way up this code listing, starting from `main`.  We call `pythagorasCPS 3 4`, putting the result into our top-level continuation function (`\k -> ...`); our side-effect that logs the result of `pythagorasCPS 3 4` to the console. Then:
 1. square x and put the result  in the (`\xSquared -> ...`)  continuation
 2. square y and put the result in the (`\ySquared -> ...`) continuation
 3. add `xSquared` and `ySquared` and put the result in the top-level/program continuation `k`.
 
-Whew!  Now, I know this is confusing to follow, and it indeed has taken me a good number of "head scratches" to get it finally.  "Is there a simpler way, without all those nested lambdas," you ask?  Absolutely!  We can eliminate those pesky nested lambda functions using the Continuation monad:
+Whew!  Now, I know this is confusing to follow, and it indeed has taken me a good number of "head scratches" to get it finally.  "Is there a simpler way, without all those pesky nested lambdas," you ask?  Absolutely!  We can eliminate them using the Continuation monad:
 
 ### Example: Pyhagoras using Cont
 
@@ -85,13 +86,13 @@ pythagorasCont x y = do
 main =  runCont (pythagorasCont 3 4) \k ->
     log $ "Pythagoras with Cont monad: " <> show k
 ```
-Nice! Notice no more nested lamdas to confuse us.  Without opening the "monad pandora's box", perhaps the simplest way to describe what's happening here is that we compose all our continuation functions into `r`, wrapping this composition in the monad `Cont r Int`.  Then, the function `runCont` triggers the execution of `r`. When we execute `runCont (pythagorasCont 3 4)`, we provide it with our top-level continuation: (` \k -> ...), which logs the type `Int` result of `pythagorasCont` to our console (note - we transformed the `Int` to a `String` using `show`).
+Nice! Notice no more nested lamdas to confuse us.  Without opening the "monad pandora's box", perhaps the simplest way to describe what's happening here is that we compose all our continuation functions into `r`, wrapping this composition in the monad `Cont r Int`.  Then, the function `runCont` triggers the execution of `r`. When we execute `runCont (pythagorasCont 3 4)`, we provide it with our top-level continuation: (` \k -> ...`), which logs the type `Int` result of `pythagorasCont` to our console (note - we transformed the `Int` to a `String` using `show`).
 
-So what is the advantage of using continuations in the above examples?  Well, depending on the circumstances, we've given ourselves the power to decide when and how to execute them, or perhaps never execute them at all!  Let me explain further - let's say we create a `success` continuation and a `failure` continuation, separately.  Based on some event in our program, we can decide when and how to invoke the appropriate `success` or `failure` continuation.  And we'll do just that in the next example.
+So what is the advantage of using continuations in the above examples?  Well, depending on the circumstances, we've given ourselves the power to decide when and how to execute them, or perhaps never execute them at all!  Let me explain further - let's say we create a `success` continuation and a `failure` continuation, separately.  Based on the result of `pythagorasCont`, we could've decided when and how to invoke the appropriate `success` or `failure` continuation.  For example, perhaps *success* or *failure* mean a result that's inside or outside some bounds, respectively.  So we alter the flow of our program with a top-level continuation function to handle each case.  And we'll do just that in the next example.
 
 ## Mimicking Task using CPS in PureScript
 Now that we've covered continuation passing style (CPS), we have the tools necessary to emulate the [`Task`](http://folktalegithubio.readthedocs.io/en/latest/api/data/task/index.html?highlight=task) constructor from the Folktale suite of libraries, that Brian used in his [tutorial video](https://egghead.io/lessons/javascript-capturing-side-effects-in-a-task).  In this tutorial, I've implemented `Task` as a type synonym for `Either`, which we covered in [Tutorial 3](https://medium.com/@kelleyalex/tutorial-3-enforce-a-null-check-with-composable-code-branching-using-either-a73bacaec498).  
-Thus implicitly, `taskRejected` and `taskOf` are the `Left` and `Right` constructors from `Either`, which represent failed or successful computations, respectively.  Let's take a look at the first code example:
+Thus implicitly, `taskRejected` and `taskOf` are the `Left` and `Right` constructors from `Either`, which represent a *failed* or *successful* computation, respectively.  Let's take a look at the first code example:
 
 ### Example: taskOf and taskRejected
 
@@ -109,9 +110,9 @@ main =
 ```
 Let's take it from the top - `err`, and `success` are two separate continuation functions, one of which will be invoked by `k`, our top-level continuation.  Within `k`, notice we are composing `taskFork ` with `log`.   It's the job of `taskFork` to execute either the `err` or `success` continuation based on whether the `Task` continuation `r` produced a `Left` or `Right` constructor. Thus if my `Task` has successfully computed something, then `taskFork` will invoke the `success` continuation.  
 
-In these simple examples `taskOf` and `taskRejected` do nothing more than to construct a `Right a` or `Left a`, respectively.  It's `contTask` that throws the `Task` into our continuation monad `Cont r (Task a b)`.  Then, when we're ready to run this continuation, we invoke `runCont c k` giving it the continuation `c` and our top-level continuation `k`.
+In these simple examples `taskOf` and `taskRejected` do nothing more than to construct a `Right a` or `Left a`, respectively.  It's `contTask` that throws the `Task` into our continuation monad `Cont r (Task a b)`.  Then, when we're ready to run this continuation, we invoke `runCont c k` giving it the continuation monad `c` and our top-level continuation `k`.
 
-Alright, let's take it up a notch, by showing how we can map over a `Task`, just like other 'container' types, because `Task` is a type alias for `Either`.
+Alright, let's take it up a notch, by showing how we can map over a `Task`, just like other 'container' types, because again, `Task` is none other than a type alias for `Either`.
 
 ### Example: taskOf.map
 
@@ -135,7 +136,7 @@ We can also bind (`>>=`) (aka `chain`) over it to return a Task within a Task:
   runCont c (k "taskOf.map.chain.taskOf: ")
 ```
 
-Just like `Either`, if we return the rejected version of Task (i.e., `Left (some value) `) , it will short circuit, ignoring map, bind, and the second task in the example below. Thus `k` will invoke the `err` continuation.
+Just like `Either`, if we return the rejected version of Task (i.e., `Left (some value) `), it will short circuit, ignoring map, bind, and the second task in the example below. Thus `k` will invoke the `err` continuation.
 
 ### Example: taskRejected.map.chain.taskOf
 
@@ -163,17 +164,14 @@ The final example in Brian's tutorial showed how you could leave it to the calle
          log t
   runCont c (fork >>> sideEffects)
 ```
-Here we needed new `success` and `error` continuations because, this time, we're returning a `String`, instead of an `Int`.  
-I compose my set of continuation functions using `contTask`, and, at this stage, I can even extend the original Task with another computation, as shown above.  It's when we execute `runCont c k` that we finally run the computation `c` and witness the side-effects to the console with `k`.
+Here we needed new `success` and `error` continuations because, this time we're returning a `String`, instead of an `Int`. I compose my set of continuation functions using `contTask`, and, at this stage, I can even extend the original Task with another computation, as shown above.  It's when we execute `runCont c k` that we finally run the computation `c` and witness the side-effects to the console with `k`.
 
 ## Summary
-In this tutorial, we looked at how to capture any side-effects that may be lurking within our program into a Task.  This way, we have the power to witness these side-effects at will, or even alter the flow of our computation when we don't wish to show them at all (see `taskFork` above).  There is no native `Task` function in PureScript, but I showed how to emulate it using continuation passing style (CPS) of programming.  
+In this tutorial, we looked at how to capture any side-effects that may be lurking within our program into a Task.  This way, we have the power to witness these side-effects at will, or even alter the flow of our computation when we wish to act on them differently (see `taskFork` above).  There is no native `Task` structure in PureScript, so I showed how to emulate it using continuation passing style (CPS) of programming.
 
-In CPS, functions don't return values; instead, they pass control to a *continuation*, which specifies what happens next in our computation.  In particular, I showed the best way to express CPS is with the monad `Cont r a` which is a type used to wrap our suspended computations `r`, and the resulting type from this suspended computation will be `a`.
+In CPS, functions don't return values; instead, they pass control to a *continuation*, which specifies what happens next in our computation.  In particular, I showed the best way to express CPS is with the monad `Cont r a` which is a type used to wrap our suspended computations `r`, and the resulting type from this suspended computation will be `a`.  When we're ready to run these suspended computations, we invoke `runCont c k`, where c is the continuation monad of type `Cont r a` (i.e., our suspended computations) and 'k' is our top-level/program continuation function.
 
-When we're ready to run these suspended computations, we invoke `runCont c k`, where c is of type `Cont r a` (i.e., our suspended computations) and 'k' is our top-level/program continuation.
-
-In my next tutorial, we'll create another implementation of `Task` for asynchronous actions such as reading and writing files.  I'll draw on the library [purescript-aff](https://pursuit.purescript.org/packages/purescript-aff/4.1.0), so it may worth your while to have a look at this library before reading the next tutorial.  Stay tuned.
+Once again, whether or not you’re finding these tutorials helpful in making the leap from JavaScript to PureScript then give me a clap, star my [GitHub](https://github.com/adkelley/javascript-to-purescript/tree/master)  repository, drop me a comment, or post a [tweet](https://twitter.com/adkelley). I believe any feedback is good feedback and helpful toward making these tutorials better in the future. That’s all for this blog post.  Till next time, when we’ll delve deeper into capturing asynchronous side effects with another implementation of `Task`.  Stay tuned.
 
 ## Navigation
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11) Tutorials [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13)
