@@ -6,11 +6,8 @@ import Control.Monad.Cont (runCont)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Pythagoras (pythagoras, addCPS, addCont, pythagorasCPS, pythagorasCont)
-import Data.Task (Task, taskOf, taskRejected, taskCont, taskFork)
+import Data.Task (contTask, taskFork, taskOf, taskRejected)
 import Data.Thrice (thrice, thriceCont, thriceCPS)
-
-launchMissiles :: Task String String
-launchMissiles = taskOf $ "launch missiles -> " <> "missile"
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
@@ -28,29 +25,63 @@ main = do
     log $ "Thrice with Cont monad: " <> show k
 
   log "\nCapture Side Effects in a Task"
-  -- To witness Task.of(1) we run our callback function fork
-  -- taskCont is just another synoymn for callback
-  -- log $ "Task.of: " <> (runCont (taskCont $ taskOf 1) (taskString >>> taskFork))
-  runCont (taskCont $ taskOf 1.0) $ taskFork >>> \k ->
-    log $ "Task.of: " <> k
-  -- -- I can make a rejected Task with the rejected method here.
-  runCont (taskCont $ taskRejected 1) $ taskFork >>> \k ->
-    log $ "Task.rejected: " <> k
-  -- we can map over this, just like the other containery types
-  runCont (taskCont $ (_ + 1) <$> (taskOf 1)) $ taskFork >>> \k ->
-    log $ "Task.of.map: " <> k
-  -- We could also bind >>= (aka chain) over it to return a task within a task
-  let t = (_ + 1) <$> (taskOf 1) >>= (\x -> taskOf (x + 1))
-  runCont (taskCont t) $ taskFork >>> \k ->
-    log $ "Task.of.map.chain: " <> k
-  -- Again, if we return the rejected version, it will just ignore both the map
-  -- and the bind, and short circuit, and go right down to the error.
-  let r = map (_ + 1) (taskRejected 1) >>= (\x -> taskOf (x + 1))
-  runCont (taskCont r) $ taskFork >>> \k ->
-    log $ "Task.rejected.map.chain: " <> k
+  -- `err`, and `success` are two separate continuation functions,
+  --  one of which will be invoked by `k`, our top-level continuation.
+  let success = \x -> "success: " <> show x
+  let err = \e -> "error: " <> show e
+  let fork = taskFork err success
+  let k = fork >>> log
 
-  log "\nLet's launch some missiles"
-  let m = map (_ <> "!") launchMissiles
-  runCont (taskCont m) $ taskFork >>> \k -> log k
-  let app = map (_ <> "!") launchMissiles
-  log $ runCont (taskCont $ (_ <> "!") <$> app) taskFork
+  -- To witness TaskOf(1.0) we call 'runCont c k', which will
+  -- run the computation contained in 'c' and invoke 'success',
+  -- which is nested in our top-level continuation 'k'
+
+  let c = contTask $ taskOf 1.0
+  runCont c k
+  -- I can make a rejected Task with the rejected method here.
+  -- Thus err will be invoked
+  let c = contTask $ taskRejected 1.0
+  runCont c k
+
+  -- add a prefix string 'p' to our top-level continuation 'k'
+  let k p = fork >>> \s -> log $ p <> s
+
+  -- we can map over this, just like the other container types
+  let c = contTask $ (taskOf 1.0) # map (_ + 1.0)
+  runCont c (k "Task.of.map: ")
+  -- We could also bind >>= (aka chain) over it to return a task within a task
+  let c = contTask $
+          (taskOf 1.0) #
+          map (_ + 1.0) >>=
+          \x -> taskOf (x + 1.0)
+  runCont c (k "taskOf.map.chain.taskOf: ")
+  -- Again, if we return the rejected version, it will short circuit, ignoring
+  -- both map and the second task, and go right down to the error.
+  let c = contTask $
+          (taskRejected 1.0) #
+          map (_ + 1.0) >>=
+          \x -> taskOf (x + 1.0)
+  runCont c (k "Task.rejected.map.chain.Task.of: ")
+  -- We can even reject anywhere along the way
+  let c = contTask $ (taskOf 1.0) #
+          map (_ + 1.0) >>=
+          \x -> taskRejected (x + 1.0)
+  runCont c (k "taskOf.map.chain.taskRejected: ")
+
+
+  log "\nLet's launch some missiles!"
+  -- we'll need new success and err continuations
+  -- because we're returning String instead of Int
+  let err = \e -> "error: " <> e
+  let success = \x -> "success: " <> x
+  let fork = taskFork err success
+
+  let sideEffects = \t -> do
+        log "launch missiles!"
+        log t
+
+  let r1 = taskOf "missle" # map (_ <> "!")
+  -- I can delay the side effects, and even extend
+  -- the computation before it runs.
+  let c = contTask $ r1 # map (_ <> "!")
+  runCont c (fork >>> sideEffects)

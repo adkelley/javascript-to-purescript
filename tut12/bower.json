@@ -14,8 +14,8 @@
     "purescript-transformers": "^3.0.0",
     "purescript-strings": "^3.0.0",
     "purescript-arrays": "^4.0.0",
-    "purescript-maybe": "^3.0.0"
-
+    "purescript-maybe": "^3.0.0",
+    "purescript-numbers": "^5.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"
