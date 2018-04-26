@@ -1,0 +1,20 @@
+{
+  "name": "tut13",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^3.3.0",
+    "purescript-console": "^3.0.0",
+    "purescript-node-fs": "^4.0.1",
+    "purescript-exceptions": "^3.1.0",
+    "purescript-aff": "^4.1.0",
+    "purescript-node-fs-aff": "^5.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^3.0.0"
+  }
+}
