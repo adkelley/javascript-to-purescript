@@ -18,7 +18,8 @@ taskRejected :: ∀ a. Show a => a -> Task a
 taskRejected x = throwError (error $ show x)
 
 newTask :: ∀ eff a. ((Either Error a → Eff eff Unit) → Eff eff (Canceler eff)) → Aff eff a
-newTask = makeAff
+newTask =
+  makeAff
 
 succ :: ∀ e b. b -> Either Error (Either e b)
 succ b = Right $ Right b
