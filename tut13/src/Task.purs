@@ -9,7 +9,7 @@ import Control.Monad.Aff (Aff, Canceler, Error, error, makeAff, throwError)
 import Control.Monad.Eff (Eff)
 import Data.Either (Either(..))
 
-type Task a = ∀ aff. (Aff aff) a
+type Task a = ∀ eff. (Aff eff) a
 
 taskOf :: ∀ a. a -> Task a
 taskOf = pure
