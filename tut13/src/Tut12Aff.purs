@@ -7,22 +7,21 @@ import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Eff.Console (log) as Console
 import Control.Monad.Except.Trans (ExceptT, runExceptT)
 import Data.Either (either)
-import Task (taskOf, taskRejected, newTask, succ, rej)
+import Task (taskOf, taskRejected, newTask, succ, rej, toAff)
 
 tut12App :: ∀ eff. Aff (console :: CONSOLE | eff) Unit
 tut12App = do
-  a1 ← runExceptT $ taskOf "hello"
-  either (\e -> log $ "err " <> e) (\x -> log $ "success " <> x) a1
-  a2 ← runExceptT $ taskRejected 1
-  either (\e -> log $ "err " <> show e) (\x -> log $ "success " <> x) a2
+  (toAff $ taskOf "hello") >>=
+  either (\e -> log $ "err " <> e) (\x -> log $ "success " <> x)
+  (toAff $ taskRejected 1) >>=
+  either (\e -> log $ "err " <> show e) (\x -> log $ "success " <> x)
 
   -- Task (Task)
-  (runExceptT $ taskOf 1 # map (_ + 1) >>= \x → taskOf (x + 1)) >>=
+  (toAff $ taskOf 1 # map (_ + 1) >>= \x → taskOf (x + 1)) >>=
   either (\e → log $ "err " <> e) (\x → log $ "success " <> show x)
 
 
-
-launchMissiles :: ∀ e x. ExceptT x (Aff (console :: CONSOLE | e)) String
+launchMissiles :: ∀ x e. ExceptT x (Aff (console :: CONSOLE | e)) String
 launchMissiles =
   newTask \cb → do
       Console.log "\nLaunch Missiles"

@@ -6,14 +6,14 @@ import Control.Monad.Aff (Aff, nonCanceler)
 import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Eff.Console (log) as Console
 import Control.Monad.Eff.Exception (EXCEPTION, try)
-import Control.Monad.Except.Trans (ExceptT, runExceptT)
+import Control.Monad.Except.Trans (ExceptT)
 import Data.Either (Either(..), either)
 import Data.String.Regex (regex, replace)
 import Data.String.Regex.Flags (global)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
 import Node.FS.Sync (readTextFile, writeTextFile)
-import Task (newTask, rej, succ)
+import Task (newTask, rej, succ, toAff)
 
 pathToFile :: String
 pathToFile = "./resources/config.json"
@@ -52,8 +52,8 @@ newContents s =
 
 app :: ∀ e. Aff (console :: CONSOLE, fs :: FS, exception :: EXCEPTION | e) Unit
 app = do
-  (runExceptT $
+  result ← toAff $
    readFile_ UTF8 pathToFile #
    map newContents >>=
-   \x → writeFile_ UTF8 pathToFile x) >>=
-  either (\e → log $ "error: " <> e) (\_ → log "successfully wrote file")
+   \x → writeFile_ UTF8 pathToFile x
+  either (\e → log $ "error: " <> e) (\_ → log "successfully wrote file") result
