@@ -1,28 +1,34 @@
-module TaskAff
-       ( Task, taskOf, taskRejected
+module Task
+       (taskOf, taskRejected
        , newTask, succ, rej)
        where
 
 import Prelude
 
-import Control.Monad.Aff (Aff, Canceler, Error, error, makeAff, throwError)
+import Control.Monad.Aff (Aff, Canceler, Error, makeAff, throwError)
+import Control.Monad.Aff.Class (liftAff)
 import Control.Monad.Eff (Eff)
+import Control.Monad.Except.Trans (ExceptT(..))
 import Data.Either (Either(..))
 
+<<<<<<< HEAD
 type Task a = ∀ eff. (Aff eff) a
+=======
+type Task x a = ∀ e. ExceptT x (Aff e) a
+>>>>>>> feat/task
 
-taskOf :: ∀ a. a -> Task a
+taskOf :: ∀ x a. a -> Task x a
 taskOf = pure
 
-taskRejected :: ∀ a. Show a => a -> Task a
-taskRejected x = throwError (error $ show x)
+taskRejected :: ∀ x a. x -> Task x a
+taskRejected = throwError
 
-newTask :: ∀ eff a. ((Either Error a → Eff eff Unit) → Eff eff (Canceler eff)) → Aff eff a
+newTask ∷ ∀ e x a. ((Either Error (Either x a) → Eff e Unit) → Eff e (Canceler e)) → ExceptT x (Aff e) a
 newTask =
-  makeAff
+  ExceptT <<< liftAff <<< makeAff
 
-succ :: ∀ e b. b -> Either Error (Either e b)
+succ :: ∀ e x b. b -> Either x (Either e b)
 succ b = Right $ Right b
 
-rej :: ∀ a e. Show e => e -> Either Error (Either String a)
-rej e = Right $ Left $ show e
+rej :: ∀ a x e. e -> Either x (Either e a)
+rej e = Right $ Left $ e
