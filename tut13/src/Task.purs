@@ -11,11 +11,7 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Except.Trans (ExceptT(..))
 import Data.Either (Either(..))
 
-<<<<<<< HEAD
-type Task a = ∀ eff. (Aff eff) a
-=======
 type Task x a = ∀ e. ExceptT x (Aff e) a
->>>>>>> feat/task
 
 taskOf :: ∀ x a. a -> Task x a
 taskOf = pure

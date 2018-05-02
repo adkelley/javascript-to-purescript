@@ -19,9 +19,9 @@ pathToFile :: String
 pathToFile = "./resources/config.json"
 
 readFile_
-   :: ∀ a x e
-    . Encoding → String
-    → ExceptT String (Aff (fs :: FS, console :: CONSOLE, exception :: EXCEPTION | e)) String
+  :: ∀ e
+   . Encoding → String
+   → ExceptT String (Aff (fs :: FS, console :: CONSOLE, exception :: EXCEPTION | e)) String
 readFile_ enc filePath =
   newTask $
   \cb -> do
@@ -39,7 +39,7 @@ writeFile_ enc filePath contents =
   \cb -> do
     Console.log ("Writing Contents: " <> contents)
     result ← try $ writeTextFile enc filePath contents
-    cb $ either (\_ → rej "Can't read file") (\_ → succ "success") result
+    cb $ either (\_ → rej "Can't write file") (\_ → succ "success") result
     pure $ nonCanceler
 
 newContents :: String -> String
