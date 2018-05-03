@@ -5,15 +5,14 @@ import Prelude
 import Control.Monad.Aff (Aff, nonCanceler)
 import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Eff.Console (log) as Console
-import Control.Monad.Eff.Exception (EXCEPTION, try)
-import Control.Monad.Except.Trans (ExceptT)
+import Control.Monad.Eff.Exception (try)
 import Data.Either (Either(..), either)
 import Data.String.Regex (regex, replace)
 import Data.String.Regex.Flags (global)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
 import Node.FS.Sync (readTextFile, writeTextFile)
-import Task (newTask, rej, res, toAff)
+import Task (TaskE, newTask, rej, res, toAff)
 
 pathToFile :: String
 pathToFile = "./resources/config.json"
@@ -21,7 +20,7 @@ pathToFile = "./resources/config.json"
 readFile_
   :: ∀ e
    . Encoding → String
-   → ExceptT String (Aff (fs :: FS, console :: CONSOLE, exception :: EXCEPTION | e)) String
+   → TaskE String (fs :: FS, console :: CONSOLE | e) String
 readFile_ enc filePath =
   newTask $
   \cb -> do
@@ -33,7 +32,7 @@ readFile_ enc filePath =
 writeFile_
   :: ∀ e
    . Encoding → String → String
-   → ExceptT String (Aff (fs :: FS, console :: CONSOLE, exception :: EXCEPTION | e)) String
+   → TaskE String (fs :: FS, console :: CONSOLE | e)  String
 writeFile_ enc filePath contents =
   newTask $
   \cb -> do
@@ -50,7 +49,7 @@ newContents s =
   where regexp = regex "8" global
 
 
-app :: ∀ e. Aff (console :: CONSOLE, fs :: FS, exception :: EXCEPTION | e) Unit
+app :: ∀ e. Aff (console :: CONSOLE, fs :: FS | e) Unit
 app = do
   result ← toAff $
    readFile_ UTF8 pathToFile #

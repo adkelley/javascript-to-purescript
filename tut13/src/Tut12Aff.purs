@@ -5,9 +5,8 @@ import Prelude
 import Control.Monad.Aff (Aff, nonCanceler)
 import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Eff.Console (log) as Console
-import Control.Monad.Except.Trans (ExceptT)
 import Data.Either (either)
-import Task (taskOf, taskRejected, newTask, res, rej, toAff)
+import Task (TaskE, taskOf, taskRejected, newTask, res, rej, toAff)
 
 tut12App :: ∀ eff. Aff (console :: CONSOLE | eff) Unit
 tut12App = do
@@ -24,14 +23,14 @@ tut12App = do
   either (\e → log $ "err " <> e) (\x → log $ "success " <> show x) c
 
 
-launchMissiles :: ∀ x e. ExceptT x (Aff (console :: CONSOLE | e)) String
+launchMissiles :: ∀ x e. TaskE x (console :: CONSOLE | e) String
 launchMissiles =
   newTask \cb → do
       Console.log "\nLaunch Missiles"
       cb $ res "missile"
       pure nonCanceler
 
-rejectMissiles :: ∀ e a. ExceptT String (Aff (console :: CONSOLE | e)) a
+rejectMissiles :: ∀ e a. TaskE String (console :: CONSOLE | e) a
 rejectMissiles =
   newTask \cb → do
       Console.log "\nLaunch Missiles"
