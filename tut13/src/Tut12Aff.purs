@@ -1,26 +1,29 @@
-module Tut12Aff (tut12App, tut12LM, tut12RM) where
+module Tut12Aff ( tut12Res, tut12Rej, tut12Chain
+                , tut12LM, tut12RM) where
 
 import Prelude
 
 import Control.Monad.Aff (Aff, nonCanceler)
 import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Eff.Console (log) as Console
-import Data.Either (either)
-import Task (TaskE, taskOf, taskRejected, newTask, res, rej, toAff)
+import Task (TaskE, taskOf, taskRejected, newTask, res, rej, fork, chain)
 
-tut12App :: ∀ eff. Aff (console :: CONSOLE | eff) Unit
-tut12App = do
-  a ← toAff $ taskOf "hello"
-  either (\e -> log $ "err " <> e) (\x -> log $ "success " <> x) a
+tut12Res :: ∀ eff. Aff (console :: CONSOLE | eff) Unit
+tut12Res =
+  taskOf "good task"
+  # fork (\e → log $ "err " <> e) (\x → log $ "success " <> show x)
 
-  b ← toAff $ taskRejected 1
-  either (\e -> log $ "err " <> show e) (\x -> log $ "success " <> x) b
+tut12Rej :: ∀ eff. Aff (console :: CONSOLE | eff) Unit
+tut12Rej =
+  taskRejected "bad task"
+  # fork (\e -> log $ "err " <> show e) (\x -> log $ "success " <> x)
 
-  -- Task (Task)
-  c ← toAff $ taskOf 1 #
-           map (_ + 1) >>=
-           \x → taskOf (x + 1)
-  either (\e → log $ "err " <> e) (\x → log $ "success " <> show x) c
+tut12Chain :: ∀ eff. Aff (console :: CONSOLE | eff) Unit
+tut12Chain =
+  taskOf 1
+  # map (_ + 1)
+  # chain (\x → taskOf (x + 1))
+  # fork (\e → log $ "err " <> e) (\x → log $ "success " <> show x)
 
 
 launchMissiles :: ∀ x e. TaskE x (console :: CONSOLE | e) String
@@ -39,16 +42,14 @@ rejectMissiles =
 
 tut12LM :: ∀ aff. Aff (console :: CONSOLE | aff) Unit
 tut12LM = do
-  result ← toAff $
-    launchMissiles #
-    map (_ <> "!") #
-    map (_ <> "!")
-  either (\e → log $ "err " <> e) (\x → log $ "success " <> show x) result
+  launchMissiles
+  # map (_ <> "!")
+  # map (_ <> "!")
+  # fork (\e → log $ "err " <> e) (\x → log $ "success " <> show x)
 
 tut12RM :: ∀ aff. Aff (console :: CONSOLE | aff) Unit
 tut12RM = do
-  result ← toAff $
-    rejectMissiles #
-    map (_ <> "!") #
-    map (_ <> "!")
-  either (\e → log $ "err " <> show e) (\x → log $ "success " <> x) result
+  rejectMissiles
+  # map (_ <> "!")
+  # map (_ <> "!")
+  # fork (\e → log $ "err " <> show e) (\x → log $ "success " <> x)
