@@ -1,6 +1,6 @@
 module Task
        (taskOf, taskRejected, newTask
-       , succ, rej, toAff)
+       , res, rej, toAff)
        where
 
 import Prelude
@@ -26,8 +26,8 @@ newTask =
 toAff :: ∀ e x a. TaskE e x a → Aff e (Either x a)
 toAff = runExceptT
 
-succ :: ∀ e x b. b -> Either x (Either e b)
-succ b = Right $ Right b
+res :: ∀ e x b. b -> Either x (Either e b)
+res b = Right $ Right b
 
 rej :: ∀ a x e. e -> Either x (Either e a)
 rej e = Right $ Left $ e
