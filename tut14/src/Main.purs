@@ -13,7 +13,6 @@ foreign import substrImpl :: Int -> String -> String
 -- fx.map(f).map(g) == fx.map(x => g(f(x)))
 res1 :: Box String
 res1 =
-  Box "Squirrels"
   # map (\str -> substrImpl 5 str)
   # map toUpperCase
 
