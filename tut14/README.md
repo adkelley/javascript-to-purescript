@@ -1,4 +1,3 @@
-# You've been using Functors
 
 ![series banner](../resources/glitched-abstract.jpg)
 
