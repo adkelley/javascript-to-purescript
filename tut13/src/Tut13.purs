@@ -12,7 +12,7 @@ import Data.String.Regex.Flags (global)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
 import Node.FS.Sync (readTextFile, writeTextFile)
-import Task (TaskE, newTask, rej, res, toAff)
+import Control.Monad.Task (Task, newTask, rej, res, toAff)
 
 pathToFile :: String
 pathToFile = "./resources/config.json"
@@ -20,7 +20,7 @@ pathToFile = "./resources/config.json"
 readFile_
   :: ∀ e
    . Encoding → String
-   → TaskE String (fs :: FS, console :: CONSOLE | e) String
+   → Task String (fs :: FS, console :: CONSOLE | e) String
 readFile_ enc filePath =
   newTask $
   \cb -> do
@@ -32,7 +32,7 @@ readFile_ enc filePath =
 writeFile_
   :: ∀ e
    . Encoding → String → String
-   → TaskE String (fs :: FS, console :: CONSOLE | e)  String
+   → Task String (fs :: FS, console :: CONSOLE | e)  String
 writeFile_ enc filePath contents =
   newTask $
   \cb -> do

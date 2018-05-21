@@ -1,6 +1,6 @@
-module Task
+module Control.Monad.Task
        (taskOf, taskRejected, newTask
-       , res, rej, fork, chain, toAff, TaskE)
+       , res, rej, fork, chain, toAff, Task)
        where
 
 import Prelude
@@ -10,26 +10,27 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Except.Trans (ExceptT(..), runExceptT)
 import Data.Either (Either(..), either)
 
+type Task x e a = ExceptT x (Aff e) a
 
-taskOf :: ∀ x e a. a -> TaskE x e a
+taskOf :: ∀ x e a. a -> Task x e a
 taskOf = pure
 
-taskRejected :: ∀ x e a. x -> TaskE x e a
+taskRejected :: ∀ x e a. x -> Task x e a
 taskRejected = throwError
 
 newTask
   ∷ ∀ e x a
   . ((Either Error (Either x a)
-  → Eff e Unit) → Eff e (Canceler e)) → TaskE x e a
+  → Eff e Unit) → Eff e (Canceler e)) → Task x e a
 newTask =
   ExceptT <<< makeAff
 
-toAff :: ∀ e x a. TaskE x e a → Aff e (Either x a)
+toAff :: ∀ e x a. Task x e a → Aff e (Either x a)
 toAff = runExceptT
 
 fork
   :: ∀ c e b a
-   . (a → Aff e c) → (b → Aff e c) → TaskE a e b
+   . (a → Aff e c) → (b → Aff e c) → Task a e b
    → Aff e c
 fork f g t = do
   result ← toAff t
@@ -37,8 +38,8 @@ fork f g t = do
 
 chain
   :: ∀ x e a b
-   . (a → TaskE x e b) → TaskE x e a
-   → TaskE x e b
+   . (a → Task x e b) → Task x e a
+   → Task x e b
 chain f t =
   t >>= f
 
