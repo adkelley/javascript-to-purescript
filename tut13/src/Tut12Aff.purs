@@ -6,7 +6,7 @@ import Prelude
 import Control.Monad.Aff (Aff, nonCanceler)
 import Control.Monad.Aff.Console (CONSOLE, log)
 import Control.Monad.Eff.Console (log) as Console
-import Task (TaskE, taskOf, taskRejected, newTask, res, rej, fork, chain)
+import Control.Monad.Task (Task, taskOf, taskRejected, newTask, res, rej, fork, chain)
 
 tut12Res :: ∀ eff. Aff (console :: CONSOLE | eff) Unit
 tut12Res =
@@ -26,14 +26,14 @@ tut12Chain =
   # fork (\e → log $ "err " <> e) (\x → log $ "success " <> show x)
 
 
-launchMissiles :: ∀ x e. TaskE x (console :: CONSOLE | e) String
+launchMissiles :: ∀ x e. Task x (console :: CONSOLE | e) String
 launchMissiles =
   newTask \cb → do
       Console.log "\nLaunch Missiles"
       cb $ res "missile"
       pure nonCanceler
 
-rejectMissiles :: ∀ e a. TaskE String (console :: CONSOLE | e) a
+rejectMissiles :: ∀ e a. Task String (console :: CONSOLE | e) a
 rejectMissiles =
   newTask \cb → do
       Console.log "\nLaunch Missiles"
