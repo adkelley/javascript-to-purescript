@@ -33,7 +33,7 @@ toAff = runExceptT
 fork
   :: ∀ c e b a
    . (a → Aff e c) → (b → Aff e c) → TaskE a e b
-   → Aff e c
+   → Task e c
 fork f g t = do
   result ← toAff t
   either f g result

@@ -37,15 +37,21 @@ Each tutorial has been placed in a separate folder named 'tut##', where ## is a 
 You can skip this section if you've already installed and are using PureScript on your computer.
 
 ### Install PureScript and its supporting actors
-See [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/)
+In earlier versions of this tutorial, I recommended you use [Bower](https://bower.io) as your package manager.  In fact, this is recommendation given in [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/).  Bower is useful, thanks to its flat dependency graph, and easy to use. However, its inability to restrict libraries that work with a specific compiler version of PureScript can cause problems for beginners.  Especially during the early stages of a release of the compiler when libraries, tooling, and documentation are still catching up.  
 
-**TL;DR**
-
-Seriously? Don't you have 10-minutes to review the career changing [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/)? Well then I wash my hands or (as Japanese would have it, my feet) of all responsibility for the results.  All kidding aside:
+ Instead, I recommend you use PureScript's own `Psc-Package` manager. The installation and usage are just as simple using Bower, so I see no good reason to use Bower anymore.  Assuming you already have npm running on your machine, here's how to install PureScript, Pulp, and Psc-Package.  As of this writing, I recommend you use the 0.11.7 version of the compiler.  
 ```
-npm install -g purescript pulp bower
-
+npm i -g purescript@0.11.7 pulp psc-package
 ```
+You can check that these work by trying some commands:
+```
+pulp --version
+psc-package
+```
+
+### Install  editor plugins
+There are plugins for most editors to support syntax highlighting, build support, REPL (Read, Evaluate, Print, Loop), and autocomplete.  You'll find the information to install these plugins for your favorite editor [here](https://github.com/purescript/documentation/blob/master/ecosystem/Editor-and-tool-support.md).
+
 ### Run your first PureScript program
 
 Assuming you've installed PureScript, Pulp, and Bower, then it doesn't get any easier than this to start your adventure in functional programming with PureScript:
@@ -53,10 +59,10 @@ Assuming you've installed PureScript, Pulp, and Bower, then it doesn't get any e
 ```
 $ mkdir purescript-hello
 $ cd purescript-hello
-$ pulp init
+$ pulp --psc-package init
 $ pulp run
 ```
-[Pulp](https://github.com/bodil/pulp) is an excellent build tool with plenty of helper options; such as watching for source file updates and re-compiling them automatically. As you add more library dependencies to your program, you can install them with `bower` (e.g., `bower install purescript-lists --save`)
+[Pulp](https://github.com/bodil/pulp) is an excellent build tool with plenty of helper options; such as watching for source file updates and re-compiling them automatically. As you add more library dependencies to your program, you can install them with `psc-package` (e.g., `psc-package install <package>`).  You'll find more information on `psc-package`  [here](https://github.com/purescript/psc-package) 
 
 
 ### My Favorite PureScript tools & references
