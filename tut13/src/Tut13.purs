@@ -26,7 +26,7 @@ readFile_ enc filePath =
   \cb -> do
     Console.log ("\nReading File: " <> filePath)
     result ← try $ readTextFile enc filePath
-    cb $ either (\_ → rej "Can't read file") (\x → res x) result
+    cb $ either (\_ → rej "Can't read file") (\success → res success) result
     pure $ nonCanceler
 
 writeFile_
