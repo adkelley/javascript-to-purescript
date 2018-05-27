@@ -26,7 +26,7 @@ readFile_ enc filePath =
   \cb -> do
     Console.log ("\nReading File: " <> filePath)
     result ← try $ readTextFile enc filePath
-    cb $ either (\_ → rej "Can't read file") (\success → res success) result
+    cb $ either (\e → rej $ show e) (\success → res success) result
     pure $ nonCanceler
 
 writeFile_
@@ -38,7 +38,7 @@ writeFile_ enc filePath contents =
   \cb -> do
     Console.log ("Writing Contents: " <> contents)
     result ← try $ writeTextFile enc filePath contents
-    cb $ either (\_ → rej "Can't write file") (\_ → res "wrote file") result
+    cb $ either (\e → rej $ show e) (\_ → res "wrote file") result
     pure $ nonCanceler
 
 newContents :: String -> String
@@ -52,7 +52,7 @@ newContents s =
 app :: ∀ e. Task (console :: CONSOLE, fs :: FS | e) Unit
 app = do
   result ← toAff $
-   readFile_ UTF8 pathToFile #
-   map newContents >>=
-   \x → writeFile_ UTF8 pathToFile x
+    readFile_ UTF8 pathToFile #
+    map newContents >>=
+    writeFile_ UTF8 pathToFile
   either (\e → log $ "error: " <> e) (\x → log $ "success: " <> x) result
