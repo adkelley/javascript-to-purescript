@@ -1,6 +1,6 @@
 module Control.Monad.Task
        (taskOf, taskRejected, newTask
-       , res, rej, fork, chain, toAff, Task, TaskE)
+       , res, rej, fork, chain, Task, TaskE)
        where
 
 import Prelude

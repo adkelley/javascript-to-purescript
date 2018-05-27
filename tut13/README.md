@@ -51,7 +51,9 @@ tut12Rej =
   # fork (\e -> log $ "err " <> show e) (\x -> log $ "success " <> x)
 
 -- | Main.purs
-main :: ∀ e. Eff   ∀ e. Eff (console :: CONSOLE, exception :: EXCEPTION | e) Unit
+main 
+     :: ∀ e
+       . Eff   ∀ e. Eff (console :: CONSOLE, exception :: EXCEPTION | e) Unit
 main = do
   log "\nTut12 - Task.of example"
   void $ launchAff tut12Res
@@ -65,7 +67,7 @@ Now, the functions, `tut12Res` and `tut12Rej` merely return a `Task`. Thus their
 I've also rewritten "launchMissles" and "rejectMissles" from the Tutorial12 repository to use async computation, so check out [Tut12Aff](https://github.com/adkelley/javascript-to-purescript/blob/master/tut13/src/Tut12Aff.purs  to see those examples.  Note, they're using the concepts that are covered in the Tutorial13 example below, so let's move on and explore a couple of new type signatures.
 
 ##  Task API - Second glance.
-Next, let’s look at the signature of `TaskE` which we use whenever we create a `newTask`.  
+Next, let’s look at the type signature of `TaskE`.  We'll use it whenever we create a `newTask`.  
 
 ```haskell
 type TaskE x e a = ExceptT x (Aff e) a
@@ -73,12 +75,15 @@ type TaskE x e a = ExceptT x (Aff e) a
 
 Yes, the type alias for `TaskE` is a little dense, so first let’s understand what is `ExceptT x`.  Without going down into the Monad rabbit hole, you can think of `ExceptT` as a wrapper which adds exceptions `x` to other monads.  So the `E` at the end of `Task` makes this distinction.  In our case, the other monad in this structure is `(Aff e) `, and we know, from the discussion above, that exceptions are an effect from Aff.  Fun fact - the `T` in `ExceptT`  stands for *transformation* because we are transforming our `(Aff e) ` monad into one that can handle both exceptions and effects. 
 
+We need the ability manually throw an exception, particularly in `taskRejected`, and act on them.  When we `runExceptT` (see `toAff` in [Task.purs](https://github.com/adkelley/javascript-to-purescript/blob/master/tut13/src/Control/Monad/Task.purs) ) , our `TaskE` structure is transformed into `Aff e (Either x a)`.  This sets us up to execute our `rej` or `res` functions (see explanation below) , depending on a failure or successful computation, respectively.  Whew!
+
 This is as far as I want to go in explaining my Task API.  Because assuming you watched Brian's [video](https://egghead.io/lessons/javascript-using-task-for-asynchronous-actions) then you don’t need any further information to implement his read/write file example.  But if you're farther along in your PureScript adventures then feel free to study the code.  Writing it certainly helped with my understanding in implementing asynchronous computations.
 
-## Reading and writing to a file using Task
-If you have looked at Brian's [video](https://egghead.io/lessons/javascript-using-task-for-asynchronous-actions) (didn't I say you should watch and understand Brian's video first)  you'll see that the main example is reading a configuration file and writing out a new port number using `Task` from Folktale.js  We're going to do the same here, but naturally with PureScript.
+## File operations using TaskE
+If you have looked at Brian's [video](https://egghead.io/lessons/javascript-using-task-for-asynchronous-actions) (didn't I say you should watch and understand Brian's video first)  you'll see that the main example is reading a configuration file and writing out a new port number using `Task` from Folktale.js  We're going to do the same here in PureScript.
 
 ```haskell
+-- | Tut13.purs
 readFile_
   :: ∀ e
    . Encoding → String
@@ -88,13 +93,34 @@ readFile_ enc filePath =
   \cb -> do
     Console.log ("\nReading File: " <> filePath)
     result ← try $ readTextFile enc filePath
-    cb $ either (\_ → rej "Can't read file") (\x → res x) result
+    cb $ either (\e → rej $ show e) (\success → res success) result
     pure $ nonCanceler
-```
-We covered reading a file back in TutorialXX, so hopefully some parts look familiar to you.  The new pieces are `newTask` and ``
 
-What's left in this signature is the `Canceler e`, which tells `makeAff` how to clean up after the async computation.  For example, if an async process is killed and an async action is pending, then the canceler is called to clean up.  In our case, we don't have any elaborate async processes so, as you'll see below,  we can provide newTask with the `NonCanceler`.  Which, as you may suspect, provides `makeAff` with a canceler that doesn't cancel anything.  With this out of the way, we're ready to show how to read and write to a file asynchronously using `Task`. 
- 
+-- | Main.purs
+main 
+  :: ∀ e
+   . Eff   ∀ e. Eff (console :: CONSOLE, exception :: EXCEPTION | e) Unit
+main = do
+  log "\nTut13 - Async Read/Write file example"
+  void $ launchAff $
+    fork (\e → AC.log $ "error: " <> e)
+         (\x → AC.log $ "success: " <> x)
+          app
+```
+We covered reading a file, including regular expressions back in TutorialXX.  So hopefully, some parts look familiar to you.  The new pieces are `newTask` and the lambda function `cb`  (denoted `\cb ->`), which represents our callback.   There's also `nonCanceler` and the `rej ` & `res` functions, which I'll cover in a bit.  
+
+First, note that the entire callback `cb` and `pure $ nonCanceler` are wrapped in `newTask`.  After logging a debugging message to the console, the callback attempts to read the file using [try] (https://pursuit.purescript.org/packages/purescript-exceptions/4.0.0/docs/Effect.Exception#v:try).  If successful, then `try` will return the text from the file and wrap it in a `Right` constructor.  Otherwise, if there's an exception, then wrap the error in a `Left` constructor.  
+
+The `either` function will take the result, and if it's a `Left` constructor (i.e., the read failed) then the computation in the first argument is executed, which passes the error to the `rej` function.  Otherwise, the computation in `either`'s second argument (i.e., the `res` function) is executed.
+
+What's left in this signature is the `Canceler e`, which tells `makeAff` how to clean up after the async computation.  For example, if an async process is killed and an async action is pending, then the canceler is called to clean up.  In our case, we don't have any elaborate async processes so, as you'll see below,  we can provide newTask with the `NonCanceler`.  Which, as you may suspect, provides `makeAff` with a canceler that doesn't cancel anything.
+
+As Brian mentions, we don't want to log success somewhere buried deep within our function.  So I've delegated the honors to our `main` module, by importing `fork` from `Control.Monad.Task`.  One thing to mention is that, in my fork function, I'm using `Console.Monad.Aff.Console.log` to log failure or success to the console because it's being performed asynchronously within the `Aff` monad.
+
+### Summary
+
+
+  
 
 ## Resources
 * [Principled, Painless Asynchronous Programming in PureScript](https://github.com/degoes-consulting/lambdaconf-2015/blob/master/speakers/jdegoes/async-purescript/presentation.md) - John Degoes

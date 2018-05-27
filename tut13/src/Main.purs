@@ -5,7 +5,9 @@ import Prelude
 import Control.Monad.Aff (launchAff)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
+import Control.Monad.Aff.Console (log) as AC
 import Control.Monad.Eff.Exception (EXCEPTION)
+import Control.Monad.Task (fork)
 import Node.FS.Aff (FS)
 import Tut12Aff (tut12Res, tut12Rej, tut12Chain, tut12LM, tut12RM)
 import Tut13 (app)
@@ -23,4 +25,5 @@ main = do
   void $ launchAff tut12LM
   void $ launchAff tut12RM
   log "\nTut13 - Async Read/Write file example"
-  void $ launchAff app
+  void $ launchAff $
+    fork (\e → AC.log $ "error: " <> e) (\x → AC.log $ "success: " <> x) app

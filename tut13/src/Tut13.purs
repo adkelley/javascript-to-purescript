@@ -3,16 +3,16 @@ module Tut13 (app) where
 import Prelude
 
 import Control.Monad.Aff (nonCanceler)
-import Control.Monad.Aff.Console (CONSOLE, log)
+import Control.Monad.Aff.Console (CONSOLE)
 import Control.Monad.Eff.Console (log) as Console
 import Control.Monad.Eff.Exception (try)
+import Control.Monad.Task (TaskE, chain, newTask, rej, res)
 import Data.Either (Either(..), either)
 import Data.String.Regex (regex, replace)
 import Data.String.Regex.Flags (global)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
 import Node.FS.Sync (readTextFile, writeTextFile)
-import Control.Monad.Task (Task, TaskE, newTask, rej, res, toAff)
 
 pathToFile :: String
 pathToFile = "./resources/config.json"
@@ -49,10 +49,8 @@ newContents s =
   where regexp = regex "8" global
 
 
-app :: ∀ e. Task (console :: CONSOLE, fs :: FS | e) Unit
+app :: ∀ e. TaskE String (console :: CONSOLE, fs :: FS | e) String
 app = do
-  result ← toAff $
-    readFile_ UTF8 pathToFile #
-    map newContents >>=
-    writeFile_ UTF8 pathToFile
-  either (\e → log $ "error: " <> e) (\x → log $ "success: " <> x) result
+  readFile_ UTF8 pathToFile
+  # map newContents
+  # chain (\x → writeFile_ UTF8 pathToFile x)
