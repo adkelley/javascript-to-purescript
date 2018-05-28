@@ -1,12 +1,13 @@
 module Main where
 
 import Prelude
-import Control.Monad.Cont (ContT(..), runContT)
-import Control.Monad.Trans.Class (lift)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
 
-foreign import data TIMEOUT :: !
+import Control.Monad.Cont (ContT(..), runContT)
+import Control.Monad.Eff (Eff, kind Effect)
+import Control.Monad.Eff.Console (CONSOLE, log)
+import Control.Monad.Trans.Class (lift)
+
+foreign import data TIMEOUT :: Effect
 
 type TOF eff = Eff (timeout :: TIMEOUT | eff)
 

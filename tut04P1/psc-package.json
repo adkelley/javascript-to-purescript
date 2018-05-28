@@ -1,0 +1,13 @@
+{
+  "name": "tut04p1",
+  "set": "psc-0.11.7-20180418",
+  "source": "https://github.com/purescript/package-sets.git",
+  "depends": [
+    "node-fs",
+    "prelude",
+    "random",
+    "exceptions",
+    "console",
+    "psci-support"
+  ]
+}
