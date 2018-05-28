@@ -26,4 +26,4 @@ main = do
   void $ launchAff tut12RM
   log "\nTut13 - Async Read/Write file example"
   void $ launchAff $
-    fork (\e → AC.log $ "error: " <> e) (\x → AC.log $ "success: " <> x) app
+    fork (\e → AC.log $ "error: " <> e) (\_ → AC.log $ "success") app

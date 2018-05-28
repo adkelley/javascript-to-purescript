@@ -26,19 +26,19 @@ readFile_ enc filePath =
   \cb -> do
     Console.log ("\nReading File: " <> filePath)
     result ← try $ readTextFile enc filePath
-    cb $ either (\e → rej $ show e) (\success → res success) result
+    cb $ either (\err → rej $ show err) (\success → res success) result
     pure $ nonCanceler
 
 writeFile_
   :: ∀ e
    . Encoding → String → String
-   → TaskE String (fs :: FS, console :: CONSOLE | e)  String
+   → TaskE String (fs :: FS, console :: CONSOLE | e) Unit
 writeFile_ enc filePath contents =
   newTask $
   \cb -> do
     Console.log ("Writing Contents: " <> contents)
     result ← try $ writeTextFile enc filePath contents
-    cb $ either (\e → rej $ show e) (\_ → res "wrote file") result
+    cb $ either (\err → rej $ show err) (\success → res $ success) result
     pure $ nonCanceler
 
 newContents :: String -> String
@@ -49,7 +49,7 @@ newContents s =
   where regexp = regex "8" global
 
 
-app :: ∀ e. TaskE String (console :: CONSOLE, fs :: FS | e) String
+app :: ∀ e. TaskE String (console :: CONSOLE, fs :: FS | e) Unit
 app = do
   readFile_ UTF8 pathToFile
   # map newContents
