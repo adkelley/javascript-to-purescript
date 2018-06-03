@@ -7,11 +7,10 @@ import Effect.Console (log, logShow)
 import Effect.Exception (Error, error, try)
 import Control.Monad.Except (runExcept)
 import Data.Either (Either(..), either)
-import Data.Foreign (unsafeFromForeign)
-import Data.Foreign.JSON (parseJSON)
+import Foreign (unsafeFromForeign)
+import Simple.JSON (parseJSON)
 import Data.List.NonEmpty (head)
 import Node.Encoding (Encoding(..))
-import Node.FS (FS)
 import Node.FS.Sync (readTextFile)
 
 pathToFile :: String
@@ -47,7 +46,7 @@ getPort =
   (try $ readTextFile UTF8 pathToFile) >>=
   chain parsePort >>>
   chain portInRange >>>
-  either (\_ -> defaultPort) id >>>
+  either (\_ -> defaultPort) identity >>>
   pure
 
 -- Instead or ignoring errors and returning defaultPort, try creating a JSON string
@@ -62,7 +61,7 @@ getPort' =
   pure
 
 
-main :: forall e. Effect Unit
+main :: Effect Unit
 main = do
   log "Use chain for composable error handling with nested Eithers"
 

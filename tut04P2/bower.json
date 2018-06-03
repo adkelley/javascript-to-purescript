@@ -1,5 +1,5 @@
 {
-  "name": "tut04P2",
+  "name": "tut04p2",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -9,10 +9,10 @@
   "dependencies": {
     "purescript-prelude": "^4.0.0",
     "purescript-console": "^4.0.0",
-    "purescript-exceptions": "^4.0.0",
-    "purescript-node-fs": "^5.0.0",
     "purescript-foreign": "^5.0.0",
-    "purescript-foreign-generic": "^6.0.0"
+    "purescript-simple-json": "4.0.0",
+    "purescript-exceptions": "^4.0.0",
+    "purescript-node-fs": "^5.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^4.0.0"

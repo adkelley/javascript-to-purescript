@@ -9,9 +9,8 @@
   "dependencies": {
     "purescript-prelude": "^4.0.0",
     "purescript-console": "^4.0.0",
-    "purescript-arrays": "^4.0.0",
-    "purescript-generics-rep": "^6.0.0",
     "purescript-maybe": "^4.0.0",
+    "purescript-foldable-traversable": "^4.0.0",
     "purescript-lists": "^5.0.0"
   },
   "devDependencies": {
