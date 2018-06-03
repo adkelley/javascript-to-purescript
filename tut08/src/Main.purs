@@ -1,9 +1,9 @@
 module Main where
 
-import Prelude
+import Prelude hiding (mempty)
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Foldable (foldr)
 import Data.Maybe (Maybe(..))
 import Data.Maybe.First (First(..))
@@ -12,7 +12,7 @@ import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
 
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   -- semigroups are concatable and associative
   log "Ensure failsafe combination using monoids"

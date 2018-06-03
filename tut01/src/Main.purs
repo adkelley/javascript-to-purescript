@@ -1,13 +1,15 @@
 module Main where
 
 import Prelude
+
 import Control.Comonad (class Comonad, class Extend, extract)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
-import Data.Char (fromCharCode, toLower)
+import Data.Char (fromCharCode)
 import Data.Int (fromString)
 import Data.Maybe (fromMaybe)
-import Data.String (singleton, trim)
+import Data.String (toLower, trim)
+import Data.String.CodeUnits (singleton)
+import Effect (Effect)
+import Effect.Console (log)
 
 -- Javascript - const Box = x => ({})
 newtype Box a = Box a
@@ -27,7 +29,7 @@ instance showBox :: Show a => Show (Box a) where
 -- This is suboptimal because its hard to follow
 nextCharForNumberString' :: String -> String
 nextCharForNumberString' str =
-  singleton(fromCharCode(fromMaybe 0 (fromString(trim(str))) + 1))
+  singleton(fromMaybe ' ' (fromCharCode(fromMaybe 0 (fromString(trim(str))) + 1)))
 
 -- Composition using oridinary functions.  This is simple, to read, write
 -- use and reason about than bundled parenthesis.  See the ReadMe in Tutorial 2
@@ -39,6 +41,7 @@ nextCharForNumberString'' =
   fromMaybe 0 >>>
   (+) 1 >>>
   fromCharCode >>>
+  fromMaybe ' ' >>>
   singleton
 
 -- But when mixing categories (i.e., Box, Maybe), we'll often use
@@ -49,11 +52,11 @@ nextCharForNumberString str =
   map trim #
   map (\s -> fromMaybe 0 $ fromString s) #
   map (\i -> i + 1) #
-  map (\i -> fromCharCode i) #
-  map (\c -> singleton $ toLower c) #
+  map (\i -> fromMaybe ' ' $ fromCharCode i) #
+  map (\c -> toLower $ singleton c) #
   extract
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Create Linear Data Flow with Container Style Types (Box)."
 

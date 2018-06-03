@@ -1,7 +1,7 @@
 module Main where
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Either (Either(..))
 import Data.List (List(..), filter, (:))
 import Data.String.Regex (Regex, parseFlags, regex, replace)
@@ -32,7 +32,7 @@ censor = replace regexString "*"
 censorAll :: Array String -> Array String
 censorAll = map censor
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Build curried functions"
   logShow $ inc 2

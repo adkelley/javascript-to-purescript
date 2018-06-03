@@ -1,15 +1,16 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+
 import Data.Char (fromCharCode)
+import Data.Function.Uncurried (Fn2, mkFn2, runFn2)
 import Data.Int (fromString)
 import Data.Lazy (Lazy, defer, force)
 import Data.Maybe (fromMaybe)
 import Data.String (trim, toLower)
-import Unsafe.Coerce (unsafeCoerce)
-import Data.Function.Uncurried (Fn2, mkFn2, runFn2)
+import Data.String.CodeUnits (singleton)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 
 nextCharForNumberString :: String -> Lazy String
 nextCharForNumberString str = do
@@ -17,14 +18,14 @@ nextCharForNumberString str = do
   map trim #
   map (\s ->fromMaybe 0 $ fromString s) #
   map (_ + 1) #
-  map (\i -> fromCharCode i) #
-  map (\c -> toLower $ unsafeCoerce c :: String)
+  map (\i -> fromMaybe ' ' $ fromCharCode i) #
+  map (\c -> toLower $ singleton c)
 
 add2 :: Fn2 Int Int Int
 add2 = mkFn2 \x y -> x + y
 
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Delay Evaluation with LazyBox"
   log "The evaluation of 'nextCharForNumberString' is deferred . . ."

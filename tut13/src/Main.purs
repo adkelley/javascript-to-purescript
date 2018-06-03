@@ -2,18 +2,16 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Aff (launchAff)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Aff.Console (log) as AC
-import Control.Monad.Eff.Exception (EXCEPTION)
+import Effect.Aff (launchAff)
+import Effect (Effect)
+import Effect.Console (log)
+import Effect.Class.Console (log) as Console
 import Control.Monad.Task (fork)
-import Node.FS.Aff (FS)
 import Tut12Aff (tut12Res, tut12Rej, tut12Chain, tut12LM, tut12RM)
 import Tut13 (app)
 
 
-main :: ∀ e. Eff (console :: CONSOLE, fs :: FS, exception :: EXCEPTION | e) Unit
+main :: Effect Unit
 main = do
   log "\nTut12 - Task.of example"
   void $ launchAff tut12Res
@@ -26,4 +24,4 @@ main = do
   void $ launchAff tut12RM
   log "\nTut13 - Async Read/Write file example"
   void $ launchAff $
-    fork (\e → AC.log $ "error: " <> e) (\_ → AC.log $ "success") app
+    fork (\e → Console.log $ "error: " <> e) (\_ → Console.log $ "success") app

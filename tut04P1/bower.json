@@ -7,13 +7,13 @@
     "output"
   ],
   "dependencies": {
-    "purescript-prelude": "^3.0.0",
-    "purescript-console": "^3.0.0",
-    "purescript-node-fs": "^4.0.0",
-    "purescript-random": "^3.0.0",
-    "purescript-exceptions": "^3.0.0"
+    "purescript-prelude": "^4.0.0",
+    "purescript-console": "^4.0.0",
+    "purescript-node-fs": "^5.0.0",
+    "purescript-random": "^4.0.0",
+    "purescript-exceptions": "^4.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": "^3.0.0"
+    "purescript-psci-support": "^4.0.0"
   }
 }

@@ -2,9 +2,9 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Control.Monad.Eff.Exception (EXCEPTION, Error, error, try)
+import Effect (Effect)
+import Effect.Console (log, logShow)
+import Effect.Exception (Error, error, try)
 import Control.Monad.Except (runExcept)
 import Data.Either (Either(..), either)
 import Data.Foreign (unsafeFromForeign)
@@ -42,7 +42,7 @@ chain :: forall a b e. (a -> Either e b) ->  Either e a -> Either e b
 chain f  = either (\e -> Left e) (\x -> (f x))
 
 
-getPort :: forall eff. Eff (fs :: FS, exception :: EXCEPTION | eff) Port
+getPort :: Effect Port
 getPort =
   (try $ readTextFile UTF8 pathToFile) >>=
   chain parsePort >>>
@@ -54,7 +54,7 @@ getPort =
 -- error or read file error and then use this modified getport function below to log
 -- the error to the console.
 
-getPort' :: forall eff. Eff (fs :: FS, exception :: EXCEPTION | eff) (Either Error Port)
+getPort' :: Effect (Either Error Port)
 getPort' =
   (try $ readTextFile UTF8 pathToFile) >>=
   chain parsePort >>>
@@ -62,7 +62,7 @@ getPort' =
   pure
 
 
-main :: forall e. Eff (console :: CONSOLE, fs :: FS, exception :: EXCEPTION | e) Unit
+main :: forall e. Effect Unit
 main = do
   log "Use chain for composable error handling with nested Eithers"
 

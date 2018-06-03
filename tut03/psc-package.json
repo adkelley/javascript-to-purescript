@@ -1,6 +1,6 @@
 {
   "name": "tut03",
-  "set": "psc-0.11.7-20180418",
+  "set": "psc-0.12.0-20180524",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "identity",

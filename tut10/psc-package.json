@@ -1,14 +1,12 @@
 {
   "name": "tut10",
-  "set": "psc-0.11.7",
+  "set": "psc-0.12.0-20180528",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "prelude",
     "console",
-    "monoid",
-    "folds",
+    "effect",
     "foldable-traversable",
-    "maps",
     "group",
     "test-unit",
     "orders",

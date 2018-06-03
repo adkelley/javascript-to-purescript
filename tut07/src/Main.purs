@@ -2,8 +2,8 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Foldable (foldl, foldr)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
@@ -54,7 +54,7 @@ acct2 = makeAccount "Nico" false 2 ["Lou"]
 acct3 :: Account
 acct3 = makeAccount "Christa Päffgen" true 3 ["John", "Sterling"]
 
-main :: ∀ e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Record examples"
   logShow $ _.firstName {firstName: "Imogen", lastName: "Heap", age: (Just 39)}

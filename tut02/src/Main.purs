@@ -2,8 +2,8 @@ module Main where
 
 import Prelude
 import Control.Comonad (extract)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Box (Box(..))
 import Data.String (Replacement(..), Pattern(..), replace)
 
@@ -46,7 +46,7 @@ applyDiscount' price discount = extract $
       (\savings -> pure $ cost - cost * savings))
 
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Refactor imperative code to a single composed expression using Box"
   log "Using extract to remove x from the Box before applying the final expression"

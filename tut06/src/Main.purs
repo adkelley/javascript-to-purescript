@@ -2,9 +2,10 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Data.Array (null)
+import Effect (Effect)
+import Effect.Console (log, logShow)
+-- see comment about null in main
+--import Data.Array (null)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
 
@@ -31,7 +32,7 @@ instance semigroupFirst :: Semigroup (First a) where
 derive instance eqFirst :: Eq a => Eq (First a)
 
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Create types with Semigroups"
   -- semigroups are concatable and associative

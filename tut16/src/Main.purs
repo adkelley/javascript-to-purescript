@@ -1,8 +1,8 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Box (Box(..))
 
 -- Monad law 1 join(m.map(join)) == join(join(m))
@@ -25,7 +25,7 @@ result3 = join $ pure m2
 result4 :: Box String
 result4 = join $ map pure m2
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "You've been using Monads"
   logShow $ result1

@@ -3,13 +3,13 @@ module Main where
 import Prelude
 
 import Control.Monad.Cont (runCont)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Effect (Effect)
+import Effect.Console (log)
 import Data.Pythagoras (pythagoras, addCPS, addCont, pythagorasCPS, pythagorasCont)
 import Data.Task (contTask, taskFork, taskOf, taskRejected)
 import Data.Thrice (thrice, thriceCont, thriceCPS)
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   -- See https://en.wikibooks.org/wiki/Haskell/Continuation_passing_style
   log $ "\nPythagoras direct style: " <> (show $ pythagoras 3 4)

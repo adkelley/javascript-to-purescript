@@ -2,8 +2,8 @@ module Main where
 
 import Prelude
 import Control.Apply (lift2)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Either (Either(..))
 
 newtype Selector = Selector
@@ -32,7 +32,7 @@ result1 =
 result2 :: Either String Selector
 result2 = lift2 (getScreenSize 800) (getSelector "header") (getSelector "footer")
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main ::  Effect Unit
 main = do
   log "Applicative Functors for multiple arguments"
   logShow $ result1

@@ -7,18 +7,16 @@
     "output"
   ],
   "dependencies": {
-    "purescript-prelude": "^3.0.0",
-    "purescript-console": "^3.0.0",
-    "purescript-monoid": "^3.0.0",
-    "purescript-folds": "^3.0.0",
-    "purescript-foldable-traversable": "^3.0.0",
-    "purescript-maps": "^3.0.0",
-    "purescript-group": "^3.1.0",
-    "purescript-test-unit": "^12.0.0",
-    "purescript-orders": "^3.0.0",
-    "purescript-identity": "^3.1.0"
+    "purescript-prelude": "^4.0.0",
+    "purescript-console": "^4.0.0",
+    "purescript-foldable-traversable": "^4.0.0",
+    "purescript-group": "adkelley/purescript-group#compiler/0.12",
+    "purescript-test-unit": "^14.0.0",
+    "purescript-orders": "^4.0.0",
+    "purescript-identity": "^4.0.0",
+    "purescript-effect": "^2.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": "^3.0.0"
+    "purescript-psci-support": "^4.0.0"
   }
 }

@@ -2,16 +2,13 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
 import Data.Array (filter)
 import Data.Either (Either(..))
 import Data.Filterable (maybeBool)
 import Data.Foldable (class Foldable, foldMap)
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Maybe.First (First(..))
 import Data.Maybe.Last (Last(..))
-import Data.Monoid (class Monoid, mempty)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Conj (Conj(..))
 import Data.Monoid.Disj (Disj(..))
@@ -23,6 +20,8 @@ import Data.String (length)
 import Data.String.Regex (Regex, match, regex)
 import Data.String.Regex.Flags (RegexFlags(..), RegexFlagsRec)
 import Data.Tuple (Tuple(..))
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Partial.Unsafe (unsafePartial)
 
 type Stats =
@@ -41,10 +40,6 @@ badStats = [ { page: "Home",  views: (Just 1) }
         , { page: "Blog",  views: Nothing  }
         , { page: "About", views: (Just 10)}
         ]
-
-fromNothing :: forall a. Maybe a -> Either String a
-fromNothing (Just x) = Right x
-fromNothing _ = Left "Nothing"
 
 regexFlags :: RegexFlagsRec
 regexFlags = { global: true, ignoreCase: true
@@ -96,7 +91,7 @@ fromSumAll :: Tuple (Additive Int) (Conj Boolean) -> Tuple Int Boolean
 fromSumAll (Tuple (Additive a) (Conj b)) = Tuple a b
 
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "A curated collection of monoids and their uses"
   log "\nPS Additive =~ JS Sum"
@@ -121,8 +116,8 @@ main = do
   logShow $ mempty :: Min Int -- (Min 2147483647)
   logShow $ foldMap Min [1, 2, 3]  -- (Min 1)
   log "\nCount # of page views"
-  logShow $ foldMap (Additive <<< fromNothing <<< _.views) goodStats
-  logShow $ foldMap (Additive <<< fromNothing <<< _.views) badStats
+  logShow $ foldMap (Additive <<< fromMaybe 0 <<< _.views) goodStats
+  logShow $ foldMap (Additive <<< fromMaybe 0 <<< _.views) badStats
   log "\nThis find uses Maybe instead of Either"
   logShow $ find First (_ > 4) [3, 4, 5, 6, 7, 2, 8]
   logShow $ find Last  (_ > 4) [3, 4, 5, 6, 7, 2, 8]

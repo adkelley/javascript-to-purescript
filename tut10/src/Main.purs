@@ -2,14 +2,13 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Foldable (class Foldable, foldMap)
 import Data.Group (ginverse)
 import Data.List (List(..), foldr, (:))
 import Data.Maybe (Maybe(..))
 import Data.Maybe.Last (Last(..))
-import Data.Monoid (class Monoid, mempty)
 import Data.Monoid.Additive (Additive(..))
 import Data.Monoid.Dual (Dual(..))
 import Data.Monoid.Endo (Endo(..))
@@ -22,11 +21,11 @@ switchArgs :: ∀ f m. Foldable f ⇒ Monoid m ⇒ f m → Dual m
 switchArgs = foldMap Dual
 
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Unbox types with foldMap"
   log "\nIdentity: id <<< p = p <<< id = p"
-  logShow $ foldMap id [(Additive 1), (Additive 2), (Additive 3)]
+  logShow $ foldMap identity [(Additive 1), (Additive 2), (Additive 3)]
   logShow $ foldMap Additive [1, 2, 3]
 
   log "\nWorking with Tuples of different types, then use 'fst' or 'snd'"
@@ -41,10 +40,10 @@ main = do
   logShow $ switchArgs ("Alex" : ", " : "Kelley" : Nil) : Nil -- (Dual ("Kelley" : ", " : "Alex" : Nil))
 
   log "\nArrays are monoids:"
-  logShow $ foldMap id [ ["Foo"], [", "], ["Bar"] ]
+  logShow $ foldMap identity [ ["Foo"], [", "], ["Bar"] ]
 
   log "\nLists are monoids too:"
-  logShow $ foldMap id ("Foo" : ", " : "Bar" : Nil) : Nil
+  logShow $ foldMap identity ("Foo" : ", " : "Bar" : Nil) : Nil
 
   log "\nEndomorphisms: (a -> a) composition is associative and therefore a monoid"
   let f = ((+) 1) <<< (((*) 2) <<< negate)

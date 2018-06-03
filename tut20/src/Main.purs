@@ -1,8 +1,8 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.List (List(..), (:))
 
 -- pure = List.of()
@@ -19,7 +19,7 @@ result1 = pure (\x -> x) `apply` (1 : 2 : 3 : Nil)
 result2 :: List String
 result2 = merch
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "List comprehensions with Applicative Functors"
   logShow $ result1

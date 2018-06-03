@@ -1,8 +1,8 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Effect (Effect)
+import Effect.Console (log)
 import Data.Either (Either(..), either)
 import Data.Function.Uncurried (Fn3, runFn3)
 import Data.List (List(..), dropWhile, head, null, (:))
@@ -59,7 +59,7 @@ result' :: ColorName -> String
 result' = either (const "No Color") toUpper <<< map (slice 1 0 <<< hex) <<< findColor
 
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Enforce a null check with composable code branching using Either"
   log $ result "blue"

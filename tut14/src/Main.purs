@@ -1,9 +1,10 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+
 import Data.Box (Box(..))
+import Effect (Effect)
+import Effect.Console (log, logShow)
 
 foreign import toUpperCase :: String -> String
 -- ignores that substr takes an optional length argument
@@ -27,13 +28,13 @@ res2 =
 res3 :: Box String
 res3 =
   Box "crayons"
-  # map id
+  # map identity
 
 res4 :: Box String
 res4 =
-  id (Box "crayons")
+  identity (Box "crayons")
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "You've been using Functors"
   logShow $ res1
