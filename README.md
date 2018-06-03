@@ -1,3 +1,13 @@
+# !! Experimental Branch !!
+This branch is a work-in-progress to support the v0.12 compiler. All the examples are working, so long as you use Bower to install. Be sure that you are using the v0.12 compiler.  Then:
+
+$ bower install
+
+$ pulp run
+
+I'll continue to update `psc-package` until all libraries can be installed using the `psc-package` manager. Then, I'll merge this branch into Master.
+
+
 # Make the Leap from JavaScript to PureScript
 
 ![series banner](resources/glitched-abstract.jpg)
