@@ -2,10 +2,8 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Cont (ContT(..), runContT)
 import Effect (Effect)
 import Effect.Console (log)
-import Control.Monad.Trans.Class (lift)
 
 -- foreign import data TIMEOUT :: Effect
 
@@ -14,8 +12,7 @@ import Control.Monad.Trans.Class (lift)
 type Milliseconds = Int
 
 foreign import setTimeout
-  :: forall eff
-   . Milliseconds
+  :: Milliseconds
   -> Effect Unit
   -> Effect Unit
 
