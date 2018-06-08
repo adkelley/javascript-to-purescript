@@ -8,7 +8,7 @@ module Data.User ( getCurrentUser
                  , getStreetName
                  , returnNull) where
 
-import Data.Foreign (Foreign)
+import Foreign (Foreign)
 
 foreign import currentUser :: Foreign
 foreign import null :: Foreign

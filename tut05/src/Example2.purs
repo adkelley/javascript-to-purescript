@@ -3,7 +3,7 @@ module Example2 (getPrefs) where
 import Prelude
 
 import Data.Either (either)
-import Data.Foreign (Foreign)
+import Foreign (Foreign)
 import Data.Utils (toEither)
 import Data.User (getPremium, getPreferences, defaultPrefs)
 

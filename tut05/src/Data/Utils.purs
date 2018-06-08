@@ -9,11 +9,11 @@ module Data.Utils
 
 import Prelude
 
-import Control.Monad.Eff.Exception (Error, error)
+import Effect.Exception (Error, error)
 import Control.Monad.Except (runExcept)
 import Data.Either (Either(..), either)
-import Data.Foreign (Foreign, isNull, isUndefined)
-import Data.Foreign.JSON (parseJSON)
+import Foreign (Foreign, isNull, isUndefined)
+import Simple.JSON (parseJSON)
 import Data.Function.Uncurried (Fn2, runFn2)
 import Data.List.NonEmpty (head)
 

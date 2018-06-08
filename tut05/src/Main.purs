@@ -2,11 +2,10 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Control.Monad.Eff.Exception (EXCEPTION)
+import Effect (Effect)
+import Effect.Console (log, logShow)
 import Data.Example (getCurrentExample)
-import Data.Foreign (unsafeFromForeign)
+import Foreign (unsafeFromForeign)
 import Data.User (getCurrentUser, returnNull)
 import Example1 (openSite)
 import Example2 (getPrefs)
@@ -14,13 +13,12 @@ import Example3 (streetName)
 import Example4 (concatUniq)
 import Example5 (wrapExample, wrapExample_)
 import Example6 (parseDbUrl, parseDbUrl_)
-import Node.FS (FS)
 import Partial.Unsafe (unsafePartial)
 
 defaultConfig :: String
 defaultConfig = "{ \"url\": \"postgres:\\/\\/username:password@localhost/myjavascriptdb\"}\n"
 
-main :: forall e. Eff (fs :: FS, exception :: EXCEPTION, console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "A collection of Either examples"
 
@@ -35,8 +33,8 @@ main = do
   log $ streetName getCurrentUser
 
   log "Example 4"
-  log $ concatUniq "x" "ys"
-  log $ concatUniq "y" "y"
+  log $ concatUniq 'x' "ys"
+  log $ concatUniq 'y' "y"
 
   log "Example 5"
   log "using where keyword in wrapExample"

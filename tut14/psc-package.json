@@ -6,6 +6,7 @@
     "prelude",
     "console",
     "functions",
-    "psci-support"
+    "psci-support",
+    "tuples"
   ]
 }

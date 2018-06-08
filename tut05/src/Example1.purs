@@ -3,7 +3,7 @@ module Example1 (openSite) where
 import Prelude
 
 import Data.Either (either)
-import Data.Foreign (Foreign)
+import Foreign (Foreign)
 import Data.Utils (fromNullable)
 
 openSite :: Foreign -> String

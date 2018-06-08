@@ -2,15 +2,16 @@ module Example6 (parseDbUrl, parseDbUrl_) where
 
 import Prelude
 
-import Control.Monad.Eff.Exception (Error, error)
 import Data.Array (singleton)
+import Data.Array.NonEmpty (NonEmptyArray, toArray)
 import Data.Either (Either(..), either)
 import Data.Example (getDbUrl)
-import Data.Foreign (unsafeFromForeign)
 import Data.Maybe (Maybe(..))
 import Data.String.Regex (Regex, match, regex)
 import Data.String.Regex.Flags (noFlags)
 import Data.Utils (fromNullable, parseValue, chain)
+import Effect.Exception (Error, error)
+import Foreign (unsafeFromForeign)
 import Partial.Unsafe (unsafePartial)
 
 dBUrlRegex :: Partial => Regex
@@ -19,7 +20,7 @@ dBUrlRegex =
     case regex "^postgres:\\/\\/([a-z]+):([a-z]+)@([a-z]+)\\/([a-z]+)$" noFlags of
       Right r -> r
 
-matchUrl :: Regex -> String -> Either Error (Array (Maybe String))
+matchUrl :: Regex -> String -> Either Error (NonEmptyArray (Maybe String))
 matchUrl r url =
   case match r url of
     Nothing -> Left $ error "unmatched url"
@@ -31,7 +32,7 @@ parseDbUrl_ =
   chain (\config -> fromNullable $ getDbUrl config) >>>
   map (\url -> unsafeFromForeign url :: String) >>>
   chain (matchUrl dBUrlRegex) >>>
-  either (\_ -> singleton Nothing) id
+  either (\_ -> singleton Nothing) toArray
 
 parseDbUrl :: Partial => String -> Array (Maybe String)
 parseDbUrl s =
@@ -39,4 +40,4 @@ parseDbUrl s =
   (\config -> fromNullable $ getDbUrl config) >>>
   map (\url -> unsafeFromForeign url :: String) >>=
   (\r -> matchUrl dBUrlRegex r) #
-  either (\_ -> singleton Nothing) id
+  either (\_ -> singleton Nothing) toArray

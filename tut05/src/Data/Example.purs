@@ -5,7 +5,7 @@ module Data.Example
   , getDbUrl
   ) where
 
-import Data.Foreign (Foreign)
+import Foreign (Foreign)
 
 foreign import previewPath :: Foreign -> Foreign
 foreign import currentExample :: Foreign

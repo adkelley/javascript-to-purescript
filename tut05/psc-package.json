@@ -1,6 +1,6 @@
 {
-  "name": "tut005",
-  "set": "psc-0.12.0-20180524",
+  "name": "tut05",
+  "set": "psc-0.12.0-20180603",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "prelude",
@@ -8,10 +8,9 @@
     "foreign",
     "nullable",
     "strings",
-    "stringutils",
     "node-fs",
     "exceptions",
-    "foreign-generic",
+    "simple-json",
     "psci-support"
   ]
 }
