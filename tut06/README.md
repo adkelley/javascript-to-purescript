@@ -97,7 +97,7 @@ instance semigroupAll :: BooleanAlgebra a => Semigroup (All a) where
   append (All a) (All b) = All (a && b)
 derive instance eqAll :: Eq a => Eq (All a)
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   logShow $ All true <> All false -- (All false)
   log "Associativity law:"

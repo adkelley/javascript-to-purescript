@@ -29,9 +29,9 @@ Let's first remind ourselves that a Task, when implemented asynchronously, repre
 ```haskell
 -- | Task.purs (excerpt)
 
-type Task e a = (Aff e) a
+type Task a = Aff a
 ```
-Here the type constructor `Task e a` represents an asynchronous computation with effects that may error with an exception `e` or produce a result of type `a`.  From the description above, recognize that`Task` is just a type synonym for the `Aff` monad, and therefore I could've represented it as such.
+Here the type constructor `Task a` represents an asynchronous computation with effects that may error or produce a result of type `a`.  From the description above, recognize that`Task` is just a type synonym for the `Aff` monad, and therefore I could've represented it as such.
 
 ## Tutorial 12 Revisited
 Now, taking the examples from [Tutorial 12](https://github.com/adkelley/javascript-to-purescript/tree/master/tut12), it's easy to match the functionality of `Folktale.Task`.  Remember, these are the asynchronous `Aff` alternatives to using the continuation monad `Cont` we covered in the last tutorial.  You'll find this code in [Tut12Aff.purs](https://github.com/adkelley/javascript-to-purescript/blob/master/tut13/src/Tut12Aff.purs)
@@ -39,27 +39,25 @@ Now, taking the examples from [Tutorial 12](https://github.com/adkelley/javascri
 ``` haskell
 -- | Tut12Aff.purs (excerpt)
 
-tut12Res :: ∀ eff. Task (console :: CONSOLE | eff) Unit
+tut12Res :: Task Unit
 tut12Res =
   taskOf "good task"
   # fork (\e → log $ "err " <> e) (\x → log $ "success " <> show x)
 
-tut12Rej :: ∀ eff. Task (console :: CONSOLE | eff) Unit
+tut12Rej :: Task Unit
 tut12Rej =
   taskRejected "bad task"
   # fork (\e -> log $ "err " <> show e) (\x -> log $ "success " <> x)
 
 -- | Main.purs (excerpt)
-main
-  :: ∀ e
-   . Eff (console :: CONSOLE, exception :: EXCEPTION | e) Unit
+main Effect Unit
 main = do
   log "\nTut12 - Task.of example"
   void $ launchAff tut12Res
   log "\nTut12 - Task.rejected example"
   void $ launchAff tut12Rej
 ```
-Hopefully, now that you're familiar with our `Task` type constructor, the code snippet above is not so scary.  First, let's look at the type signature for `tut12Res`.  It states the for all effects `eff`, we return an asynchronous `Task`, parameterized with an effect `(console :: CONSOLE | e)` that logs our result to the console & any other effect `eff`; along with a type `Unit` which represents no computational content.  The function `tut12Res` creates a task of String "good task",  and because `taskOf` always returns a successful computation,  `fork`  returns the "success" code given in its right argument.  The function `tut12Rej`, does the opposite by rejecting the task and throwing an error.  So, we handle the error by executing the first argument; logging "err bad task" to the console.
+Hopefully, now that you're familiar with our `Task` type constructor, the code snippet above is not so scary.  First, let's look at the type signature for `tut12Res`.  It states the for all effects `eff`, we return an asynchronous `Task` that logs our result to the console (and any other effect); along with a type `Unit` which represents no computational content.  The function `tut12Res` creates a task of String "good task",  and because `taskOf` always returns a successful computation, `fork` returns the "success" code given in its right argument.  The function `tut12Rej`, does the opposite by rejecting the task and throwing an error.  So, we handle the error by executing the first argument; logging "err bad task" to the console.
 
 When we run the function `launchAff`, shown in the `main` module, then that is the time we execute our asynchronous tasks created by `tut12Res` and `tut12Rej`.  In the `main` do block, we see a mix of synchronous and asynchronous computations combined.  For example, `log "\nTut12 - Task.rejected example"` is performed synchronously, while `\x →  log $ "success " <> show x` in `Tut12Aff.purs` is performed asynchronously.  What I love about `purescript-aff` is that you feel like you're writing synchronous code, and relieved from writing tedious callbacks in JavaScript.
 
@@ -70,12 +68,12 @@ I've also rewritten "launchMissiles" and "rejectMissiles" from the Tutorial12 re
 ```haskell
 -- | Task.purs (excerpt) 
 
-type TaskE x e a = ExceptT x (Aff e) a
+type TaskE x a = ExceptT x Aff a
 ```
 
-Don't be confused by the difference between `Task` and `TaskE`,  rather bear with me for a moment.  The type alias for `TaskE` is a little dense, so first let’s understand what is `ExceptT x`.  Without going down into the monad rabbit hole, you can think of `ExceptT` as a wrapper which adds exceptions `x` to other monads.  So the `E` at the end of the name `TaskE` makes this distinction.  In our case, the other monad in this structure is `Task e a`.  Also, as a reminder, `Task e a` is a type synonym for `(Aff e) a`.
+Don't be confused by the difference between `Task` and `TaskE`,  rather bear with me for a moment.  The type alias for `TaskE` is a little dense, so first let’s understand what is `ExceptT x`.  Without going down into the monad rabbit hole, you can think of `ExceptT` as a wrapper which adds exceptions `x` to other monads.  So the `E` at the end of the name `TaskE` makes this distinction.  In our case, the other monad in this structure is `Task a`.  Also, as a reminder, `Task a` is a type synonym for `Aff a`.
 
-So by creating `TaskE`, I am adding the ability to throw an exception in the `Task` monad manually.  I need this capability to implement `taskRejected` correctly.  One other benefit is that exceptions `x` can be any type (e.g., `String`), and no longer limited to the `Error` type exclusively.  When we `runExceptT` (see `toAff` in [Task.purs](https://github.com/adkelley/javascript-to-purescript/blob/master/tut13/src/Control/Monad/Task.purs) ) , our `TaskE` structure is transformed into `Aff e (Either x a)`.  This transformation sets us up to execute our `rej` or `res` functions (see explanation below), depending on failure or a successful computation, respectively.  Whew!
+So by creating `TaskE`, I am adding the ability to throw an exception in the `Task` monad manually.  I need this capability to implement `taskRejected` correctly.  One other benefit is that exceptions `x` can be any type (e.g., `String`), and no longer limited to the `Error` type exclusively.  When we `runExceptT` (see `toAff` in [Task.purs](https://github.com/adkelley/javascript-to-purescript/blob/master/tut13/src/Control/Monad/Task.purs) ) , our `TaskE` structure is transformed into `Aff (Either x a)`.  This transformation sets us up to execute our `rej` or `res` functions (see explanation below), depending on failure or a successful computation, respectively.  Whew!
 
 This explanation is as far as I want to go in delving into my Task API.  Because assuming you watched Brian's [video](https://egghead.io/lessons/javascript-using-task-for-asynchronous-actions), then you don’t need anything further to implement his read/write file example.  I've modeled my Task API to resemble the Folktale implementation of `Task` closely. However, if you're farther along in your PureScript adventures then feel free to study the code.  Writing it certainly helped with my understanding in implementing asynchronous computations.
 
@@ -85,9 +83,8 @@ The primary example in Brian's [video](https://egghead.io/lessons/javascript-usi
 ```haskell
 -- | Tut13.purs (excerpt)
 readFile_
-  :: ∀ e
-   . Encoding → String
-   → TaskE String (fs :: FS, console :: CONSOLE | e) String
+  :: Encoding → String
+   → TaskE String String
 readFile_ enc filePath =
   newTask $
   \cb -> do
@@ -96,16 +93,14 @@ readFile_ enc filePath =
     cb $ either (\err → rej $ show err) (\success → res success) result
     pure $ nonCanceler
 
-app :: ∀ e. TaskE String (console :: CONSOLE, fs :: FS | e) Unit
+app :: TaskE String Unit
 app = do
   readFile_ UTF8 pathToFile
   # map newContents
   # chain (\x → writeFile_ UTF8 pathToFile x)
 
 -- | Main.purs (excerpt)
-main 
-  :: ∀ e
-   . Eff (console :: CONSOLE, exception :: EXCEPTION | e) Unit
+main :: Effect Unit
 main = do
   log "\nTut13 - Async Read/Write file example"
   void $ launchAff $
@@ -113,17 +108,17 @@ main = do
          (\_ → AC.log $ "success")
          app
 ```
-We covered reading a file, including regular expressions, back in [Tutorial4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2).  So hopefully, some parts look familiar to you.  However, let's go over the final argument in the type signature for `readFile_`.  For all effects `e`, return a `TaskE` that is parameterized by an exception of type `String`, effects of type `(fs :: FS, console :: Console | e)`, and a successful result of type `String` (i.e., the text from the file). The new pieces are `newTask` and the lambda function `cb`  (denoted `\cb -> ...`), which represents our callback.   There's also `nonCanceler` and the `rej ` & `res` functions, which I'll cover in a bit.  
+We covered reading a file, including regular expressions, back in [Tutorial4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P2).  So hopefully, some parts look familiar to you.  However, let's go over the final argument in the type signature for `readFile_`. Return a `TaskE` that is parameterized by an exception of type `String`, and a successful result of type `String` (i.e., the text from the file). The new pieces are `newTask` and the lambda function `cb`  (denoted `\cb -> ...`), which represents our callback.   There's also `nonCanceler` and the `rej ` & `res` functions, which I'll cover in a bit.  
 
 First, note that the entire callback `cb` and `pure $ nonCanceler` are wrapped in a `newTask`.  After logging a debugging message to the console, the callback attempts to read the file using [try](https://pursuit.purescript.org/packages/purescript-exceptions/4.0.0/docs/Effect.Exception#v:try).  If successful, then `try` returns the text from the file, wrapped it in a `Right` constructor.  Otherwise, if there's an exception, then it wraps the `Error` in a `Left` constructor.
 
 The `either` function takes the result, and if it's a `Left` constructor (i.e., the read file failed) then the computation in the first argument is executed.  In this case, it turns `Error` into a `String` using `show` and finally passes the error to the `rej` function.  Otherwise, execute the computation in `either`'s second argument, passing the file's text to the `res` function.
 
-What's left about the `newTask` signature to discuss is the `Canceler e`, which tells the function how to clean up after the async computation.  For example, if an asynchronous process is killed and an asynchronous action is pending, then a canceler is called to clean up.  In our case, we don't have any elaborate asynchronous processes, so we provide newTask with the `nonCanceler` function.  As you may suspect, this function provides `newTask` with a canceler that doesn't cancel anything.  Behind the scenes, `newTask` is just a synonym for [makeaff](https://pursuit.purescript.org/search?q=makeAff) from the `purescript-aff` library.  However, I also compose `makeAff` with the `ExceptT` monad for the reasons I explained above.
+What's left about the `newTask` signature to discuss is the `Canceler`, which tells the function how to clean up after the async computation.  For example, if an asynchronous process is killed and an asynchronous action is pending, then a canceler is called to clean up.  In our case, we don't have any elaborate asynchronous processes, so we provide newTask with the `nonCanceler` function.  As you may suspect, this function provides `newTask` with a canceler that doesn't cancel anything.  Behind the scenes, `newTask` is just a synonym for [makeaff](https://pursuit.purescript.org/search?q=makeAff) from the `purescript-aff` library.  However, I also compose `makeAff` with the `ExceptT` monad for the reasons I explained above.
 
 The function `app` mimics the sequence of actions from Brian's video.  For the sake of brevity, I've left out `newContents` and `writeFile_`, so be sure to check out my [repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13) for the full listing.  I should mention, that we don't need `chain` because there's an equivalent in PureScript called [bind](https://pursuit.purescript.org/packages/purescript-prelude/4.0.0/docs/Control.Bind#t:Bind).  We'll cover it when we get into monads later in the series.  However, in the meantime, I decided to add `chain` to help you follow along with Brian's JavaScript example.  
 
-As Brian mentions, we don't want to log success somewhere buried deep within our function.  So I've delegated the honors to our `main` module, by importing `fork` from `Control.Monad.Task`.  One thing to mention is, in my fork function, I'm using `Control.Monad.Aff.Console.log` to log a failure or success to the console because it's being performed asynchronously within the `Aff` monad.
+As Brian mentions, we don't want to log success somewhere buried deep within our function.  So I've delegated the honors to our `main` module, by importing `fork` from `Control.Monad.Task`.  One thing to mention is, in my fork function, I'm using `Effect.Class.Console.log` to log a failure or success to the console because it's being performed asynchronously within the `Aff` monad.
 
 ### Summary
 In this tutorial and Tutorial12, we modeled the Task API from Folktale.js in PureScript using asynchronous actions and the continuation passing style respectively.  In all honesty, given all the functionality that is present already in `purescript-aff``, it's debatable whether a Task API is necessary.  However, for me, it was certainly a good exercise in asynchronous programming, and I hope it is for you.  Finally, if you have any questions about some of the functions in [Task.purs](https://github.com/adkelley/javascript-to-purescript/blob/master/tut13/src/Control/Monad/Task.purs)  then don’t hesitate to ask by leaving a comment below.

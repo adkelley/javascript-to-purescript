@@ -36,45 +36,46 @@ main = do
   -- run the computation contained in 'c' and invoke 'success',
   -- which is nested in our top-level continuation 'k'
 
-  let c = contTask $ taskOf 1.0
-  runCont c k
+  let c0 = contTask $ taskOf 1.0
+  runCont c0 k
   -- I can make a rejected Task with the rejected method here.
   -- Thus err will be invoked
-  let c = contTask $ taskRejected 1.0
-  runCont c k
+  let c1 = contTask $ taskRejected 1.0
+  runCont c1 k
 
   -- add a prefix string 'p' to our top-level continuation 'k'
-  let k p = fork >>> \s -> log $ p <> s
+  -- we'll need a new 'k' var in order to avoid a shadow warning
+  let k' p = fork >>> \s -> log $ p <> s
 
   -- we can map over this, just like the other container types
-  let c = contTask $ (taskOf 1.0) # map (_ + 1.0)
-  runCont c (k "Task.of.map: ")
+  let c2 = contTask $ (taskOf 1.0) # map (_ + 1.0)
+  runCont c2 (k' "Task.of.map: ")
   -- We could also bind >>= (aka chain) over it to return a task within a task
-  let c = contTask $
+  let c3 = contTask $
           (taskOf 1.0) #
           map (_ + 1.0) >>=
           \x -> taskOf (x + 1.0)
-  runCont c (k "taskOf.map.chain.taskOf: ")
+  runCont c3 (k' "taskOf.map.chain.taskOf: ")
   -- Again, if we return the rejected version, it will short circuit, ignoring
   -- both map and the second task, and go right down to the error.
-  let c = contTask $
+  let c4 = contTask $
           (taskRejected 1.0) #
           map (_ + 1.0) >>=
           \x -> taskOf (x + 1.0)
-  runCont c (k "Task.rejected.map.chain.Task.of: ")
+  runCont c4 (k' "Task.rejected.map.chain.Task.of: ")
   -- We can even reject anywhere along the way
-  let c = contTask $ (taskOf 1.0) #
+  let c5 = contTask $ (taskOf 1.0) #
           map (_ + 1.0) >>=
           \x -> taskRejected (x + 1.0)
-  runCont c (k "taskOf.map.chain.taskRejected: ")
+  runCont c5 (k' "taskOf.map.chain.taskRejected: ")
 
 
   log "\nLet's launch some missiles!"
   -- we'll need new success and err continuations
   -- because we're returning String instead of Int
-  let err = \e -> "error: " <> e
-  let success = \x -> "success: " <> x
-  let fork = taskFork err success
+  let err' = \e -> "error: " <> e
+  let success' = \x -> "success: " <> x
+  let fork' = taskFork err' success'
 
   let sideEffects = \t -> do
         log "launch missiles!"
@@ -83,5 +84,5 @@ main = do
   let r1 = taskOf "missle" # map (_ <> "!")
   -- I can delay the side effects, and even extend
   -- the computation before it runs.
-  let c = contTask $ r1 # map (_ <> "!")
-  runCont c (fork >>> sideEffects)
+  let c6 = contTask $ r1 # map (_ <> "!")
+  runCont c6 (fork' >>> sideEffects)

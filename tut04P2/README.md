@@ -14,7 +14,7 @@ The series outline and javascript code samples were borrowed with permission fro
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his [video](https://egghead.io/lessons/javascript-composable-error-handling-with-either) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript. Finally, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1).
 
 ## Compiler release update
-Since I began writing these tutorials, there have been a couple [release updates](https://github.com/purescript/purescript/releases) to the PureScript compiler. So starting with this tutorial, the package declarations in `bower.json` have been updated to support compiler version 0.10.5 and are not backward compatible.  So be sure to update PureScript and [pulp](https://github.com/bodil/pulp) to their latest release.  Here's how I do it:
+Since I began writing these tutorials, there have been a couple [release updates](https://github.com/purescript/purescript/releases) to the PureScript compiler. So starting with this tutorial, the package declarations in `bower.json` and `psc-package` have been updated to support compiler version 0.12.0 and are not backward compatible.  So be sure to update PureScript and [pulp](https://github.com/bodil/pulp) to their latest release.  Here's how I do it:
 
 ```
 npm update -g purescript pulp
@@ -59,9 +59,9 @@ In the code example below, we have our usual import suspects such as `Prelude`. 
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, logShow)
-import Control.Monad.Eff.Exception (EXCEPTION, try)
+import Effect (Effect)
+import Effect.Console (CONSOLE, logShow)
+import Effect.Exception (EXCEPTION, try)
 import Node.Encoding (Encoding(..))
 import Node.FS (FS)
 import Node.FS.Sync (readTextFile)
@@ -97,9 +97,9 @@ On the next line, we create a class instance of `show` for `Port`, which declare
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
-import Control.Monad.Eff.Exception (EXCEPTION, Error, error, try)
+import Effect (Eff)
+import Effect.Console (log, logShow)
+import Effect.Exception (Error, error, try)
 import Control.Monad.Except (runExcept)
 import Data.Either (Either(..), either)
 import Data.Foreign (unsafeFromForeign)
@@ -129,14 +129,14 @@ parsePort port =
 chain :: forall a b e. (a -> Either e b) ->  Either e a -> Either e b
 chain f  = either (\e -> Left e) (\x -> (f x))
 
-getPort :: forall eff. Eff (fs :: FS, exception :: EXCEPTION | eff) Port
+getPort :: Effect Port
 getPort =
   (try $ readTextFile UTF8 pathToFile) >>=
   chain parsePort >>>
   either (\_ -> defaultPort) id >>>
   pure
 
-main :: forall e. Eff (console :: CONSOLE, fs :: FS, exception :: EXCEPTION | e) Unit
+main :: Effect Unit
 main =
   logShow =<< getPort
 ```  
@@ -157,9 +157,9 @@ With `Foreign` and `ForeignError` out of the way, let's finish up `parsePort`. A
 
 First, notice the return type signature:
 
-`forall eff. Eff (fs :: FS, exception :: EXCEPTION | eff) Port`
+`Effect Port`
 
-It makes it very clear as to what side effects `getPort` creates along with the return type.  Once again, we see `(try $ readTextFile)` which will return an `Eff FS (Right String)` or, in the case of an exception, `Eff EXCEPTION (Left Error)`.  Then, use the bind operator `>>=` to take the Either construct out of the `Eff` monad, which becomes our second argument in `chain`.  After executing `chain`, we compose the result with `either` to deliver a port number. Finally,  wrap the result back in the `Eff` monad with `pure` before returning.
+It makes it very clear that `getPort` creates side effects along with the return type.  Once again, we see `(try $ readTextFile)` which will return an `Effect (Right String)` or, in the case of an exception, `Effect (Left Error)`.  Then, use the bind operator `>>=` to take the Either construct out of the `Eff` monad, which becomes our second argument in `chain`.  After executing `chain`, we compose the result with `either` to deliver a port number. Finally,  wrap the result back in the `Eff` monad with `pure` before returning.
 
 
 ## Final Points

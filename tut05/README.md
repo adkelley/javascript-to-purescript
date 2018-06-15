@@ -171,7 +171,7 @@ const wrapExample = example =>
 ```
 ### PureScript
 ```haskell
-wrapExample :: forall eff. Foreign -> Eff (fs :: FS, exception :: EXCEPTION | eff) Foreign
+wrapExample :: Foreign -> Effect Foreign
 wrapExample example =
   fromNullable (getPreviewPath example) #
   map (\path -> unsafeFromForeign path :: String) >>>
@@ -183,7 +183,7 @@ wrapExample example =
       either (\_ -> example) (assignObject2 example) >>>
       pure
 
-wrapExample_ :: forall eff. Foreign -> Eff (fs :: FS, exception :: EXCEPTION | eff) Foreign
+wrapExample_ :: Foreign -> Effect Foreign
 wrapExample_ example =
   fromNullable (getPreviewPath example) #
   map (\path -> unsafeFromForeign path :: String) >>>
@@ -267,7 +267,7 @@ One final item - `parseDbUrl` returns `Array (Maybe String)`, and so you're prob
 defaultConfig :: String
 defaultConfig = "{ \"url\": \"postgres:\\/\\/username:password@localhost/mydb\"}\n"
 
-main :: forall e. Eff (fs :: FS, exception :: EXCEPTION, console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "A collection of Either examples"
 

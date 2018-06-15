@@ -160,7 +160,7 @@ Unless you're calling PureScript from JavaScript (yes you can do that), every Pu
 
 From our `main` method we call our function `nextCharForNumberString` and log the result using the `log` or `logShow` functions.  The difference between these two is that `log` expects a string argument, whereas `logShow` can log a value, so long as an instance of the `Show` class has been declared. Here's the code:
 ```purescript
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "Create Linear Data Flow with Container Style Types (Box)."
 

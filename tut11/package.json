@@ -1,9 +1,10 @@
 {
   "name": "javascript-to-purescript",
   "description": "Javascript to Purescript Tutorial Series",
+  "private": true,
   "version": "2.0.0",
   "scripts": {
-    "clean": "rm -rf bower_components output .psc* .pulp-cache",
+    "clean": "rimraf bower_components && rimraf output && rimraf .psc* && rimraf .pulp-cache",
     "install": "psc-package install",
     "build": "pulp --psc-package build",
     "exec": "pulp --psc-package run",

@@ -40,7 +40,9 @@ PureScript has been architected solely as an FP language. It is a small, strongl
 
 I’ve created a github repository with the markdown versions of these stories (i.e., README.md) together with the code samples. You can clone it [here](https://github.com/adkelley/javascript-to-purescript) and [fetch upstream](https://help.github.com/articles/syncing-a-fork/) for future updates.
 
-Each tutorial has been placed in a separate folder named 'tut##', where ## is a number (e.g., 'tut01') that corresponds to video## from Brian's [course](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript). I have set up the folders so that you can run the PureScript code samples for the first time with `bower update && pulp run`, then `pulp run` from then on (explained below).  You will also find the accompanying tutorial markdown (e.g., tut01/README.md) which illustrates the abstraction from Brian's corresponding video (e.g. video1) and how to implement it in PureScript.
+Each tutorial has been placed in a separate folder named 'tut##', where ## is a number (e.g., 'tut01') that corresponds to video## from Brian's [course](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript). You will also find the accompanying tutorial markdown (e.g., tut01/README.md) which illustrates the abstraction from Brian's corresponding video (e.g., video1) and how to implement it in PureScript.
+
+I have set up the folders so that you can run the PureScript code samples for the first time with `npm run all` then `npm run exec` from then on. There's also individual scripts `npm run clean`, `npm run install`, `npm run build`, `npm run exec`; used to clean, install, build, and execute the tutorial examples respectively. Naturally, this assumes you have (and you should) the `npm` package manager installed. These scripts depend on `rimraf` (the UNIX command `rm -rf` for node), `Pulp` (a build tool for PureScript projects), `Psc-Package` (PureScript package manager), and the `Bower` package manager.  Note that `Bower` is used in a couple of cases only. I will remove it, once `Psc-Package` captures all my module dependencies.  All this is explained below.
 
 ## Get up and running in PureScript
 
@@ -49,13 +51,14 @@ You can skip this section if you've already installed and are using PureScript o
 ### Install PureScript and its supporting actors
 In earlier versions of this tutorial, I recommended you use [Bower](https://bower.io) as your package manager.  In fact, this is recommendation given in [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/).  Bower is useful, thanks to its flat dependency graph, and easy to use. However, its inability to restrict libraries that work with a specific compiler version of PureScript can cause problems for beginners.  Especially during the early stages of a release of the compiler when libraries, tooling, and documentation are still catching up.  
 
- Instead, I recommend you use PureScript's own `Psc-Package` manager. The installation and usage are just as simple using Bower, so I see no good reason to use Bower anymore.  Assuming you already have npm running on your machine, here's how to install PureScript, Pulp, and Psc-Package.  As of this writing, I recommend you use the 0.11.7 version of the compiler.  
+ Instead, I recommend you use PureScript's own `Psc-Package` manager. The installation and usage are just as simple using Bower, so I see no good reason to use Bower anymore.  Assuming you already have npm running on your machine, here's how to install PureScript, Pulp, and Psc-Package.  As of this writing, I recommend you use the 0.12.0 version of the compiler.  Before executing the following command, be sure you have the latest [npm](https://www.npmjs.com/) package manager and [node](https://nodejs.org/en/) installed.
 ```
-npm i -g purescript@0.11.7 pulp psc-package
+npm i -g purescript@0.12.0 pulp psc-package bower rimraf
 ```
 You can check that these work by trying some commands:
 ```
 pulp --version
+bower --version
 psc-package
 ```
 

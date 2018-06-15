@@ -54,7 +54,7 @@ var f = function (x) {
 };
 
 var main =
-  Control_Monad_Eff_Console.logShow(Data_Show.showInt)(f(5)(2 + 3 | 0));
+  Effect_Console.logShow(Data_Show.showInt)(f(5)(2 + 3 | 0));
 ```
 
 As shown above, despite never using `y`, `main` will still evaluate `2 + 3` before calling `f`.  However, this should not be setting off alarm bells.  In fact, nearly all programming languages are strict, with one notable exception being Haskell.  There are some advantages because optimization for eager languages is common amongst modern hardware architectures.  Even the best compilers for lazy languages will likely produce slower code.  If it is eager, then the developer gets to decide about the order of execution of their program.  But this is somewhat of a grey area because modern compilers will naturally look for efficiencies, including reordering of expressions to best optimize processor resources.

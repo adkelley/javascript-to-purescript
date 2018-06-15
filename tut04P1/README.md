@@ -33,33 +33,33 @@ Brian’s JavaScript [code examples](https://egghead.io/lessons/javascript-compo
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Eff.Random (RANDOM, randomInt)
+import Effect (Effect)
+import Effect.Console (log)
+import Effect.Random (randomInt)
 
 type PortRange = { min :: Int, max :: Int }
 
 validPorts :: PortRange
 validPorts = { min: 2500,  max: 7500 }
 
-main :: Eff (console :: CONSOLE, random :: RANDOM) Unit
+main :: Effect Unit
 main = do
   log "Use chain for composable error handling with nested Eithers - Part 1"
   portNumber <- randomInt (validPorts.min) (validPorts.max)
   log $ "Our random port number is: " <> show portNumber
 ```
 
-I import the `Control.Monad.Eff` and `Control.Monad.Eff.Console` modules for logging my results to the console.  I also import the `Control.Monad.Eff.Random` for generating random integers using `randomInt`.  For this to compile, I added both the `purescript-console` and `purescript-random` dependencies to my `bower.json` file.
+I import the `Effect` and `Effect.Console` modules for logging my results to the console.  I also import the `Effect.Random` for generating random integers using `randomInt`.  For this to compile, I added both the `purescript-console` and `purescript-random` dependencies to my `bower.json` file.
 
 Look at the type declaration of `main`.  It signifies that it will run a computation with two effects; 1) logging to the `CONSOLE` and 2) generating `RANDOM` numbers, yielding a value of type `Unit`.  Thanks to the granularity of `EFF`, there is good clarity, meaning that the reader of my program can trust that I am creating these two effects, only.
 
 Alternatively, you’ll most often see a type declaration like the following:
 
 ```haskell
-main :: forall eff. Eff (console :: CONSOLE, random :: RANDOM | eff) Unit
+main :: Effect Unit
 ```
 
-It tells you that the module `main` is an effectful computation, which runs in any environment that supports RANDOM number generation and CONSOLE IO.  All good so far, but adding ` | eff` means that `main` will also support other side effects, yielding a value of type Unit.
+It tells you that the module `main` is an effectful computation, because we are creating random number generation and console IO side effects.
 
 Now, since we're writing strings to the console, the astute reader may be asking, why doesn’t `main` return `String` instead of `Unit`?  Well again, `main` is a computation that has effects and thus you cannot emulate them by pure functions.  So instead, `Unit` (i.e., nothing) is returned to indicate that `main` has terminated correctly.  Continuing,  `main` creates a random integer between 2500 and 7500 using the function `randomInt` and assigns it to the variable `portNumber`.  Finally, I print the port number to the console using our old and trusted friend ‘log’.
 
@@ -75,10 +75,10 @@ In the code example below, I am adding a new effect to our arsenal by introducin
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Eff.Exception (EXCEPTION, Error, catchException, error, message, throwException)
-import Control.Monad.Eff.Random (RANDOM, randomInt)
+import Effect (Effect)
+import Effect.Console (log)
+import Effect.Exception (Error, catchException, error, message, throwException)
+import Effect.Random (randomInt)
 
 type PortRange = { min :: Int, max :: Int }
 
@@ -103,7 +103,7 @@ catchWhenBadPort portNumber =
   where
     printException e = log $ message e
 
-main :: Eff (console :: CONSOLE, random :: RANDOM, err :: EXCEPTION) Unit
+main :: Effect Unit
 main = do
   log "Use chain for composable error handling with nested Eithers - Part 1"
   -- Create a 50% chance of generating a invalid port number
@@ -116,7 +116,7 @@ main = do
   -- throwWhenBadPort portNumber
 ```
 
-I import the `Control.Monad.Eff.Exception` module, tapping on four functions - `throwException`, catchException, error, and message.  My first function `inValidPort`, determines whether the portNumber we’ve supplied is within the range of `validPorts`.  When it is an invalid port number, `throwWhenBadPart` will throw an exception.  To help grok this example, take a look at the type signatures of  `throwException` and `catchException`:
+I import the `Effect.Exception` module, tapping on four functions - `throwException`, catchException, error, and message.  My first function `inValidPort`, determines whether the portNumber we’ve supplied is within the range of `validPorts`.  When it is an invalid port number, `throwWhenBadPart` will throw an exception.  To help grok this example, take a look at the type signatures of  `throwException` and `catchException`:
 
 ```haskell
 throwException :: forall a eff. Error -> Eff (exception :: EXCEPTION | eff) a
@@ -127,7 +127,7 @@ throwException :: forall a eff. Error -> Eff (exception :: EXCEPTION | eff) a
 `catchException` is similar:
 
 ```haskell
-catchException :: forall a eff. (Error -> Eff eff a) -> Eff (exception :: EXCEPTION | eff) a -> Eff eff a
+catchException :: forall a. (Error -> Effect a) -> Effect a -> Effect a
 ```
 
 Notice that the input to `catchException` is simply the output from `throwException` - makes sense! Then I'm telling catchException to generate a `CONSOLE` effect by using `printException` to log the error message from `catchWhenBadPort` to the console.
