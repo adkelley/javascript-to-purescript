@@ -172,17 +172,17 @@ main = do
 ```
 You can safely ignore main's type declaration for now.  But it tells the compiler and anyone who is reading the program that `main` will generate a side effect, namely logging to the console. The rest should be self-explanatory, except the special syntax called `do` notation. In simple terms (for now), `do` allows us to write our log statements as we would in an imperative program - one after the other.  It's much more than that, especially when we encounter expressions that bind elements together or give names to expressions using the `let` keyword.  But this explanation will suffice for now.
 
-To run the program for the first time, `cd` into the `tut01/src` and type `bower update && pulp run`.  Then `pulp run` afterward is enough.
+To run the program for the first time, `cd` into the `tut01/src` and use my node package manager scripts by typing `npm run all`.  Then, afterward, typing `npm run exec` is enough. You can view (and modify) these scripts in the `package.json` file located in the root directory of each tutorial.
 
 ### Fun Facts
 
 Some things I didn't cover that you may be wondering about:
 1. Modules must be imported explicitly using the `import` statement, whenever you use one of its functions. Even the standard PureScript library called the 'Prelude' isn't loaded automatically.  Typically you will import all the functions from Prelude with `import Prelude`, while the imports from other modules are listed explicitly. This helps to avoid conflicting imports.
 
-2. A PureScript directory structure is typically the following; which is created when you type `pulp init` inside the root (i.e., my-app):
+2. A PureScript directory structure is typically the following; which is created when you type `pulp --psc-package init` inside the root (i.e., my-app):
 ```
 my-app/
-  bower components/
+  .psc-package/ (i.e., module dependencies) 
   output/
   src/
   test/
@@ -196,9 +196,9 @@ var Box = function (x) {
 };
 ```
 
-4. If you want to run your code in the browser, then have a look at the command `pulp browserify`.  The resulting Javascript code can be saved to a file and included in an HTML document. If you try this, you should see the log statements printed to your browser’s console.
+4. If you want to run your code in the browser, then have a look at the command `pulp --psc-package browserify`.  The resulting Javascript code can be saved to a file and included in an HTML document. If you try this, you should see the log statements printed to your browser’s console.
 
-5. Conversely, if you want to optimize your code, and run your code from the terminal, then use the commands `pulp build -O --to output.js  && node output.js`.  
+5. Conversely, if you want to optimize your code, and run your code from the terminal, then use the commands `pulp --psc-package build -O --to output.js  && node output.js`.  
 
 6. A recent compiler update introduced a new syntactic structure, called an operator section, for simplifying anonymous function arguments.  For example, on line 6 of `nextCharForNumberString` we wrote our increment by one function like this:
 ```purescript

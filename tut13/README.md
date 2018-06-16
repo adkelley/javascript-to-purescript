@@ -68,7 +68,7 @@ I've also rewritten "launchMissiles" and "rejectMissiles" from the Tutorial12 re
 ```haskell
 -- | Task.purs (excerpt) 
 
-type TaskE x a = ExceptT x Aff a
+type TaskE x a = ExceptT x (Aff a)
 ```
 
 Don't be confused by the difference between `Task` and `TaskE`,  rather bear with me for a moment.  The type alias for `TaskE` is a little dense, so first let’s understand what is `ExceptT x`.  Without going down into the monad rabbit hole, you can think of `ExceptT` as a wrapper which adds exceptions `x` to other monads.  So the `E` at the end of the name `TaskE` makes this distinction.  In our case, the other monad in this structure is `Task a`.  Also, as a reminder, `Task a` is a type synonym for `Aff a`.

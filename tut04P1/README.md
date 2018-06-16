@@ -49,17 +49,9 @@ main = do
   log $ "Our random port number is: " <> show portNumber
 ```
 
-I import the `Effect` and `Effect.Console` modules for logging my results to the console.  I also import the `Effect.Random` for generating random integers using `randomInt`.  For this to compile, I added both the `purescript-console` and `purescript-random` dependencies to my `bower.json` file.
+I import the `Effect` and `Effect.Console` modules for logging my results to the console.  I also import the `Effect.Random` for generating random integers using `randomInt`.  For this to compile, I added both the `purescript-console` and `purescript-random` dependencies to my `bower.json` and `psc-package.json` files.
 
-Look at the type declaration of `main`.  It signifies that it will run a computation with two effects; 1) logging to the `CONSOLE` and 2) generating `RANDOM` numbers, yielding a value of type `Unit`.  Thanks to the granularity of `EFF`, there is good clarity, meaning that the reader of my program can trust that I am creating these two effects, only.
-
-Alternatively, you’ll most often see a type declaration like the following:
-
-```haskell
-main :: Effect Unit
-```
-
-It tells you that the module `main` is an effectful computation, because we are creating random number generation and console IO side effects.
+Look at the type declaration of `main`.  It signifies that it will run a computation that has side effects; mainly 1) logging to the console and 2) generating random numbers, yielding a value of type `Unit`.
 
 Now, since we're writing strings to the console, the astute reader may be asking, why doesn’t `main` return `String` instead of `Unit`?  Well again, `main` is a computation that has effects and thus you cannot emulate them by pure functions.  So instead, `Unit` (i.e., nothing) is returned to indicate that `main` has terminated correctly.  Continuing,  `main` creates a random integer between 2500 and 7500 using the function `randomInt` and assigns it to the variable `portNumber`.  Finally, I print the port number to the console using our old and trusted friend ‘log’.
 
@@ -89,7 +81,7 @@ isInvalidPort :: Int -> Boolean
 isInvalidPort portNumber =
   (portNumber < validPorts.min || portNumber > validPorts.max)
 
-throwWhenBadPort ::  Int -> forall eff. Eff (err :: EXCEPTION | eff) Unit
+throwWhenBadPort ::  Int -> Effect Unit
 throwWhenBadPort portNumber =
   when (isInvalidPort portNumber) $ throwException errorMessage
   where
@@ -97,7 +89,7 @@ throwWhenBadPort portNumber =
                               show validPorts.min <> " and " <> show validPorts.max
 
 
-catchWhenBadPort :: Int -> forall eff. Eff (console :: CONSOLE | eff) Unit
+catchWhenBadPort :: Int -> Effect Unit
 catchWhenBadPort portNumber =
   catchException printException $ throwWhenBadPort portNumber
   where
@@ -119,7 +111,7 @@ main = do
 I import the `Effect.Exception` module, tapping on four functions - `throwException`, catchException, error, and message.  My first function `inValidPort`, determines whether the portNumber we’ve supplied is within the range of `validPorts`.  When it is an invalid port number, `throwWhenBadPart` will throw an exception.  To help grok this example, take a look at the type signatures of  `throwException` and `catchException`:
 
 ```haskell
-throwException :: forall a eff. Error -> Eff (exception :: EXCEPTION | eff) a
+throwException :: forall a. Error -> Effect a
 ```
 
 `Error` is the type of JavaScript errors, and whenever the port number is invalid, I trigger a JavaScript error using the function `error :: String -> Error` in the example above.

@@ -13,13 +13,6 @@
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his [video](https://egghead.io/lessons/javascript-composable-error-handling-with-either) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript. Finally, if you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1).
 
-## Compiler release update
-Since I began writing these tutorials, there have been a couple [release updates](https://github.com/purescript/purescript/releases) to the PureScript compiler. So starting with this tutorial, the package declarations in `bower.json` and `psc-package` have been updated to support compiler version 0.12.0 and are not backward compatible.  So be sure to update PureScript and [pulp](https://github.com/bodil/pulp) to their latest release.  Here's how I do it:
-
-```
-npm update -g purescript pulp
-```
-
 ## Introduction
 
 In [Part 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1), recall that a function or expression creates a side effect whenever it modifies some state outside its scope, or it has an observable interaction with the outside world.  We don't eliminate them because side effects help us to write useful code.  Instead, we represent them explicitly in the type system to distinguish them from pure computations.  One benefit is that future maintainers will recognize that there are side effects in our code more readily.
