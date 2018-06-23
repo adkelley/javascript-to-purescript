@@ -10,7 +10,7 @@
     "purescript-prelude": "^4.0.0",
     "purescript-console": "^4.0.0",
     "purescript-foldable-traversable": "^4.0.0",
-    "purescript-group": "adkelley/purescript-group#compiler/0.12",
+    "purescript-group": "^4.0.0",
     "purescript-test-unit": "^14.0.0",
     "purescript-orders": "^4.0.0",
     "purescript-identity": "^4.0.0",

@@ -7,6 +7,9 @@
     "console",
     "functions",
     "psci-support",
-    "tuples"
+    "tuples",
+    "bifunctors",
+    "profunctor",
+    "strings"
   ]
 }

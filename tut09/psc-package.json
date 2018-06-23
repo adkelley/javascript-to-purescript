@@ -1,6 +1,6 @@
 {
   "name": "tut09",
-  "set": "psc-0.12.0-20180603",
+  "set": "psc-0.12.0-20180621",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "prelude",

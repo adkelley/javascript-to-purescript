@@ -1,4 +1,4 @@
-# You've been using Functors
+# You've been using Functors!
 ![series banner](../resources/glitched-abstract.jpg)
 
 > *This is* **Tutorial 14** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
@@ -11,62 +11,79 @@
 
 Welcome to Tutorial 14 in the series **Make the leap from Javascript to PureScript**.  I hope you're enjoying it thus far.  If you're new to this series, then be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript.
 
-In this tutorial, we are going to explore one of the most common and useful abstractions in the functional programming world - Functors!  Yes, it's a scary, mathematical term indeed.  However, as the title of this tutorial states, we've been using functors throughout this series - only I never called it out.  I hope that, after you finish this tutorial, you find that functors aren't scary at all. Instead, they're incredibly useful and its definition and laws serve as a basis for future abstractions in this series, including Applicative Functors and Monads.  By recognizing them and knowing their laws, I guarantee your understanding will serve you well throughout your functional programming adventures.
+In this tutorial, we are going to explore a common and useful abstraction within functional programming - Functors!  Yes, at first blush, you might think they're a scary, mathematical term indeed.  However, as the headline suggests, we've been using functors all along - I just never called them out.  They are incredibly useful and serve as a basis for future abstractions covered later in this series; including applicatives and monads.  By understanding functors and their laws, I guarantee they will serve you well throughout your functional programming adventures.
 
 I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-delaying-evaluation-with-lazybox) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts exceptionally well, and it's better you understand its implementation in the comfort of JavaScript.
 
 You will find the markdown and all code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley).
 
+
+# You've been using Functors!
+
+In this tutorial, we are going to explore a common and useful abstraction within functional programming - Functors!  Yes, at first blush, you might think they're a scary, mathematical term indeed.  However, as the headline suggests, we've been using functors all along - I just never called them out.  They are incredibly useful and serve as a basis for future abstractions covered later in this series; including applicatives and monads.  By understanding functors and their laws, I guarantee they will serve you well throughout your functional programming adventures.
+
 ## Definition of a Functor
-In functional programming, the definition of a functor is straightforward - it is any type with a map method.  Let me repeat - a functor is any type with a map method.  A functor also obeys a few laws which we'll cover shortly. So, you might be asking, "what was all my anxiety about?"  Well, unless you've studied category theory, then you've likely never heard of a 'functor' before.  In category theory (i.e., mathematics), a functor is used to describe a mapping between categories. Similarly, in functional programming, we use it to describe the ability to perform a map operation over some structure. For instance, take a moment and go back to review [Tutorial 10]().  In that tutorial I introduced the type signature of the `map` function:
+The definition of a Functor is straightforward - it is any type constructor that supports a map method. That’s all - tutorial over!  Oh, wait - a functor also obeys a few laws which we'll cover shortly.  Unless you've studied category theory, then perhaps you've never heard of the term Functor before.  In mathematics, it is used to describe a mapping between categories. Similarly, in functional programming, we use it to describe the ability to perform a map operation over some type constructor. In our case, a category is a type argument.  For instance, let's take a moment to go back and review an example [Tutorial 10](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10).  In that tutorial,  I introduced the type signature of the `map` function:
 
 ```haskell
   map :: ∀ a b. (a → b) → f a → f b
 ```
 
-As you might expect, it explicitly states that `f` is a functor if and only if it has a `map` function.  Thus `f` is the structure that we map over.  Many structures qualify as functors; the canonical example being lists or arrays.  Whenever we map a function from `(a → b) ` over a structure of `a`s to get a structure of `b`s then that structure is a functor.  Referring back to [Tutorial 10](), let's have another look at our `Additive Int` example.  I've aligned the type signature of `map'` with `map` to make it easily apparent.  Here we are mapping the `Sum` type constructor over a `List` of `Int`s and we get back a `List` of `Int`s wrapped in `Sum`s (i.e., `List Sum`). 
+One way of interpreting this function is that the `f` type constructor must be a functor because an instance of the `map` operation exists.  You'll find that almost all type constructors are functors; the canonical example being a list.  However, there are exceptions, such as a binary search tree.  You cannot freely substitute the values in a binary search tree because the substitution might change the ordering.  Another common interpretation is that an ordinary functor `f` is a "producer of output" that can have its type adapted. In the above type signature, we are adapting the output to become type `b`.  Keep this interpretation in mind as we dive further down.
+
+### Functors aren't always 'containery' type constructors!
+It's a common misconception that only containers (e.g., lists) can be functors.  As a counter-example, consider the function type constructor `((→ ) r) = r → b`, which takes an input of type `r` and produces an output of type `b`.  With the help of function composition, we can create an instance of `map` that adapts the output to become type `b`. Therefore function arrows are functors too!
+
+```haskell
+-- | map == compose for function arrows
+instance functorFn :: Functor ((→) r) where
+  map f g = f <<< g 
+```
+It's worth noting that function composition allows us to change the output type from an `a` to type `b`. However, we aren't able to change the input type.  This inability is a limitation of an ordinary Functor and it speaks to my point earlier that ordinary functors are "producers of output" that can have its type adapted.  But there is a way to change the input type, making a functor become a "consumer of input".  Keep this point also in mind when we explore the topic of `Contravariant Functors` in the last section.  First, let's have a look at an ordinary Functor example.
+
+### Ordinary Functor
+I mentioned we've been using functors all along, so it seems appropriate to refer back to an example in a previous tutorial.  Using `Additive Int`  from [Tutorial 10](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10), I've aligned the type signature of `map_` with `map` to make the type arguments easy to follow.  Here we are mapping `Sum` over the functor `List`  containing integers to get another list of integers that are wrapped individually with `Sum`.  Thus, we adapt our list of `a`s to get a list `b`s, preserving the functor.
  
 ```haskell
 type Sum = Additive Int
 
-map :: (a   -> b  ) -> f    a   -> f    b
-map':: (Int -> Sum) -> List Int -> List Sum
-map' = map
+map  :: (a    -> b  ) -> f    a   -> f    b
+map_ :: (Int  -> Sum) -> List Int -> List Sum
+map_ = map
 
-map' Sum (1 : 2 : 3 : Nil) -- (Sum 1 : Sum 2 : Sum 3 : Nil)
+-- | Returns (Sum 1 : Sum 2 : Sum 3 : Nil)
+map Sum (1 : 2 : 3 : Nil)
 ```
 
 ## Functor Laws
-What would a functor be without a couple laws for us to know and leverage in practice. The first law of functors is one that preserves function composition while mapping.  It's easier to show the code first then explain, so taking the first code example from this tutorial:
+Now, what would a Functor be without laws for us to leverage in our code? Fortunately, they're simple to remember.  The first law of functors is one that preserves function composition while mapping.  That is: 
 
 ```haskell
--- | First law of Functors
--- | fx.map(f).map(g) == fx.map(x => g(f(x)))
+--| First law of Functors:
 
--- | Box("RELS")
+-- | returns Box("RELS")
 res1 :: Box String
 res1 =
   Box "squirrels"
   # map (\str -> substrImpl 5 str)
   # map toUpperCase
 
--- | Box("RELS")
+-- | returns Box("RELS")
 res2 :: Box String
 res2 =
   Box "Squirrels"
   # map (\str -> toUpperCase $ substrImpl 5 str)
 ```
 
-Here the functions `res1` and `res2` produce the same result, but `res2` is more efficient.  They're equivalent because the functor laws guarantee that mapping over a functor `f` with the composition of two functions `fn1` and `fn2` (i.e., `fn2 <<< fn1`), as shown in `res2`, is no different than mapping over the functor twice - once with `fn1` followed by `fn2`, as shown in `res1`.  Moreover `res2` like functions will always more efficient than `res1` because we only map over our structure once. Imagine that, instead of `Box`, we had a long list of strings. Then mapping over the list once is much more efficient than mapping over it twice.  So I think it demonstrates that knowing and implementing these laws in practice can help you to be a better functional programmer.
+The functions `res1` and `res2` (given above) produce the same result, because the functor laws guarantee that mapping over a Functor `f` with the composition of two functions `fn1` and `fn2` (i.e., `fn2 <<< fn1`) is no different than mapping over the functor twice.  Moreover, function composition, as shown in `res2` is more efficient than `res1` because we map over our type constructor once only.  Just imagine if you have a list of thousands of objects, then you'll want to take advantage of the function composition law.
 
-The second law is even simpler.  It shows that mapping over a functor `f` with the identity function produces the same result as applying the identity function to the functor. As a reminder, the identity function takes an `x` and returns that `x`. Here again, perhaps it's easier to show than to explain:
+The second law is even simpler.  It shows that mapping over a Functor `f` with the identity function produces the same result as applying the identity function to the functor. As a reminder, the identity function takes an `x` and returns that `x`. Let's show the code:
 
 ```haskell
--- | Second law of Functors
--- | fx.map(id) == id(fx)
+-- | Second law of Functors:
 
--- | Box("crayons")
+-- | returns Box("crayons")
 res3 :: Box String
 res3 =
   Box "crayons"
@@ -78,28 +95,123 @@ res4 =
   identity (Box "crayons")
 ```
 
-In summary, for a structure to be a functor, it must have a mapping operation, and it must preserve identity morphisms and the composition of morphisms.  Here a morphism refers to a structure-preserving map from one structure to another.  That's all there is to it.  However, before we go, let's explore a few more abstractions that belong to the family of functors.  They are used much less frequently than functors but they're worth knowing and having in your tool chest.
+In summary, for a type constructor to be a Functor, it must have a mapping operation, and it must preserve the identity and composition morphisms.  Here a morphism refers to a structure-preserving map from one type to another.  That's all there is to ordinary functors.  However, before we go, let's explore a couple more abstractions that belong to the family of functors.
 
 ## Bifunctors
-Similar to a Functor, a Bifunctor is any structure `f` with a binary mapping operation (`bimap`) over two type arguments. The canonical example is a list or array of `Tuple`.  For greater clarity, let's look a the type signature for `bimap`:
+Similar to a Functor, a Bifunctor is any type constructor `f` with a binary mapping operation (`bimap`) over not just one type argument, but two type arguments.  You can think of it as applying `map` over two independent channels.  The canonical example of a Bifunctor is a list or array of `Either` or `Tuple`.  Moreover, since we have two type arguments, that opens the opportunity for three types of map operations, `bimap`, `lmap` and `rmap`.  See my comments in the code example for further detail:
 
 ```haskell
-bimap :: ∀ a b c d. (a → b) → (c → d) → f a c → f b d
+--| map over a functor with two type arguments (e.g., Tuple)
+class Bifunctor where
+    bimap :: ∀ a b c d. (a → b) → (c → d) → f a c → f b d
+
+-- | Map a function over the left type argument of a `Bifunctor`.
+lmap :: ∀ f a b c. Bifunctor f => (a -> b) -> f a c -> f b c
+lmap fn = bimap fn identity
+
+-- | Map a function over the right type arguments of a `Bifunctor`.
+rmap :: ∀ f a b c. Bifunctor f => (b -> c) -> f a b -> f a c
+rmap fn = bimap identity fn
 ```
 
-Like Functor, a Bifunctor obeys the Functor laws of composition and identity. For the sake of brevity, I won't list the code examples proving these laws, so be sure to have a look at the code in my [repository](). One interesting question is whether you can use `map` instead of `bimap` to map over a structure that has two type arguments.  The answer is a resounding YES!
+Like Functor, a Bifunctor obeys the Functor laws of composition and identity morphisms. Have a look at the code in my [tutorial repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14) where I demonstrate these laws. 
+
+One interesting question is whether `map` can be used instead of `bimap` to map over a functor that has two type arguments.  Well, not if you want to change both `a & b` to `c & d` respectively - you'll need `bimap` for that.  However, if you want to apply (b → d), leaving the `a` type argument untouched, then you're all set.   However, for better readability, I suggest you use `Data.Bifunctor.rmap ` instead.  If you need to map the left argument, then use `Data.Bifunctor.lmap`.
+
+## Contravariant functors
+While Brian didn't cover a Contravariant Functor in his video, I thought this might be a good place to introduce it.  This is an advanced abstraction, taking me a good amount of time to understand and implement in practice.   If you don't get it the first or second time, then don't sweat it, because I've been in your shoes.  If you're new to functional programming, then feel free to skip this section, and come back to it later down the road.  Rest easy knowing that, compared to ordinary functors, contravariant functors have less applicability. 
+
+Recall that I mentioned that with an ordinary functor, the mapping operation changes the resulting type only.  Moreover, recall the intuition that ordinary functors are a "producer of output values" that can have its type adapted (i.e., (a → b)).  However, what if we would like to transform our functor into a "consumer of input values" that can have their type adapted?  That is the intuition behind a *Contravariant* functor.   But first, let’s understand the difference between an ordinary functor (aka *Covariant*) and a *Contravariant* functor. 
+
+### Covariant functors
+Covariant functors are often called ordinary functors.  So far, the functor examples that I've covered have been *covariant*.  That is, there is a mapping operation over the type constructor that preserves the direction of the arrow.  So the 'co' in covariant means 'together' - where all the arrows in the type signature point to the right:
 ```haskell
--- | What happens when we apply a functor
--- | to a Tuple?
-res9 :: Box (Tuple String String)
-  Box $ Tuple "crayons" "markers"
-  # map  (\str -> toUpperCase $ substrImpl 5 str)
+class Functor f where
+   map :: (a → b) → f a → f b
 ```
-Here, we ignore the left argument and apply the function `(a → b)` to the right argument.  Instead, for better readability, I suggest you should use the function `rmap` from `Data.Bifunctor`.  If you need to map the left argument, then `Data.Bifunctor.lmap` is your answer.
+Again, a common intuition for a covariant functor is a "producer of output" that can have its type adapted.
 
-## Profunctors
+### Contravariant
 
-And for the grand finale, let's go over the topic of `Profunctors`.  I can't tell you how many time I have watched Phil Freeman's popular [video](), scratching my head in frustration.  
+```haskell
+class Contravariant f where
+    cmap :: ∀ a b f. Contravariant f => (b → a) → f a → f b
+```
+
+As you might guess, `cmap` stands for *contravariant map*.  What's different from the covariant functor instance is that we have a `(b → a)` instead of a `(a → b)`.  Also, recognize that the identity and composition functor laws still apply:
+
+```haskell
+cmap identity = identity
+cmap f . cmap g = cmap (g . f)
+```
+
+Coding examples to show these laws is an exercise left to the reader.
+
+So how can we derive `(b → a)`, and what are contravariant functors good for?  Well, let's tackle the latter question first.  Say we have a predicate function `(a → Boolean)` which classifies integers as either positive or negative.
+
+```haskell
+negative :: Int → Boolean
+negative x = x < 0 
+``` 
+Being a big believer in code reuse, we don't want to have to duplicate this function to support floating point numbers.  If we have a way of adapting our floating point input values to integers first, then we can apply this predicate function without any changes.  
+
+So, we've seen one example of what contravariant functors are good for, but how do we know one when we see it?  Well, surprise, you've already seen one. Recall our "non-containery" function arrow `((→) r) = r → b` functor, with a mapping operation that is essentially function composition:
+```haskell
+-- | map == compose for function arrows
+instance functorFn :: Functor ((→) r) where
+    map f g = f <<< g 
+```
+However, as it stands, the ordering of the type parameters in `cmap` doesn't allow us to make an instance of this adaptation just yet.  But if we create a `newtype` then we're all set:
+
+```haskell
+newtype Predicate a  = Predicate (a → Boolean)
+```
+A Predicate type constructor `((→) r)` determines the "truthiness" of a value `a` by returning a boolean of `true` or `false`.  
+
+Now we can create an instance of  `cmap`  that takes a Predicate `p` and composes it with a function `g`. 
+
+```haskell
+instance contravariantPredicate :: Contravariant Predicate where
+  cmap g (Predicate p) = Predicate (p <<< g)
+```
+
+### Contravariant example
+With all the pieces in place, now let’s create a function `isNegative`, which returns a "thunk" of ` Predicate Number`.   Note that a "thunk" is a function with no arguments whose evaluation is pending.
+
+```haskell
+negative :: Int → Boolean
+negative x = x < 0
+
+isNegative :: Predicate Number
+isNegative = cmap (\x → floor x) (Predicate negative)
+```
+
+`(\x → floor x`) is our `g` function in `cmap` (see `cmap` instance) that is mapped over a floating point input value to transform it into an integer. Then, this is composed with `negative`  to form our `Predicate (\x → negative <<< floor x)`.  As it stands, `isNegative` is just a thunk, so if we want to evaluate it then we need one more function that I call `truthiness`:
+
+```haskell
+truthiness :: ∀ a. Predicate a → (a → Boolean)
+truthiness (Predicate p) = p
+```
+Thanks to pattern matching, this simple to express.   Finally, let's map over an array of negative and positive floating point values by applying the function `truthiness isNegative` to each value in the array.  Then we use an instance of `show` to log the array of booleans to the console:
+
+```haskell
+main = do
+log $ "isNegative : " <> result where
+   result = show $ map (truthiness isNegative) [1.3, (-1.5), (-2.6)]
+```
+
+## Summary
+
+In this tutorial, we covered the topic of Functors;  an abstraction that we have been using throughout this series.  For a type constructor to be a Functor, it must have a mapping operation, and it must preserve the identity and composition morphisms.  Here a morphism refers to a structure-preserving map from one type to another.  We then explored the difference between a *covariant* Functor and *contravariant* Functor.  We found that covariant or ordinary functors are the most common type of functor, but there are good use cases for contravariant functors too.  The canonical example is a Predicate.  Finally, I've left an easter egg in my [code repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14), so be sure to check it out.  You'll find the references that I've listed below will help you to explore this egg (i.e., topic).
+
+That's all for now. My next tutorial will explain how `pure` and `map` can be used to place a value into a Functor, regardless of the complexities of the type constructor. If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media. Thank you and till next time!
+
+## Resources
+
+* [A Gentle Introduction to Profunctors](https://www.youtube.com/watch?v=tfQdtPbYhV0) - Julie Moronuki, Monadic Warsaw lectures.  Her six-part course begins with a review of Type Class, then Functors (covariant & contravariant) and finally to Profunctors.  Slides are linked in the comments section of the videos.
+* [24 Days of Hackage: contravariant](https://ocharles.org.uk/blog/guest-posts/2013-12-21-24-days-of-hackage-contravariant.html) - an awesome tutorial which served as the basis for my contravariant section.
+* [Fun with Profunctors - speaker deck](https://speakerdeck.com/paf31/fun-with-profunctors) - Phil Freeman, LA Haskell Meetup. He starts with an introduction to covariant and contravariant functors, then works his way to Profunctors and demonstrates how they were utilized in PureScript's [Lens Library](https://github.com/purescript-contrib/purescript-lens). You'll want to watch the video of his lecture (linked below) more than once.
+* [Fun with Profunctors - Youtube](https://www.youtube.com/watch?v=OJtGECfksds)
 
 
 ## Navigation
