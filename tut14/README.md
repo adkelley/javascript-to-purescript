@@ -18,11 +18,6 @@ I borrowed (with permission) the outline and javascript code samples from the eg
 
 You will find the markdown and all code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley).
 
-
-# You've been using Functors!
-
-In this tutorial, we are going to explore a common and useful abstraction within functional programming - Functors!  Yes, at first blush, you might think they're a scary, mathematical term indeed.  However, as the headline suggests, we've been using functors all along - I just never called them out.  They are incredibly useful and serve as a basis for future abstractions covered later in this series; including applicatives and monads.  By understanding functors and their laws, I guarantee they will serve you well throughout your functional programming adventures.
-
 ## Definition of a Functor
 The definition of a Functor is straightforward - it is any type constructor that supports a map method. That’s all - tutorial over!  Oh, wait - a functor also obeys a few laws which we'll cover shortly.  Unless you've studied category theory, then perhaps you've never heard of the term Functor before.  In mathematics, it is used to describe a mapping between categories. Similarly, in functional programming, we use it to describe the ability to perform a map operation over some type constructor. In our case, a category is a type argument.  For instance, let's take a moment to go back and review an example [Tutorial 10](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10).  In that tutorial,  I introduced the type signature of the `map` function:
 
