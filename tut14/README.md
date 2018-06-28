@@ -11,10 +11,10 @@
 
 Welcome to Tutorial 14 in the series **Make the leap from Javascript to PureScript**.  I hope you're enjoying it thus far.  If you're new to this series, then be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript.
 
-In this tutorial, we are going to explore a common and useful abstraction within functional programming - Functors!  Yes, at first blush, you might think they're a scary, mathematical term indeed.  However, as the headline suggests, we've been using functors all along - I just never called them out.  They are incredibly useful and serve as a basis for future abstractions covered later in this series; including applicatives and monads.  By understanding functors and their laws, I guarantee they will serve you well throughout your functional programming adventures.
+In this tutorial, we are going to explore a common and useful abstraction within functional programming - Functors.  Yes, at first blush, you might think that that functors are a scary, mathematical term indeed.  However, as the headline suggests, we've been using functors all along - I just never called them out.  They are incredibly useful and serve as a basis for future abstractions covered later in this series; including applicatives and monads.  By understanding functors and their laws, I guarantee they will serve you well throughout your functional programming adventures.
 
 I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-delaying-evaluation-with-lazybox) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts exceptionally well, and it's better you understand its implementation in the comfort of JavaScript.
+[Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-you-ve-been-using-functors) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts exceptionally well, and it's better you understand its implementation in the comfort of JavaScript.
 
 You will find the markdown and all code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley).
 
@@ -25,7 +25,7 @@ The definition of a Functor is straightforward - it is any type constructor that
   map :: ∀ a b. (a → b) → f a → f b
 ```
 
-One way of interpreting this function is that the `f` type constructor must be a functor because an instance of the `map` operation exists.  You'll find that almost all type constructors are functors; the canonical example being a list.  However, there are exceptions, such as a binary search tree.  You cannot freely substitute the values in a binary search tree because the substitution might change the ordering.  Another common interpretation is that an ordinary functor `f` is a "producer of output" that can have its type adapted. In the above type signature, we are adapting the output to become type `b`.  Keep this interpretation in mind as we dive further down.
+One way of interpreting this function is that the `f` type constructor must be a functor because an instance of the `map` operation exists.  You'll find that almost all type constructors are functors; the canonical example being a list.  However, there are exceptions, such as a binary search tree.  You cannot freely substitute the values in a binary search tree because the substitution might change the ordering.  Another common interpretation is that an ordinary functor `f` is a "producer of output" that can have its type adapted. In the above type signature, we are adapting the output to become type `b`.  Keep this interpretation in mind as we continue on.
 
 ### Functors aren't always 'containery' type constructors!
 It's a common misconception that only containers (e.g., lists) can be functors.  As a counter-example, consider the function type constructor `((→ ) r) = r → b`, which takes an input of type `r` and produces an output of type `b`.  With the help of function composition, we can create an instance of `map` that adapts the output to become type `b`. Therefore function arrows are functors too!
@@ -55,7 +55,7 @@ map Sum (1 : 2 : 3 : Nil)
 Now, what would a Functor be without laws for us to leverage in our code? Fortunately, they're simple to remember.  The first law of functors is one that preserves function composition while mapping.  That is: 
 
 ```haskell
---| First law of Functors:
+--| First law of Functors: composition
 
 -- | returns Box("RELS")
 res1 :: Box String
@@ -76,7 +76,7 @@ The functions `res1` and `res2` (given above) produce the same result, because t
 The second law is even simpler.  It shows that mapping over a Functor `f` with the identity function produces the same result as applying the identity function to the functor. As a reminder, the identity function takes an `x` and returns that `x`. Let's show the code:
 
 ```haskell
--- | Second law of Functors:
+-- | Second law of Functors: identity
 
 -- | returns Box("crayons")
 res3 :: Box String
@@ -137,10 +137,10 @@ As you might guess, `cmap` stands for *contravariant map*.  What's different fro
 
 ```haskell
 cmap identity = identity
-cmap f . cmap g = cmap (g . f)
+cmap f <<< cmap g = cmap (g <<< f)
 ```
 
-Coding examples to show these laws is an exercise left to the reader.
+Coding examples to show these laws are an exercise left to the reader.
 
 So how can we derive `(b → a)`, and what are contravariant functors good for?  Well, let's tackle the latter question first.  Say we have a predicate function `(a → Boolean)` which classifies integers as either positive or negative.
 
@@ -161,7 +161,7 @@ However, as it stands, the ordering of the type parameters in `cmap` doesn't all
 ```haskell
 newtype Predicate a  = Predicate (a → Boolean)
 ```
-A Predicate type constructor `((→) r)` determines the "truthiness" of a value `a` by returning a boolean of `true` or `false`.  
+A Predicate type constructor determines the "truthiness" of a value `a` by returning a boolean of `true` or `false`.  
 
 Now we can create an instance of  `cmap`  that takes a Predicate `p` and composes it with a function `g`. 
 
@@ -171,7 +171,7 @@ instance contravariantPredicate :: Contravariant Predicate where
 ```
 
 ### Contravariant example
-With all the pieces in place, now let’s create a function `isNegative`, which returns a "thunk" of ` Predicate Number`.   Note that a "thunk" is a function with no arguments whose evaluation is pending.
+With all the pieces in place, now let’s create a function `isNegative`, which returns a "thunk" of ` Predicate Number`.   Note that a "thunk" is a function with no arguments and whose evaluation is pending.
 
 ```haskell
 negative :: Int → Boolean
@@ -187,7 +187,7 @@ isNegative = cmap (\x → floor x) (Predicate negative)
 truthiness :: ∀ a. Predicate a → (a → Boolean)
 truthiness (Predicate p) = p
 ```
-Thanks to pattern matching, this simple to express.   Finally, let's map over an array of negative and positive floating point values by applying the function `truthiness isNegative` to each value in the array.  Then we use an instance of `show` to log the array of booleans to the console:
+Thanks to pattern matching, this is simple to express.   Finally, let's map over an array of negative and positive floating point values by applying the function `truthiness isNegative` to each value in the array.  Then we use an instance of `show` to log the array of booleans to the console:
 
 ```haskell
 main = do
@@ -197,7 +197,7 @@ log $ "isNegative : " <> result where
 
 ## Summary
 
-In this tutorial, we covered the topic of Functors;  an abstraction that we have been using throughout this series.  For a type constructor to be a Functor, it must have a mapping operation, and it must preserve the identity and composition morphisms.  Here a morphism refers to a structure-preserving map from one type to another.  We then explored the difference between a *covariant* Functor and *contravariant* Functor.  We found that covariant or ordinary functors are the most common type of functor, but there are good use cases for contravariant functors too.  The canonical example is a Predicate.  Finally, I've left an easter egg in my [code repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14), so be sure to check it out.  You'll find the references that I've listed below will help you to explore this egg (i.e., topic).
+In this tutorial, we covered the topic of Functors;  an abstraction that we have been using throughout this series.  For a type constructor to be a Functor, it must have a mapping operation, and it must preserve the identity and composition morphisms.  Here a morphism refers to a structure-preserving map from one type to another.  We then explored the difference between a *covariant* Functor and *contravariant* Functor.  We found that covariant or ordinary functors are the most common type of functor, but there are good use cases for contravariant functors too.  The canonical example of a contravariant functor is a [Predicate](https://pursuit.purescript.org/packages/purescript-contravariant/4.0.0/docs/Data.Predicate#t:Predicate).  Finally, I've left an easter egg in my [code repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14), so be sure to check it out.  You'll find the references that I've listed below will help you to explore and understand this egg.
 
 That's all for now. My next tutorial will explain how `pure` and `map` can be used to place a value into a Functor, regardless of the complexities of the type constructor. If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media. Thank you and till next time!
 
