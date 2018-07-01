@@ -1,6 +1,6 @@
 {
   "name": "tut15",
-  "set": "psc-0.12.0-20180603",
+  "set": "psc-0.12.0-20180628",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "prelude",
@@ -8,6 +8,8 @@
     "console",
     "psci-support",
     "aff",
-    "exceptions"
+    "exceptions",
+    "strings",
+    "globals"
   ]
 }
