@@ -108,7 +108,7 @@ main = do
   -- throwWhenBadPort portNumber
 ```
 
-I import the `Effect.Exception` module, tapping on four functions - `throwException`, catchException, error, and message.  My first function `inValidPort`, determines whether the portNumber we’ve supplied is within the range of `validPorts`.  When it is an invalid port number, `throwWhenBadPart` will throw an exception.  To help grok this example, take a look at the type signatures of  `throwException` and `catchException`:
+I import the `Effect.Exception` module, tapping on four functions - `throwException`, catchException, error, and message.  My first function `isInvalidPort`, determines whether the portNumber we’ve supplied is within the range of `validPorts`.  When it is an invalid port number, `throwWhenBadPart` will throw an exception.  To help grok this example, take a look at the type signatures of  `throwException` and `catchException`:
 
 ```haskell
 throwException :: forall a. Error -> Effect a
