@@ -3,11 +3,11 @@ module Main where
 import Prelude
 import Effect (Effect)
 import Effect.Console (log, logShow)
-import Data.Box (Box(..))
+import Data.Box (Box)
 
 -- Monad law 1 join(m.map(join)) == join(join(m))
 m1 :: Box (Box (Box Int))
-m1 = Box $ Box $ Box 3
+m1 = pure $ pure $ pure 3
 
 result1 :: Box Int
 result1 = join $ map join m1
@@ -17,7 +17,7 @@ result2 = join $ join m1
 
 -- Monad law 2: join(Box.of(m) == join(m.map(Box.of)))
 m2 :: Box String
-m2 = Box "Wonder"
+m2 = pure "Wonder"
 
 result3 :: Box String
 result3 = join $ pure m2
