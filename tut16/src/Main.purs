@@ -1,36 +1,40 @@
 module Main where
 
 import Prelude
-import Effect (Effect)
-import Effect.Console (log, logShow)
-import Data.Box (Box)
 
--- Monad law 1 join(m.map(join)) == join(join(m))
+import Data.Box (Box(..))
+import Effect (Effect)
+import Effect.Console (log)
+
+-- | Monad associativity law
+-- | (m >>= f) >>= g ≡ m >>= (\x → f x >>= g)
 m1 :: Box (Box (Box Int))
 m1 = pure $ pure $ pure 3
 
 result1 :: Box Int
-result1 = join $ map join m1
+result1 = (m1 >>= identity) >>= identity
 
 result2 :: Box Int
-result2 = join $ join m1
+result2 = m1 >>= (\x → identity x >>= identity)
 
--- Monad law 2: join(Box.of(m) == join(m.map(Box.of)))
+-- | Monad Identity laws
+-- | Right: m >>= pure ≡ m
+-- | Left: pure a >>= f ≡ f a
+
 m2 :: Box String
 m2 = pure "Wonder"
 
-result3 :: Box String
-result3 = join $ pure m2
+rightIdentity :: Boolean
+rightIdentity =  (m2 >>= pure) == m2
 
-result4 :: Box String
-result4 = join $ map pure m2
+leftIdentity :: Boolean
+leftIdentity = (m2 >>= Box) == (Box "Wonder")
 
 main :: Effect Unit
 main = do
   log "You've been using Monads"
-  logShow $ result1
-  logShow $ result2
-  logShow $ result1 == result2
-  logShow $ result3
-  logShow $ result4
-  logShow $ result3 == result4
+  log $ "(m >>= f) >>= g : " <> (show result1)
+  log $ "m >>= (\\x → f x >>= g) : " <> (show result2)
+  log $ "Associativity law:  " <> (show $ result1 == result2)
+  log $ "Right Identity law: " <> (show rightIdentity)
+  log $ "Left Identity law:  " <> (show leftIdentity)
