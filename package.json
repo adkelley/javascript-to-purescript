@@ -1,5 +1,5 @@
 {
-  "name": "tutorials",
+  "name": "purescript_tutorials",
   "version": "0.1.0",
   "description": "See https://hackernoon.com/make-the-leap-from-javascript-to-purescript-5b35b1c06fef",
   "scripts": {
