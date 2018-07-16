@@ -1,7 +1,7 @@
 # You've been using Monads
 ![series banner](../resources/glitched-abstract.jpg)
 
-> *This is* **Tutorial 15** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
+> *This is* **Tutorial 16** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
 > *to read the series introduction where I cover the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
@@ -62,6 +62,7 @@ For a type constructor, `m` to be a Monad, it must follow the law of associativi
 ```haskell
 -- | Monad associativity law
 -- | (m >>= f) >>= g ≡ m >>= (\x → f x >>= g)
+
 m1 :: Box (Box (Box Int))
 m1 = pure $ pure $ pure 3
 
@@ -85,6 +86,7 @@ The Left Identity law states that if you take a value and embed it into a type c
 
 ```haskell
 -- | Left: pure a >>= f ≡ f a
+
 m2 :: Box String
 m2 = pure "Wonder"
 
@@ -98,6 +100,8 @@ main = logShow leftIdentity
 Along these same lines, if we can show that `Box` adheres to the Right Identity law, then it must be a monad.  This law states that if you have a monad, `m` and you feed it to `pure` using `bind`, then this process is the same as the original monad.  More formally, `m >>= pure ≡ m`.  For the final code example, we'll do just that:
 
 ```haskell
+-- | Right: m >>= pure ≡ m
+
 m2 :: Box String
 m2 = pure "Wonder"
 
