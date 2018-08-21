@@ -6,7 +6,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
-> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 15](https://github.com/adkelley/javascript-to-purescript/tree/master/tut15)
+> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 15](https://github.com/adkelley/javascript-to-purescript/tree/master/tut15) | [Tutorial 17 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut17) 
 
 Welcome to Tutorial 16 in the series **Make the leap from Javascript to PureScript**.  I hope you're enjoying it thus far.  If you're new to this series, then be sure to read the [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript.
 
@@ -15,7 +15,7 @@ At last, we've come to the topic of monads.  Like functors, we've been using the
 I borrowed (with permission) the outline and javascript code samples from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption is that you have watched his [video](https://egghead.io/lessons/javascript-you-ve-been-using-monads) before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts exceptionally well, and it's better you understand its implementation in the comfort of JavaScript.
 
-The markdown and all code examples for this tutorial are on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut15).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley).
+The markdown and all code examples for this tutorial are on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a [pull request](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14).  Finally, If you are enjoying this series, then please help me to tell others by recommending this article and favoring it on social media.  My Twitter handle is [@adkelley](https://twitter.com/adkelley).
 
 
 ## Functor -> Applicative Functor -> Monad
