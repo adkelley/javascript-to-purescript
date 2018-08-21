@@ -1,62 +1,102 @@
-# Make the Leap from Javascript to PureScript Series (DRAFT)
+# Build curried functions
 
-## 17 - xx
+![series banner](../resources/glitched-abstract.jpg)
 
-This is the second tutorial in the series **Make the leap from Javascript to PureScript**.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) where you'll find the Javascript reference for learning FP abstractions, but also how to install and run PureScript. The series outline and javascript code samples have been borrowed from the egghead.io course [Professor Frisby Introduces Composable Functional Javascript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean). I assume that you've watched Brian's [video](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box) and PureScript, together with Bower and Pulp have been installed.  That is you're familiar with the **Box** abstraction you're able to enter `bower update && pulp run` to load the library dependencies, compile the program, and run the code.  Let's go!
+> *This is* **Tutorial 17** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
+> *to read the series introduction where I cover the goals & outline, and the installation,*
+> *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
+> *once-per-week. So come back often, there is a lot more to come!*
 
-## Currying
-In PureScript, like most FP languages, all functions take just one argument and return one result. This approach models the [lamda calculus](https://en.wikipedia.org/wiki/Lambda_calculus), which is a notation for describing mathematical functions and programs.  It was developed by Alonzo Church in the 1930's, and it serves as a strong theoretical foundation for functional programming.
+> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 16](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16)
 
-So how does PureScript handle functions that take multiple arguments?  Well, just as we saw in the example above, when there are multiple arguments to a function, PureScript will transcompile it to JavaScript as a sequence of nested functions. Each will take one argument and return the next function or, in the case of the last one, return the final result.  This nesting of functions is called `currying`.
+In this tutorial, we're going to talk about currying functions of multiple arguments.  The process of currying is to break down a function of multiple arguments into a set of nested functions; with each taking a single argument and returning a single result.  Think of it as decomposing the function into a chain of functions that have a single argument.  Like most functional programming languages, PureScript functions take only one argument and return one result by default. This approach models the [lamda calculus](https://en.wikipedia.org/wiki/Lambda_calculus), which is a notation for describing mathematical functions and programs.  Alonzo Church developed it in the 1930's, and it serves as a strong theoretical foundation for functional programming. 
 
-Let's take a simple example of a function that adds two arguments, starting with the PureScript code:
-```purescript
-add :: Int -> Int -> Int
-add x y = x + y
+## Currying explained
+Like referential transparency, currying is one of the main pillars of functional programming.  Again, it is the process of turning a multi-argument function into a series of nested functions that each have one argument and return one result.  In the case of the last input argument, we return a result to the caller.  It means that an expression like `result = fn x y z` is transformed to `f1 = fn x`; `f2 = f1 y`; and `result = f2 z`.
+
+When there are multiple arguments to a function, PureScript transcompiles it to JavaScript as a sequence of nested functions; very similar to the curried JavaScript code that Brian showed in his [video](https://egghead.io/lessons/javascript-currying-with-examples).  The main advantages to currying are 1) we can partially apply functions, and 2) we can create type signatures that are also functions.  
+
+Partially applying a function means that we apply the function to some of its arguments; while returning a function that's expecting additional arguments later on. Take the canonical example of `add10` shown below, which adds 10 to any number by partially applying the function, `myAdd` .  
+```haskell
+myAdd :: Int → Int → Int
+myAdd x y = x + y
+
+add10 :: Int → Int
+add10 = myAdd 10
 ```
-Subsequently, PureScript will transcompile this to the following JavaScript code:
-```javascript
-var add = function (x) {
-    return function(y)  {
-         return x + y | 0
-   }
-}
-```
-The advantages of this approach include the ability to perform partial function application.  For example, using the `add` function above in the PureScript REPL:
-```
-> t add
-Int -> Int -> Int
+By supplying `myAdd` with just the first argument of 10, `myAdd 10 y` is partially applied and executes only upon supplying the `y` argument.  Here we see that the main benefit of currying is the ability to create specialized functions, such as `add10`, without introducing new code or repetition.
 
-> add10 = add 10
-> :t add10
-Int -> Int
-
-> add10 5
-15
+```haskell
+type Dict key value = key → Maybe value
 ```
-Now, if you suspect that there is a performance penalty to currying, then you are correct.  But PureScript provides a solution for writing functions whose speed you deem to be critical to the performance of your program.  The module `Data.Function.Uncurried` has an extensive number of type constructors (e.g., `Fn2`) that represent JavaScript functions that genuinely take multiple type arguments:
+Given the arguments `key` and `value`, we create the function type, ` key → Maybe value`.  You can think of it like a predicate that returns the `value` associated with `key`, assuming the `key` exists in the dictionary.  If it does, then return `Just value`; otherwise, return `Nothing`.
+
+We create an empty dictionary with:
+```haskell
+emptyDict :: ∀ k v. Dict k v
+emptyDict _ = Nothing
+```
+The type argument to `emptyDict` is a function type that initializes our dictionary.  It returns a function that ignores the input argument `k` and assigns our value to `Nothing`.  The insertion function for this dictionary is a little more interesting:
+```haskell
+insertDict :: (Eq k) => k → v → Dict k v → Dict k v
+insertDict key value dict =
+  \key' → if key == key'
+            then (Just value)
+            else dict key'
+```
+In `insertDict`, we are returning a function type that is partially applied.  The function is only fully applied after we supply it with the `key'` argument.  Upon which, it checks whether it matches with a `key` in the front of the dictionary.  If there is a match then return `Just value`; otherwise, delegate the function to the previous `Dict`, which was created by the previous call to `insertDict`.  Let's see how this works in the PureScript REPL.  
+
+First, we fire up the REPL with the command `pulp --psc-package repl`.  Note that, by default, `pulp` assumes you're using [Bower](https://bower.io/)  to install your dependencies.  However, in my case, I chose the dependencies to be installed via the [psc-package manager](https://github.com/purescript/psc-package), and I inform `pulp` of this fact by adding the `--psc-package` flag. The REPL will re-compile your code and start the command line:
+
+```haskell
+> import Main
+> :t  insertDict 'a' (1::Int) emptyDict
+Char → Maybe Int
+> (insertDict 'a' (1 :: Int) emptyDict) 'a'
+(Just 1)
+> insertDict 'b' 2 (insertDict 'a' (1::Int) emptyDict) 'b'
+(Just 2)
+> insertDict 'b' 2 (insertDict 'a' (1::Int) emptyDict) 'a'
+(Just 1)
+> insertDict 'b' 2 (insertDict 'a' (1::Int) emptyDict) 'x'
+Nothing
+```
+Taking it from the top, we import our `Main`  module, and then we start running our tests.  Using the `:t` command, I often like to check my understanding of the type returned by a function. Thus, we see that `insertDict 'a' (1::Int) emptyDict` returns the function type `Char → Maybe Int`.  This result confirms our understanding - we must supply `key'` before `insertDict` is fully applied.  So, on the next command line, we assign `key'` to the character `a` which matches with `key`, and the output shows that it returns `Just 1` as expected.  
+
+What happens when we supply a key that's not in the dictionary?  Well, on the last line, we see that the key `x` is not in the front of the dictionary, because `b → Just 2` is in front.  Therefore, we fall back to the previous `(insertDict 'a' (1::Int) emptyDict) ` and check again.  However it is not there either, so we fall back once more to `emptyDict` which returns `Nothing`.
+
+Let's be clear - currying of multi-argument functions is not all unicorns and rainbows.  As you might imagine, this nesting of functions comes with a performance penalty which, in most cases, is worth the tradeoff in favor of partial function application.  However, in cases where there is performance critical code, we can declare a JavaScript function that takes multiple arguments simultaneously.
+
+## When performance is critical, use uncurried functions
+Again, there is a performance penalty when currying multi-argument functions.  In these cases, PureScript provides a solution for writing functions whose speed you deem to be critical to the performance of your program.  The module `Data.Function.Uncurried` has an extensive number of type constructors that represent JavaScript functions that genuinely take multiple type arguments simultaneously.  For example:
+
 ```haskell
 foreign import data Fn2 :: Type -> Type -> Type -> Type
 ```
-Note that the first argument is the function you're calling (remember functions are types too).  Thus if we felt that our canonical `add` was a critical performance function (it's not), then we can transform it to the following:
+Note that the first argument to `Fn2` is the name of the function you're calling.  The next two types are the input arguments, and the resulting type follows them.  Thus, if we felt that our canonical `myAdd` was a critical performance function (it's not), then we can transform it to the following:
 ```haskell
 import Data.Function.Uncurried
 
-add :: Fn2 Int Int Int
-add mkFn2 \x y -> x + y
+myAddFast :: Fn2 Int Int Int
+myAddFast = mkFn2 \x y -> x + y
 ```
-PureScript will transcompile it to the following JavaScript code:
+PureScript will transcompile it to something similar to the following JavaScript code:
 ```javascript
-exports.add = function(x, y) {
+exports.myAddFast = function(x, y) {
   return x + y;
 };
 ```
-Finally, running this in the PureScript REPL again
+Using the REPL again, we apply this function of two arguments by using the `runF2` function, giving us the expected result:
+
+```haskell
+> runFn2 myAddFast 10 10
+20
 ```
-> runFn2 add 2 2
-4
-```
+
+## Summary
+In this tutorial we learned that, in PureScript, all functions that have multiple arguments are curried by default.  When we curry a function of multiple arguments, we decompose it into a chained sequence of functions, each with one argument.  As we saw with the `add10` example, currying gives us the ability to create specialized functions from more general ones (e.g., `myAdd`) without introducing new code and repetition.  However, currying function arguments provoke a performance penalty.  Instead, for performance-critical code, there is a module `Data.Function.Uncurried` that you can leverage as an escape hatch.
+
+I hope that you found the concept of currying to be easy to understand. In the next tutorial, we'll expand on our knowledge of functors by introducing applicative functors, which are described by the `Applicative` type class.  Applicative functors have many use cases, including form validation.   If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on social media. Thank you and until next time!
 
 ## Navigation
 [<--](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16) Tutorials [-->](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18)
