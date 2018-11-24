@@ -6,8 +6,8 @@
 > *to read the series introduction where I cover the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
-
-> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 12](https://github.com/adkelley/javascript-to-purescript/tree/master/tut12)
+>
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 12](https://github.com/adkelley/javascript-to-purescript/tree/master/tut12) | [Tutorial 14](https://github.com/adkelley/javascript-to-purescript/tree/master/tut14) [Tutorial 17 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut17)
 
 
 ## Introduction

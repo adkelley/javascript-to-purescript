@@ -1,13 +1,13 @@
-# Make the Leap from Javascript to PureScript Series (DRAFT)
+# Write applicatives for concurrent actions
 
-## 21 - xx
+![series banner](../resources/glitched-abstract.jpg)
 
-This is the second tutorial in the series **Make the leap from Javascript to PureScript**.  Be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) where you'll find the Javascript reference for learning FP abstractions, but also how to install and run PureScript. The series outline and javascript code samples have been borrowed from the egghead.io course [Professor Frisby Introduces Composable Functional Javascript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
-[Brian Lonsdorf](https://github.com/DrBoolean). I assume that you've watched Brian's [video](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box) and PureScript, together with Bower and Pulp have been installed.  That is you're familiar with the **Box** abstraction you're able to enter `bower update && pulp run` to load the library dependencies, compile the program, and run the code.  Let's go!
+> *Note: This is* **Tutorial 21** *in the series* **Make the leap from JavaScript to PureScript** *. Be sure*
+> *to read the series introduction where we cover the goals & outline, and the installation,*
+> *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
+> *once-per-month. So come back often, there’s a lot more to come!*
 
-## Abstraction
-
-## Diving into the code
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 20](https://github.com/adkelley/javasc-to-purescript/tree/master/tut20) | [> Tutorial 21](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21)
 
 
 ## Navigation

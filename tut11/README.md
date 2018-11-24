@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
-> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 10](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 10](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10)
 
 
 Welcome to Tutorial 11 in the series **Make the leap from Javascript to PureScript**.  I hope you're enjoying it thus far.  If you're new to this series, then be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript.

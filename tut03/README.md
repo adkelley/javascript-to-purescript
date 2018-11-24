@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
-> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02) | [> Tutorial 4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02) | [> Tutorial 4](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript.  

@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
-> [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 16](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 16](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16)
 
 In this tutorial, We're going to cover currying functions of multiple arguments.  The process of currying is to break down a function of multiple arguments into a set of nested functions; with each taking a single argument and returning a single result.  Think of it as decomposing the function into a chain of functions that have a single argument.  You'll find all the code examples in this tutorial, and supplementary ones in my [github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut17).
 
@@ -16,7 +16,7 @@ The series outline and javascript code samples were borrowed with permission fro
 ## Currying explained
 In PureScript, like most functional programming languages, functions take only one argument and return one result by default. This approach models the [lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus), which is a notation for describing mathematical functions and programs.  Alonzo Church developed it in the 1930's, and it serves as a strong theoretical foundation for functional programming.
 
-The way accomplish this is by currying multiple function arguments. It is the process of turning a multi-argument function into a series of nested functions that each have one argument and return one result.  In the case of the last input argument, we return a result to the caller.  It means that an expression like `result = fn x y z` is transformed to `f1 = fn x`; `f2 = f1 y`; and `result = f2 z`.
+The way to accomplish this is by currying multiple function arguments. It is the process of turning a multi-argument function into a series of nested functions that each have one argument and return one result.  In the case of the last input argument, we return a result to the caller.  It means that an expression like `result = fn x y z` is transformed to `f1 = fn x`; `f2 = f1 y`; and `result = f2 z`.
 
 When there are multiple arguments to a function, PureScript transcompiles it to JavaScript as a sequence of nested functions; very similar to the curried JavaScript code that Brian showed in his [video](https://egghead.io/lessons/javascript-currying-with-examples).  The main advantages to currying are 1) we can partially apply functions, and 2) we can create type signatures that are also functions.  
 
