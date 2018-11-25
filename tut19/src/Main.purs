@@ -3,7 +3,7 @@ module Main where
 import Prelude
 import Control.Apply (lift2)
 import Effect (Effect)
-import Effect.Console (log, logShow)
+import Effect.Console (log)
 import Data.Either (Either(..))
 
 newtype Selector = Selector
@@ -14,7 +14,7 @@ newtype Selector = Selector
 instance showSelector :: Show Selector where
   show (Selector s) = show s.height
 
--- jquery stub "$"
+-- fake jquery stub "$" and DOM node
 getSelector :: String -> Either String Selector
 getSelector selector =
   Right $ Selector { selector, height: 10 }
@@ -27,7 +27,7 @@ getScreenSize screen (Selector head) (Selector foot) =
 
 result1 :: Either String Selector
 result1 =
-  Right (getScreenSize 800) `apply` (getSelector "header") `apply` (getSelector "footer")
+  Right (getScreenSize 800) <*> (getSelector "header") <*> (getSelector "footer")
 
 result2 :: Either String Selector
 result2 = lift2 (getScreenSize 800) (getSelector "header") (getSelector "footer")
@@ -35,5 +35,5 @@ result2 = lift2 (getScreenSize 800) (getSelector "header") (getSelector "footer"
 main ::  Effect Unit
 main = do
   log "Applicative Functors for multiple arguments"
-  logShow $ result1
-  logShow $ result2
+  log $ "result1: " <> (show result1)
+  log $ "result2 (using lift2): " <> (show result2)
