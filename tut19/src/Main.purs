@@ -1,15 +1,18 @@
 module Main where
 
 import Prelude
+
 import Control.Apply (lift2)
+import Data.Either (Either(..))
 import Effect (Effect)
 import Effect.Console (log)
-import Data.Either (Either(..))
 
 newtype Selector = Selector
   { selector :: String
   , height :: Int
   }
+
+type Error = String
 
 instance showSelector :: Show Selector where
   show (Selector s) = show s.height
@@ -25,15 +28,22 @@ getScreenSize screen (Selector head) (Selector foot) =
            , height:   screen - (head.height + foot.height)
            }
 
-result1 :: Either String Selector
+-- | Use the Monad type constructor to sequentially acquire
+-- | the header and the footer size
+result1 :: Either Error Selector
 result1 =
+  Right ()
+
+-- | Better
+result2 :: Either Error Selector
+result2 =
   Right (getScreenSize 800) <*> (getSelector "header") <*> (getSelector "footer")
 
-result2 :: Either String Selector
-result2 = lift2 (getScreenSize 800) (getSelector "header") (getSelector "footer")
+result3 :: Either Error Selector
+result3 = lift2 (getScreenSize 800) (getSelector "header") (getSelector "footer")
 
 main ::  Effect Unit
 main = do
   log "Applicative Functors for multiple arguments"
-  log $ "result1: " <> (show result1)
-  log $ "result2 (using lift2): " <> (show result2)
+  log $ "result2 (using <*>): " <> (show result1)
+  log $ "result3 (using lift2): " <> (show result2)
