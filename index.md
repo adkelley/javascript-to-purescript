@@ -27,3 +27,5 @@
 * [15 - Lift into a Functor with pure](https://github.com/adkelley/javascript-to-purescript/tree/master/tut15/README.md)
 * [16 - You've been using Monads](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16/README.md)
 * [17 - Build curried functions](https://github.com/adkelley/javascript-to-purescript/tree/master/tut17/README.md)
+* [18 - Applicative Functors for multiple arguments](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18/README.md)
+* [19 - Apply multiple functors as arguments to a function (Applicatives)](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19/README.md)
