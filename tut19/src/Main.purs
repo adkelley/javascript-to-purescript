@@ -3,47 +3,59 @@ module Main where
 import Prelude
 
 import Control.Apply (lift2)
-import Data.Either (Either(..))
+import Data.Either (Either)
 import Effect (Effect)
 import Effect.Console (log)
+
+type Error = String
 
 newtype Selector = Selector
   { selector :: String
   , height :: Int
   }
 
-type Error = String
-
 instance showSelector :: Show Selector where
   show (Selector s) = show s.height
 
 -- fake jquery stub "$" and DOM node
-getSelector :: String -> Either String Selector
+getSelector :: String -> Either Error Selector
 getSelector selector =
-  Right $ Selector { selector, height: 10 }
+  pure $ Selector { selector, height: 10 }
 
 getScreenSize :: Int -> Selector -> Selector -> Selector
-getScreenSize screen (Selector head) (Selector foot) =
+getScreenSize screen (Selector header) (Selector footer) =
   Selector { selector: "screen"
-           , height:   screen - (head.height + foot.height)
+           , height:   screen - (header.height + footer.height)
            }
 
 -- | Use the Monad type constructor to sequentially acquire
 -- | the header and the footer size
-result1 :: Either Error Selector
-result1 =
-  Right ()
+result1A :: Either Error Selector
+result1A =
+   (getSelector "header") >>=
+      \header -> (getSelector "footer") >>=
+         \footer -> pure $ getScreenSize 800 header footer
 
--- | Better
+result1B :: Either Error Selector
+result1B = do
+  header <- getSelector "header"
+  footer <- getSelector "footer"
+  pure $ getScreenSize 800 header footer
+
+-- | Better to acquire the header and footer in parallel,
+-- | using the Applicative Functor
 result2 :: Either Error Selector
 result2 =
-  Right (getScreenSize 800) <*> (getSelector "header") <*> (getSelector "footer")
+  pure (getScreenSize 800) <*> (getSelector "header") <*> (getSelector "footer")
 
+-- | Shorten result2 by using lift2
 result3 :: Either Error Selector
 result3 = lift2 (getScreenSize 800) (getSelector "header") (getSelector "footer")
 
 main ::  Effect Unit
 main = do
   log "Applicative Functors for multiple arguments"
-  log $ "result2 (using <*>): " <> (show result1)
-  log $ "result3 (using lift2): " <> (show result2)
+  log $ "result1A (uses >>=): " <> (show result1A)
+  log $ "result1b (uses a 'do block'): " <> (show result1B)
+  log $ "result2 (uses <*>): " <> (show result2)
+  log $ "result3 (uses lift2): " <> (show result3)
