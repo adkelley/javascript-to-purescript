@@ -115,7 +115,34 @@ result3 =
 
 The above example shows two approaches; `result2` uses the infix operator for `apply`, namely `<*>`.  The `result3` function is slightly shorter because it uses the `lift2` helper method; declaring the two arguments required by the function.
 
-I should point out that this all works thanks to currying, which I covered in [Tutorial 17](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03).  That is, `getScreenSize` becomes a series of nested functions.  This means that the expression `result = getScreenSize 800  (getSelector "header") (getSelector "footer")` is transformed to `f1 = getScreenSize 800`; `f2 = f1 (getSelector "header")`; and `result = f2 (getSelector "footer")`.
+There is actually one more approach, introduced in PureScript compiler version 0.12, which takes advantage of Applicative do-notation.  The syntax is similar to do-notation, which we saw in `result1B` from the code example above. However, instead of treating `Selector` as a monad, we use the `ado` keyword to tell the compiler to treat it as an Applicative.  We also replace `pure` with the `in` keyword.  
+
+A key motivation for `ado` is that Applicative syntax can be difficult to read and write, particularly when there are more than two functorial arguments.  For example (co-opted from the Glasgow Haskell Compiler [documentation](https://ghc.haskell.org/trac/ghc/wiki/ApplicativeDo)):
+
+```haskell
+(\x y z → x*y + y*z + z*x) <$> expr1 <*> expr2 <*> expr3
+
+vs.
+
+ado 
+  x <- expr1
+  y <- expr2
+  z <- expr3
+  in (x*y + y*z + z*x)
+```
+
+shows how we can make use of all the applicative benefits while still being able to use do-notation sugar.  Similarly, rewriting our `getScreensize` example to take advantage of Applicative do-notation is a trivial exercise:
+
+```haskell
+result4 :: Either Error Selector
+result4 = ado
+  header <- getSelector "header"
+  footer <- getSelector "footer
+  in getScreenSize 800 header footer
+```
+
+As a final point, I should mention that this all works thanks to currying, which I covered in [Tutorial 17](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03).  That is, `getScreenSize` becomes a series of nested functions.  This means that the expression `result = getScreenSize 800  (getSelector "header") (getSelector "footer")` is transformed to `f1 = getScreenSize 800`; `f2 = f1 (getSelector "header")`; and `result = f2 (getSelector "footer")`.
+
 
 ## Summary
 In this tutorial, we saw an example of how to employ Applicatives in our code. Whenever you need to apply a function to multiple functorial arguments, and their calculation or retrieval is independent of one another, then it's best to treat the type constructor as an Applicative, rather than a Monad (see [Treating `Selector` as an Applicative](#treating-selector-as-an-applicative)).  This way, we can calculate or retrieve the function's arguments in parallel.  On the hand, if the value of one or more function arguments is dependent on the value of another argument, then treat the type constructor as a Monad.  This approach calculates or retrieves the arguments sequentially; threading the values through the monad until you have your final result (see [Treating `Selector` as a Monad](#treating-selector-as-a-monad)).
