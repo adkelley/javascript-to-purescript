@@ -13,6 +13,9 @@ In the last tutorial, I introduced the Applicative Functor for applying a functi
 
 I borrowed this series outline, and the javascript code samples with permission from the egghead.io course Professor Frisby Introduces Composable Functional JavaScript by Brian Lonsdorf — thank you, Brian! A fundamental assumption of each tutorial is that you’ve watched his [video](https://egghead.io/lessons/javascript-applying-applicatives-exhibit-a) before tackling the equivalent PureScript abstraction featured in this tutorial. Brian covers the featured concepts exceptionally well, and I feel it’s better that you understand its implementation in the comfort of JavaScript.
 
+You'll find the text and code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request.
+
+
 ## Quick Applicative Functor review
 From the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18), we learned that the Applicative Functor type class extends the [map](https://pursuit.purescript.org/packages/purescript-prelude/4.1.0/docs/Data.Functor) method by enabling function application to more than one functor value. Also, it can lift functions of zero arguments or values into a functorial type constructor. To accomplish the former we use the `apply` method, and the latter is achieved using `pure`.  For example, using the PureScript REPL, we can play with our old friend the `Box` type constructor to see how `apply` and `pure` work:
 

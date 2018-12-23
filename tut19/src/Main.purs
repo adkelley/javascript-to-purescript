@@ -52,6 +52,13 @@ result2 =
 result3 :: Either Error Selector
 result3 = lift2 (getScreenSize 800) (getSelector "header") (getSelector "footer")
 
+-- | Use Applicative do-notation (syntax support added in 0.12)
+result4 :: Either Error Selector
+result4 = ado
+  header ← getSelector "header"
+  footer ← getSelector "footer"
+  in getScreenSize 800 header footer
+
 main ::  Effect Unit
 main = do
   log "Applicative Functors for multiple arguments"
@@ -59,3 +66,4 @@ main = do
   log $ "result1b (uses a 'do block'): " <> (show result1B)
   log $ "result2 (uses <*>): " <> (show result2)
   log $ "result3 (uses lift2): " <> (show result3)
+  log $ "result4 (uses ado): " <> (show result4)
