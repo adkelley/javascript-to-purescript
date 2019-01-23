@@ -1,9 +1,11 @@
 module Main where
 
 import Prelude
+
+import Control.Apply (lift2)
+import Data.List (List(..), (:))
 import Effect (Effect)
 import Effect.Console (log, logShow)
-import Data.List (List(..), (:))
 
 -- pure ~ List.of() in JavaScript
 merch :: List String
@@ -14,7 +16,7 @@ merch =
   <*> ("black" : "white" : Nil)
 
 result1 :: List Int
-result1 = pure (\x -> x) <*> (1 : 2 : 3 : Nil)
+result1 = pure (\x → x) <*> (1 : 2 : 3 : Nil)
 
 result2 :: List String
 result2 = merch
