@@ -79,7 +79,7 @@ Next, we should declare how to show the value of `Box` when logging to the conso
 const Box = x =>
 ({
   map: f => Box(f(x)),
-  inspect: () => 'Box($(x))'
+  inspect: () => `Box(${x})`
 })
 ```
 Similar to our `Functor` instance, we create an instance of the `Show` class in PureScript and tell it exactly how we want `Box` to be logged to the console:
@@ -95,7 +95,7 @@ const Box = x =>
 ({
   map: f => Box(f(x)),
   fold: f => f(x),
-  inspect: () => 'Box($(x))'
+  inspect: () => `Box(${x})`
 })
 ```
 
