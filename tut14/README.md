@@ -1,4 +1,5 @@
 # You've been using Functors!
+
 ![series banner](../resources/glitched-abstract.jpg)
 
 > *This is* **Tutorial 14** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
@@ -6,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-week. So come back often, there is a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 13](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13) | [Tutorial 15 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut15) [Tutorial 19 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 13](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13) | [Tutorial 15 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut15) [>> Tutorial 20](https://github.com/adkelley/javascript-to-purescript/tree/master/tut20)
 
 
 Welcome to Tutorial 14 in the series **Make the leap from Javascript to PureScript**.  I hope you're enjoying it thus far.  If you're new to this series, then be sure to read the series [Introduction](https://github.com/adkelley/javascript-to-purescript) to learn how to install and run PureScript.

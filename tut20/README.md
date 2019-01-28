@@ -2,12 +2,12 @@
 
 ![series banner](../resources/glitched-abstract.jpg)
 
-> *Note: This is* **Tutorial 19** *in the series* **Make the leap from JavaScript to PureScript** *. Be sure*
+> *Note: This is* **Tutorial 20** *in the series* **Make the leap from JavaScript to PureScript** *. Be sure*
 > *to read the series introduction where we cover the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
 > *once-per-month. So come back often, there’s a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 19](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19)
+> [Index](https://github.com/adkeelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 19](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19)
 
 In the last tutorial, I introduced our first practical example of an Applicative Functor for getting a web page's screen height from the DOM.  In this tutorial, we'll continue covering them with another example that captures the pattern of nested loops in your imperative code when constructing list comprehensions. For a quick review of applicative functors, please read my [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19).  Alternatively, if you are new to the Applicative, then please start with [tutorial 18](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18).
 
@@ -42,9 +42,9 @@ for (x of xs) {
     for (z of zs) {
       // ["teeshirt-large-red", "teeshirt-medium-red", ..."]
       clothes.push(`${x}-${y}-$(z)`);
-    }
-  }
-}
+    };
+  };
+};
 ```
 
 Add more nested loops at your peril, because it leads to code that is difficult to read and debug until it becomes a sinister [pyramid of doom](https://en.wikipedia.org/wiki/Pyramid_of_doom_(programming)).  So, the critical takeaway from Brian's tutorial and mine is to replace these messy loops altogether by using an applicative functor. Again, this pattern works on not only lists but any foldable data structure such as an array or tree.
@@ -62,7 +62,7 @@ newStringList s = s : Nil
 The new functions above are `cons`, whose infix operator is `(:)`, and `Nil` for representing the empty list.  In the above example, we are `cons`tructing a new list by prepending the string `s` to `Nil`. With these two functions, together with our applicative functor, we have the necessary ingredients for constructing a list comprehension of clothes, created from our type, size, and color lists:
 
 ```haskell
-import Prelude,
+import Prelude
 import Data.List (List(..), (:))
 
 -- returns ('teeshirt-large-black' : 'teeshirt-large-white', ...)
