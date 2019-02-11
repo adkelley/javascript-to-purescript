@@ -8,6 +8,6 @@
     "install": "psc-package install",
     "build": "pulp --psc-package build",
     "exec": "pulp --psc-package run",
-    "all": "npm run clean && npm run install && npm run build && npm run exec"
+    "all": "npm run clean && npm run install && npm run exec"
   }
 }

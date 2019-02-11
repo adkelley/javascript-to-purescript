@@ -1,21 +1,23 @@
 module Main where
 
 import Prelude
+
 import Control.Apply (lift3)
 import Data.List (List(..), (:))
 import Effect (Effect)
 import Effect.Console (log, logShow)
 
 -- pure ~ List.of() in JavaScript
+-- f <$> List a == pure f <*> List a
 result1 :: List Int
-result1 = pure (\x y → x * y) <*> (1 : 2 : Nil) <*> (1 : 2 : Nil)
+result1 = (\x y → x * y) <$> 1 : 2 : Nil <*> 1 : 2 : Nil
 
 merch1 :: List String
 merch1 =
-  pure (\x y z -> x <> "-" <> y <> "-" <> z)
-  <*> ("teeshirt" : "sweater" : Nil)
-  <*> ("large" : "medium" : "small": Nil)
-  <*> ("black" : "white" : Nil)
+  (\x y z -> x <> "-" <> y <> "-" <> z)
+  <$> "teeshirt" : "sweater" : Nil
+  <*> "large" : "medium" : "small": Nil
+  <*> "black" : "white" : Nil
 
 -- | Use lift3 to rid ourselves of pure & <*>
 merch2 :: List String
@@ -28,9 +30,9 @@ merch2 = lift3
 -- | Use applicative do notation introduced in 0.12.0
 merch3 :: List String
 merch3 = ado
-  x <- ("teeshirt" : "sweater" : Nil)
-  y <- ("large" : "medium" : "small" : Nil)
-  z <- ("black" : "white" : Nil)
+  x <- "teeshirt" : "sweater" : Nil
+  y <- "large" : "medium" : "small" : Nil
+  z <- "black" : "white" : Nil
   in (x <> "-" <> y <> "-" <> z)
 
 main :: Effect Unit

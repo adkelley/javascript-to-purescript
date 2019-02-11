@@ -2,7 +2,6 @@ module Main where
 
 import Prelude
 
-import Control.Apply (lift2)
 import Control.Monad.Task (TaskE, fork, newTask, res, rej)
 import Data.Either (Either(..), either)
 import Data.Foldable (foldr)
@@ -41,13 +40,13 @@ main = do
   void $ launchAff $
     let s = "\nTwo sequential finds:\n"
     in
-      (dbFind 20) >>=
-        (\p1 → (dbFind 8) >>=
+      dbFind 20 >>=
+        (\p1 → dbFind 8 >>=
            \p2 → pure $ reportHeader p1 p2)
       # fork (\e → Console.log $ "error: " <> e) (\p → Console.log (s <> p))
 
   void $ launchAff $
     let s = "\nRewritten using two concurrent finds:\n"
     in
-     lift2 (\p1 p2 → reportHeader p1 p2) (dbFind 20) (dbFind 8)
+     (\p1 p2 → reportHeader p1 p2) <$> (dbFind 20) <*> (dbFind 8)
      # fork (\e → Console.log $ "error: " <> e) (\p → Console.log (s <> p))

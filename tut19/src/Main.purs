@@ -46,7 +46,7 @@ result1B = do
 -- | using the Applicative Functor
 result2 :: Either Error Selector
 result2 =
-  pure (getScreenSize 800) <*> (getSelector "header") <*> (getSelector "footer")
+  (getScreenSize 800) <$> (getSelector "header") <*> (getSelector "footer")
 
 -- | Shorten result2 by using lift2
 result3 :: Either Error Selector
