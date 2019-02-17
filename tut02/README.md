@@ -5,9 +5,9 @@
 > *Note: This is* **Tutorial 2** *in the series* **Make the leap from JavaScript to PureScript** *. Be sure*
 > *to read the series introduction where we cover the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
-> *once-per-week. So come back often, there’s a lot more to come!*
+> *once-per-month. So come back often, there’s a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript/tree/blob/master/README.md) [< Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) | [Tutorial 3 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03) [>> Tutorial 20](https://github.com/adkelley/javascript-to-purescript/tree/master/tut20)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript/tree/blob/master/README.md) [< Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) | [Tutorial 3 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut03) [>> Tutorial 21](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) by
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the abstraction in PureScript.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript.  For this tutorial, we're going to look at another example of the abstraction `Box( )` (see [video2](https://egghead.io/lessons/javascript-refactoring-imperative-code-to-a-single-composed-expression-using-box))

@@ -30,3 +30,4 @@
 * [18 - Applicative Functors for multiple arguments](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18/README.md)
 * [19 - Apply multiple functors as arguments to a function (Applicatives)](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19/README.md)
 * [20 - List comprehensions with Applicative Functors](https://github.com/adkelley/javascript-to-purescript/tree/master/tut20/README.md)
+* [21 - Write applicatives for concurrent actions](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21/README.md)

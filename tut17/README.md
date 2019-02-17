@@ -5,9 +5,9 @@
 > *This is* **Tutorial 17** *in the series* **Make the leap from JavaScript to PureScript**. Be sure
 > *to read the [series introduction](https://github.com/adkelley/javascript-to-purescript) where I cover the goals & outline, and the installation,*
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
-> *once-per-week. So come back often, there is a lot more to come!*
+> *once-per-month. So come back often, there is a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript/blob/master/README.md) [< Tutorial 16](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16) | [Tutorial 18 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18) [>> Tutorial 20](https://github.com/adkelley/javascript-to-purescript/tree/master/tut20)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript/blob/master/README.md) [< Tutorial 16](https://github.com/adkelley/javascript-to-purescript/tree/master/tut16) | [Tutorial 18 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18) [>> Tutorial 21](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21)
 
 In this tutorial, We're going to cover currying functions of multiple arguments.  The process of currying is to break down a function of multiple arguments into a set of nested functions; with each taking a single argument and returning a single result.  Think of it as decomposing the function into a chain of functions that have a single argument.  You'll find all the code examples in this tutorial, and supplementary ones in my [github repository](https://github.com/adkelley/javascript-to-purescript/tree/master/tut17).
 

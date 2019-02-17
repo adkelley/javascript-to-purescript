@@ -3,9 +3,9 @@
 ![series banner](resources/glitched-abstract.jpg)
 
 > *Note: This is the introduction to the “Make the Leap from JavaScript to PureScript” tutorial series. I’ll be*
-> *publishing a new tutorial approximately once-per-week. So come back often, there’s a lot more of this to come!*
+> *publishing a new tutorial approximately once-per-month. So come back often, there’s a lot more of this to come!*
 >
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/md) | [> Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) [>> Tutorial 20](https://github.com/adkelley/javascript-to-purescript/tree/master/tut20)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/md) | [> Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) [>> Tutorial 21](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21)
 
 ## Introduction
 
