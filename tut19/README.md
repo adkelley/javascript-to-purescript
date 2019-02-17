@@ -30,9 +30,13 @@ Box 5
 The `pure` method, from the [Control.Applicative](https://pursuit.purescript.org/packages/purescript-prelude/4.1.0/docs/Control.Applicative) module, lifted our addition function `(+)` and the values `2`, and `3` into our `Box` constructor.  The `apply` method, from PureScript's [Control.Apply](https://pursuit.purescript.org/packages/purescript-prelude/4.1.0/docs/Control.Apply) module, maps `Box (+)` over the arguments `Box 2` and `Box 3` to calcuate and return `Box 5`.  Note, we could have assigned these functor arguments to `Box` directly (e.g., `Box (+)`) without using `pure`.  However, in production code, I prefer to use it in case I decide to change the name of the type constructor later on.  This way it's a simple name change to one or more arguments in a function's type declaration, avoiding error-prone edits to arguments within the body of the function.  We also learned that there's an infix operator for `apply`, namely `<*>`:
 
 ```haskell
-> pure (+) <*> (pure 2) <*> (pure 3) :: Box Int
+> (+) <$> (pure 2) <*> (pure 3) :: Box Int
 Box 5
 ```
+Recall that `map`, whose infix operator is `<$>`, enables the substitution of `pure`, and one `apply` from an applicative expression.  Thus, from the above, `map` 
+takes care of lifting our function into `Box`, such that `(+)` is partially applied to each argument within `Box` to obtain the result of the addition.
+
+
 Also, there are helper methods `lift2`, `lift3`, `lift4`, etc., that help to shorten our code even further.  The number in the name of these methods represents the number of functorial arguments to the function. For example:
 
 ```haskell

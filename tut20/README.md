@@ -67,9 +67,8 @@ import Data.List (List(..), (:))
 
 -- returns ('teeshirt-large-black' : 'teeshirt-large-white', ...)
 merch1 :: List String
-merch1 =
-  pure (\x y z -> x <> "-" <> y <> "-" <> z)
-  <*> ("teeshirt" : "sweater" : Nil)
+merch1 = (\x y z -> x <> "-" <> y <> "-" <> z)
+  <$> ("teeshirt" : "sweater" : Nil)
   <*> ("large" : "medium" : "small": Nil)
   <*> ("black" : "white" : Nil)
 ```
