@@ -6,4 +6,4 @@ import Effect.Console (log)
 
 main :: Effect Unit
 main = do
-  log "Hello sailor!"
+  log "Hello Tut22!"
