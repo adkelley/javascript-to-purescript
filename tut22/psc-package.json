@@ -6,6 +6,11 @@
     "psci-support",
     "console",
     "effect",
-    "prelude"
+    "prelude",
+    "node-fs",
+    "either",
+    "foldable-traversable",
+    "transformers",
+    "aff"
   ]
 }
