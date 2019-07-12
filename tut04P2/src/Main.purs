@@ -33,7 +33,7 @@ parsePort :: String -> Either Error Port
 parsePort port =
   case parsed of
     Left nel -> Left $ error $ show $ head nel
-    Right x -> Right $ unsafeFromForeign x :: Port
+    Right x -> Right (unsafeFromForeign x :: Port)
   where parsed = runExcept $ parseJSON port
 
 

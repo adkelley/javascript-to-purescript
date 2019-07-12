@@ -95,7 +95,7 @@ So, how is this accomplished in PureScript?  Well, when it comes to lazy evaluat
 import Data.Lazy (Lazy, defer, force)
 
 nextCharForNumberString :: String -> Lazy String
-nextCharForNumberString str = do
+nextCharForNumberString str =
   defer (\_ -> str) #
   map trim #
   map (\s -> fromMaybe 0 $ fromString s) #

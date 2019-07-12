@@ -39,10 +39,10 @@ main = do
   log "Example 5"
   log "using where keyword in wrapExample"
   example <- wrapExample getCurrentExample
-  log $ unsafeFromForeign example :: String
+  log (unsafeFromForeign example :: String)
   log "using let keyword in wrapExample_"
   example_ <- wrapExample_ getCurrentExample
-  log $ unsafeFromForeign example_ :: String
+  log (unsafeFromForeign example_ :: String)
   -- or this way
   -- (wrapExample_ getCurrentExample) >>=
   -- (\example_ -> log $ unsafeFromForeign example_ :: String)

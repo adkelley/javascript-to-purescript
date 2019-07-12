@@ -287,7 +287,7 @@ main = do
   log "Example 5"
   log "using where keyword in wrapExample"
   example <- wrapExample getCurrentExample
-  log $ unsafeFromForeign example :: String
+  log (unsafeFromForeign example :: String)
 
   log "Example 6"
   log "Using bind to help parse the database URL"

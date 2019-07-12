@@ -95,25 +95,25 @@ main :: Effect Unit
 main = do
   log "A curated collection of monoids and their uses"
   log "\nPS Additive =~ JS Sum"
-  logShow $ mempty :: Additive Int -- (Additive 0)
+  logShow (mempty :: Additive Int) -- (Additive 0)
   logShow $ foldMap Additive [1, 2, 3]
   log "\nPS Multiplicative =~ JS Product"
-  logShow $ mempty :: Multiplicative Int -- (Multiplicative 1)
+  logShow  (mempty :: Multiplicative Int) -- (Multiplicative 1)
   logShow $ foldMap Multiplicative [1, 2, 3]
   log "\nPS Disj =~ JS Any"
-  logShow $ mempty :: Disj Boolean -- (Disj false)
+  logShow (mempty :: Disj Boolean) -- (Disj false)
   logShow $ foldMap Disj [false, false, true]
   log "\nPS Conj =~ JS All"
-  logShow $ mempty :: Conj Boolean -- (Conj true)
+  logShow (mempty :: Conj Boolean) -- (Conj true)
   logShow $ foldMap Conj [true, true, true]
   log "\nPS First =~ JS First"
-  logShow $ mempty :: First Int -- Nothing
+  logShow (mempty :: First Int) -- Nothing
   logShow $ foldMap First [Nothing, Just 1, Nothing] -- First ((Just 1))
   log "\nPS Max =~ JS Max"
-  logShow $ mempty :: Max Int -- (Max -2147483648)
+  logShow (mempty :: Max Int) -- (Max -2147483648)
   logShow $ foldMap Max [1, 2, 3] -- (Max 3)
   log "\nPS Min =~ JS Min"
-  logShow $ mempty :: Min Int -- (Min 2147483647)
+  logShow (mempty :: Min Int) -- (Min 2147483647)
   logShow $ foldMap Min [1, 2, 3]  -- (Min 1)
   log "\nCount # of page views"
   logShow $ foldMap (Additive <<< fromMaybe 0 <<< _.views) goodStats

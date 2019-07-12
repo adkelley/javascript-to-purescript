@@ -37,4 +37,4 @@ main = do
   log "Tutorial 22: Leapfrogging types with Traverse"
   void $ launchAff $
     traverse (\x → taskReadTextFile x) files
-    # fork (\e → Console.errorShow e) (\r → Console.log $ foldl (<>) "" r)
+    # fork (\e → Console.errorShow e) (\rs → Console.log $ foldl (<>) "" rs)

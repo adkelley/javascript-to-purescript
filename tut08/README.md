@@ -79,9 +79,9 @@ Because this implementation of `First` has the identity element `Nothing`, it ju
 Monoids are useful because you can perform 'safe' operations with them.  For example, let's say our code returns an empty list of the `Additive` type. Then, instead of blowing up, the value returned will be zero.  In summary, for the three monoids we've covered so far, `mempty` returns the following:
 
 ```haskell
-  logShow $ mempty :: Additive Int -- (Additive 0)
-  logShow $ mempty :: Conj Boolean -- (Conj true)
-  logShow $ mempty :: First Int -- First (Nothing)
+  logShow (mempty :: Additive Int) -- (Additive 0)
+  logShow (mempty :: Conj Boolean) -- (Conj true)
+  logShow (mempty :: First Int) -- First (Nothing)
 ```
 
 Note the inline type assignment (e.g., `mempty :: Additive Int`) within our PureScript code. It is a handy feature for declaring the type of generic type constructs such as `mempty`.

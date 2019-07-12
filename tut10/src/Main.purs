@@ -56,7 +56,7 @@ main = do
   logShow $ i 5 -- -9
 
   log "\nThis is your Last monoid"
-  logShow $ mempty :: (Last Int)
+  logShow (mempty :: (Last Int))
   logShow $ foldMap Last [(Just 1), Nothing, (Just 2)] -- (Just 2)
 
   log "\nfoldMap for monoids is foldr, mempty and map combined"

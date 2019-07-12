@@ -45,7 +45,7 @@ listResults =
 -- | Laws
 identityLaw ∷ Boolean
 identityLaw =
-  ((pure identity) <*> (pure 1)) ≡ (pure 1) ∷ Box Int
+  ((pure identity) <*> (pure 1)) ≡ ((pure 1) ∷ Box Int)
 
 homomorphism ∷ Boolean
 homomorphism =
@@ -53,7 +53,7 @@ homomorphism =
     f = \x → x + 1
     y = 1
   in
-    ((pure f) <*> (pure y)) ≡ (pure $ f y) ∷ Box Int
+    ((pure f) <*> (pure y)) ≡ ((pure $ f y) ∷ Box Int)
 
 interchange ∷ Boolean
 interchange =
@@ -61,7 +61,7 @@ interchange =
     u = pure $ \x → x + 1
     y = 1
   in
-   (u <*> (pure y)) ≡ ((pure (_ $ y)) <*> u) ∷ Box Int
+   (u <*> (pure y)) ≡ (((pure (_ $ y)) <*> u) ∷ Box Int)
 
 
 composition ∷ Boolean
@@ -71,7 +71,7 @@ composition =
     v = pure $ \x → x + 1
     w = pure 2
   in
-    ((pure (⋘)) <*> u <*> v <*> w ) ≡ (u <*> (v <*> w)) ∷ Box Int
+    ((pure (⋘)) <*> u <*> v <*> w ) ≡ ((u <*> (v <*> w)) ∷ Box Int)
 
 
 main :: Effect Unit

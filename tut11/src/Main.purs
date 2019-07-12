@@ -13,7 +13,7 @@ import Effect (Effect)
 import Effect.Console (log, logShow)
 
 nextCharForNumberString :: String -> Lazy String
-nextCharForNumberString str = do
+nextCharForNumberString str =
   defer (\_ -> str) #
   map trim #
   map (\s ->fromMaybe 0 $ fromString s) #
