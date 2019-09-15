@@ -2,7 +2,7 @@
 
 # Leapfrogging types with Traversable
 
-[series banner](file:///Users/Gibson/Dropbox/code/purescript/javascript-to-purescript/resources/glitched-abstract.jpg)
+[series banner](../resources/glitched-abstract.jpg)
 
 > **Note: This is** **Tutorial 22** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
@@ -39,7 +39,7 @@ that can be folded, such as a `List` or `Array,` to return a value.  I didn't co
 in [Tutorial 10](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10).  Like `map`, the two operations within
 the `Traversable` class allow us to transform the elements within the Functor.  Moreover, like `Foldable`, we accumulate the results and effects of this transformation function along the way into an `Applicative Functor`.
 
-For a simple example, imagine you have an array of string elements that you wish to parse, but one or more of these elements may be invalid.  The function signature is `parseStrings :: Array String -> Array (Maybe String)`, where the `Maybe` type constructor represents the possibility of a valid or invalid string.  If this is what we want, then the `map` operation suffices - `map (\x -> Maybe x) (Array String) = Array (Maybe String)`  However, what if we want  `parseStrings`  to signal a failure whenever it encounters an invalid string within the array? In this case, our type signature becomes `parseStrings :: Array String -> Maybe (Array String)`.  Unfortunately `map` is not up to this task; therefore, we rely on one of the member functions from the `Traversable` class to help complete this job.
+For a simple example, imagine you have an array of string elements that you wish to parse, but one or more of these elements may be invalid.  The function signature is, `parseStrings :: Array String -> Array (Maybe String)`, where the `Maybe` type constructor represents the possibility of a valid or invalid string.  If this is what we want, then the `map` operation suffices - `map (\x -> Maybe x) (Array String) = Array (Maybe String)`  However, what if we want  `parseStrings`  to signal a failure whenever it encounters an invalid string within the array? In this case, our type signature becomes `parseStrings :: Array String -> Maybe (Array String)`.  Unfortunately `map` is not up to this task; therefore, we rely on one of the member functions from the `Traversable` class to help complete this job.
 
 
 ### Member functions

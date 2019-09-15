@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
 > *once-per-month. So come back often, there’s a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 18](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18) | [>> Tutorial 21](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 18](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18) | [>> Tutorial 22](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22)
 
 In the last tutorial, I introduced the Applicative Functor for applying a function to multiple functor arguments.  Now, I'm going to show a practical example of this functor - getting a web page's screen height from the DOM.  However, first, let's take a quick refresher on Applicative Functors then dive right into the example. 
 
