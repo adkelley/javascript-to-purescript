@@ -32,3 +32,4 @@
 * [20 - List comprehensions with Applicative Functors](https://github.com/adkelley/javascript-to-purescript/tree/master/tut20/README.md)
 * [21 - Write applicatives for concurrent actions](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21/README.md)
 * [22 - Leapfrogging types with traversable](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22/README.md)
+* [23 - Maintaining structure whilst asyncing](https://github.com/adkelley/javascript-to-purescript/tree/master/tut23/README.md)

@@ -1,6 +1,6 @@
 {
   "name": "tut21",
-  "set": "psc-0.13.0",
+  "set": "psc-0.13.3",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "aff",

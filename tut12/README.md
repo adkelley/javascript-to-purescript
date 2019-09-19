@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-month. So come back often, there is a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 11](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11) | [Tutorial 13 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13) [>> Tutorial 22](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 11](https://github.com/adkelley/javascript-to-purescript/tree/master/tut11) | [Tutorial 13 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13) [>> Tutorial 23](https://github.com/adkelley/javascript-to-purescript/tree/master/tut23)
 
 
 ## Introduction

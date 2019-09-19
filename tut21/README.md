@@ -2,14 +2,14 @@
 
 # Write applicatives for concurrent actions
 
-[series banner](../resources/glitched-abstract.jpg)
+[series banner](file:///Users/Gibson/Dropbox/code/purescript/javascript-to-purescript/resources/glitched-abstract.jpg)
 
 > **Note: This is** **Tutorial 21** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
 > 
-> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 20](https:github.com/adkelley/javascript-to-purescript/tree/master/tut20) | [Tutorial 22 >>](https:github.com/adkelley/javascript-to-purescript/tree/master/tut22)
+> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 20](https:github.com/adkelley/javasc-to-purescript/tree/master/tut20) | [Tutorial 22 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22) [Tutorial 23 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut23)
 
 In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut20), we continued our exploration of Applicative Functors with a practical example that captured the pattern of nested loops for constructing
 foldable (e.g., array) comprehensions.
@@ -24,7 +24,7 @@ Brian Lonsdorf — thank you, Brian! A fundamental assumption is that you’
 featured in this tutorial. Brian covers the featured concepts exceptionally well, and I feel it’s better that you understand its implementation in the comfort of JavaScript.
 
 You'll find the text and code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21).  If you read something that you feel could be explained better, or a code example that needs refactoring,
-then please let me know via a comment or send me a pull request.  Also, before leaving, please give it a start to help me publicize these tutorials.
+then please let me know via a comment or send me a pull request.  Also, before leaving, please give it a star to help me publicize these tutorials.
 
 Let's start with a quick review of `TaskE` then move onto the example.
 

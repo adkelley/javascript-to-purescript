@@ -1,6 +1,6 @@
 {
-  "name": "tut22",
-  "set": "psc-0.13.0",
+  "name": "tut23",
+  "set": "psc-0.13.3",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "psci-support",

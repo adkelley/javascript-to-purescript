@@ -9,7 +9,7 @@
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
 > 
-> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 21](https:github.com/adkelley/javascript-to-purescript/tree/master/tut21)
+> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 21](https:github.com/adkelley/javascript-to-purescript/tree/master/tut21) | [Tutorial 23 >>](https:github.com/adkelley/javascript-to-purescript/tree/master/tut23)
 
 In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21/), we concluded our extensive exploration of `Functor` type classes, by ending with the `Applicative Functor`. Now, in this tutorial, we'll look at a new type class that has a relationship with `Functor`, called `Traversable`.   Throughout our `Functor` exploration the transformation functions processed the elements within a `Functor` type class (using `map`, `apply` or `bind`) while preserving the structure of the original `Functor`. For example, `map (\x -> x + 1) [1, 2, 3]` takes the array `[1, 2, 3]` and returns a new array `[2, 3, 4]`, leaving the outer structure intact.  However, what if we what to change the original `Functor` to another type constructor?  For example, perhaps we want `Array String` to become \`Maybe (Array String)~ to reflect the overall success or failure of our transformation function.   That is the topic of this and the next tutorial - commuting two types, turning
 the these structures inside out.
@@ -39,7 +39,7 @@ that can be folded, such as a `List` or `Array,` to return a value.  I didn't co
 in [Tutorial 10](https://github.com/adkelley/javascript-to-purescript/tree/master/tut10).  Like `map`, the two operations within
 the `Traversable` class allow us to transform the elements within the Functor.  Moreover, like `Foldable`, we accumulate the results and effects of this transformation function along the way into an `Applicative Functor`.
 
-For a simple example, imagine you have an array of string elements that you wish to parse, but one or more of these elements may be invalid.  The function signature is, `parseStrings :: Array String -> Array (Maybe String)`, where the `Maybe` type constructor represents the possibility of a valid or invalid string.  If this is what we want, then the `map` operation suffices - `map (\x -> Maybe x) (Array String) = Array (Maybe String)`  However, what if we want  `parseStrings`  to signal a failure whenever it encounters an invalid string within the array? In this case, our type signature becomes `parseStrings :: Array String -> Maybe (Array String)`.  Unfortunately `map` is not up to this task; therefore, we rely on one of the member functions from the `Traversable` class to help complete this job.
+For a simple example, imagine you have an array of string elements that you wish to parse, but one or more of these elements may be invalid.  The function signature is `parseStrings :: Array String -> Array (Maybe String)`, where the `Maybe` type constructor represents the possibility of a valid or invalid string.  If this is what we want, then the `map` operation suffices - `map (\x -> Maybe x) (Array String) = Array (Maybe String)`  However, what if we want  `parseStrings`  to signal a failure whenever it encounters an invalid string within the array? In this case, our type signature becomes `parseStrings :: Array String -> Maybe (Array String)`.  Unfortunately `map` is not up to this task; therefore, we rely on one of the member functions from the `Traversable` class to help complete this job.
 
 
 ### Member functions
@@ -91,7 +91,7 @@ Now, with the `sequence` and `traverse` operations in our back pocket, let's mov
 
 ## Example
 
-In Brian's video, we lean on our `Task` module (see [Tutorial 13](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13)) once again to read multiple files asynchronously, wrapping each file in a Task:
+In Brian's [video](https://egghead.io/lessons/javascript-leapfrogging-types-with-traversable), we lean on our `Task` module (see [Tutorial 13](https://github.com/adkelley/javascript-to-purescript/tree/master/tut13)) once again to read multiple files asynchronously, wrapping each file in a Task:
 
     const fs = require('fs')
     const Task = require('data.task')

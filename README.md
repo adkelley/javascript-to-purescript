@@ -41,9 +41,9 @@ You can skip this section if you've already installed and are using version 0.13
 ### Install PureScript and its supporting actors
 In earlier versions of this tutorial, I recommended you use [Bower](https://bower.io) as your package manager.  In fact, this is the recommendation given in [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/).  Bower is useful, thanks to its flat dependency graph, and easy to use. However, its inability to restrict libraries that work with a specific compiler version of PureScript can cause problems for beginners.  Especially during the early stages of a release of the compiler when libraries, tooling, and documentation are still catching up.  
 
- Instead, I recommend you use PureScript's own `Psc-Package` manager. The installation and usage are just as simple using Bower, so I see no good reason to use Bower when it is not necessary.  Assuming you already have npm running on your machine, here's how to install PureScript, Pulp, and Psc-Package.  As of this writing, I recommend you use the 0.13.2 version of the compiler.  Before executing the following command, be sure you have the latest [npm](https://www.npmjs.com/) package manager and [node](https://nodejs.org/en/) installed.
+ Instead, I recommend you use PureScript's own `Psc-Package` manager. The installation and usage are just as simple using Bower, so I see no good reason to use Bower when it is not necessary.  Assuming you already have npm running on your machine, here's how to install PureScript, Pulp, and Psc-Package.  As of this writing, I recommend you use the 0.13.3 version of the compiler.  Before executing the following command, be sure you have the latest [npm](https://www.npmjs.com/) package manager and [node](https://nodejs.org/en/) installed.
 ```
-npm i -g purescript@0.13.2 pulp psc-package bower rimraf
+npm i -g purescript@0.13.3 pulp psc-package bower rimraf
 ```
 You can check that these work by trying some commands:
 ```
