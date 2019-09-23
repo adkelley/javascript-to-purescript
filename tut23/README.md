@@ -24,7 +24,7 @@ You’ll find the text and code examples for this tutorial on [Github](https://g
 
 From the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22/), we learned that the two member functions belonging to the `Traversable` class are `sequence` and `traverse`.  First, the `sequence` function commutes two types `T1 (T2 a)` to `T2 (T1 a)`.
 
-For example, imagine we want to turn an `Array` of `String` into an `Array` of `Maybe (String)`, followed by commuting these structures to obtain `Maybe (Array String)`.  The rationale for invertnig these types is to signal the overall success (i.e., `Just (Array String)`) or failure (i.e., `Nothing`) in transforming each of the string elements.  This way, if this function is part of a chain of functions then, in case of `Nothing` the computation chain halts and we handle the error subsequently.  Using `map` and `sequence` the approach is:
+For example, imagine we want to turn an `Array` of `String` into an `Array` of `Maybe (String)`, followed by commuting these structures to obtain `Maybe (Array String)`.  The rationale for inverting these types is to signal the overall success (i.e., `Just (Array String)`) or failure (i.e., `Nothing`) in transforming each of the string elements.  This way, if this function is part of a chain of functions then, in case of `Nothing` the computation chain halts and we handle the error subsequently.  Using `map` and `sequence` the approach is:
 
 -   First our mapping function: `map (\s -> Maybe String) (Array String)`, which results in `Array (Maybe String)`
 -   Next, our `sequence` function: `sequence Array (Maybe String)`, which results in `Maybe (Array String)`
