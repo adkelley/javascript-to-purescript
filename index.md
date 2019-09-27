@@ -33,3 +33,4 @@
 * [21 - Write applicatives for concurrent actions](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21/README.md)
 * [22 - Leapfrogging types with traversable](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22/README.md)
 * [23 - Maintaining structure whilst asyncing](https://github.com/adkelley/javascript-to-purescript/tree/master/tut23/README.md)
+* [24 - Principled type conversions with Natural Transformations](https://github.com/adkelley/javascript-to-purescript/tree/master/tut24/README.md)

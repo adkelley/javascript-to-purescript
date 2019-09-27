@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-month. So come back often, there is a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 17](https://github.com/adkelley/javascript-to-purescript/tree/master/tut17) | [>> Tutorial 19](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19) [>>> Tutorial 23](https://github.com/adkelley/javascript-to-purescript/tree/master/tut23)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 17](https://github.com/adkelley/javascript-to-purescript/tree/master/tut17) | [>> Tutorial 19](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19) [>>> Tutorial 24](https://github.com/adkelley/javascript-to-purescript/tree/master/tut24)
 
 In this tutorial, I'm going to show how you can apply a function to multiple functor arguments by using the Applicative Functor.  In essence, this type class extends the `map` operation from the Functor class to enable function application to more than just one functor value.  It can also lift functions of zero arguments and values into a functorial type constructor.  So you can think of Applicative as having a couple more superpowers over Functor.
 
