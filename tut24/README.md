@@ -1,3 +1,5 @@
+
+
 # Principled type conversions with Natural Transformations
 
 [series banner](../resources/glitched-abstract.jpg)
@@ -9,7 +11,7 @@
 > 
 > [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 23](https:github.com/adkelley/javascript-to-purescript/tree/master/tut23)
 
-In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22/), we wrapped up our look at the `Traversable` type class with an example of how to process a sequence of `HTTP GET` requests using the member function `traverse`. Now, we'll move on to natural transformations in functional programming - what they are and the laws they must obey.  Then, in the next tutorial, we'll show that natural transformations are beneficial in everyday programming.
+In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22/), we wrapped up our look at the `Traversable` type class with an example of how to process a sequence of `HTTP GET` requests using the member function `traverse`. Now, we'll move on to natural transformations in functional programming - what they are and the laws they must obey.  Then, in the next tutorial, we'll show how natural transformations come in handy during everyday programming.
 
 I borrowed this series outline, and the JavaScript code samples with permission from the egghead.io course Professor Frisby Introduces Composable Functional JavaScript by
 Brian Lonsdorf — thank you, Brian! A fundamental assumption is that you've watched his [video](https://egghead.io/lessons/javascript-principled-type-conversions-with-natural-transformations) on the topic before tackling the equivalent PureScript abstraction
@@ -20,19 +22,27 @@ You'll find the text and code examples for this tutorial on [Github](https://git
 
 ## Natural Transformations
 
-As Brian mentions in his [video](https://egghead.io/lessons/javascript-principled-type-conversions-with-natural-transformations), a simple explanation of a natural transformation is that its a type conversion. It takes one functor holding an `a` to another functor holding that same `a`.  You can think of it as a change in data constructors `F a -> G a`.
-
-Let's implement a natural transformation by turning an `Either`  data constructor into a `Task` data constructor.
+As Brian mentions in his [video](https://egghead.io/lessons/javascript-principled-type-conversions-with-natural-transformations), a simple explanation of a natural transformation is that its a type conversion. It takes one functor holding an element `a` to another functor holding that same `a`.  You can think of it as a change in data constructors `F a -> G a`.  Let's implement a natural transformation by turning an `Either`  data constructor into a `Task` data constructor.
 
 
 ## Example: Transforming Either to a Task
 
-Recall from [Tutorial 3](https://github.com/adkelley/javascript-to-purescript/blob/master/tut03/README.md) that `Either` is used to express a computation that may or may not succeed.  `Either a b` always contains a value of `a` or `b`; defined by the constructors `Left a` or `Right b`, but never both at the same time.  `Right b` is the idiomatic designation of a successful computation, while `Left a` means a failed computation.  We naturally transform `Either` to a `Task` by mapping `Left a` to `taskRejected` and `Right b` to `taskOf`.  Let's create this natural transformation `eitherToTask` with the following JavaScript code:
+Recall from [Tutorial 3](https://github.com/adkelley/javascript-to-purescript/blob/master/tut03/README.md) that `Either` is used to express a computation that may or may not succeed.  `Either a b` always contains a value of `a` or `b`; defined by the constructors `Left a` or `Right b`, but never both at the same time.  `Right b` is the idiomatic designation of a successful computation, while `Left a` means a failed computation.  We naturally transform `Either` to a `Task` by mapping `Left a` to `taskRejected` and `Right b` to `taskOf`.
+
+Let's create this natural transformation `eitherToTask` with the following JavaScript code:
 
     const eitherToTask = e =>
       e.fold(Task.rejected, Task.of)
+    
+    eitherToTask(Right('nightingale')
+    .fork(e => console.error('err', e),
+          r => console.log('res', r))
+    
+    eitherToTask(Left('errrrr'))
+    .fork(e => console.error('err', e),
+          r => console.log('res', r))
 
-In PureScript, the equivalent to `e.fold` is the `either` function from the [Data.Either](https://pursuit.purescript.org/packages/purescript-either/4.1.1/docs/Data.Either#v:either) module.  Using [point free style](https://en.wikipedia.org/wiki/Tacit_programming), the equivalent function in PureScript is:
+In PureScript, the equivalent to `e.fold` is the `either` function from the [Data.Either](https://pursuit.purescript.org/packages/purescript-either/4.1.1/docs/Data.Either#v:either) module.  Using [point free style](https://en.wikipedia.org/wiki/Tacit_programming), the equivalent code in PureScript is:
 
     type Either = String
     
@@ -40,12 +50,12 @@ In PureScript, the equivalent to `e.fold` is the `either` function from the [Dat
     eitherToTask = either (\e -> taskRejected e) (\a -> taskOf a)
     
     main :: Effect Unit
-    main = do
       void $ launchAff $
         eitherToTask (Right "Nightingale") #
-        fork (\e -> Console.error $ "Error: " <> e) (\s -> Console.log $ "Result: " <> s)
+        fork (\e -> Console.error $ "Error: " <> e)
+             (\s -> Console.log $ "Result: " <> s)
 
-With the help of a type alias, we designate our `Error` type to be a `String`.  Logging this to the console we get `Result: Nightengale`. Calling `eitherToTask` with a `(Left "errrrr")` argument will `console.error` the string `Error: errrrr`.
+With the help of a type alias, we designate our `Error` type to be a `String`.  Calling `eitherToTask` with `(Right "Nightingale")` and logging to the console we get `Result: Nightengale~`. Calling `eitherToTask` with a `(Left "errrrr")` argument will `console.error` the string `Error: errrrr`.
 
 Now, let's try another example using our old friend `Box` from [Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02).
 
@@ -59,14 +69,20 @@ First, Brian's example in JavaScript:
     
     const res = boxToEither(Box(100))
 
-The equivalent in PureScript is:
+Similarly in PureScript:
 
     type Error = String
     
     boxToEither :: forall b. Box b -> Either Error b
     boxToEither (Box b) = Right b
+    
+    main :: Effect Unit
+    main = do
+      Console.logShow $ boxToEither $ Box 100
 
-Compared to the JavaScript example, notice that we don't provide a fold operation in our PureScript code. Instead, we leverage Purescript's pattern matching capabilities to take our `b` from `Box` and put it into `Either`'s `Right` directly.  If you try compiling `boxToEither (Box b)  = Left b`, you'll get an error.  Why? Look at `boxToEither`'s type signature: `forall b. Box b -> Either Error b`.  We see that when `Box b` is transformed, our `b` is defined by the `Right b` constructor.  If the compiler permitted us to chose `Left b`, then it would be invalid because it violates the laws of natural transformations, described below.
+Compared to the JavaScript example, notice that we don't provide a fold operation in our PureScript code. Instead, we leverage Purescript's pattern matching capabilities to take our `b` from `Box` and put it into `Either`'s `Right` constructor directly.
+
+If you try compiling `boxToEither (Box b)  = Left b`, you'll get an error.  Why? Look at `boxToEither`'s type signature: `forall b. Box b -> Either Error b`.  We see that when `Box b` is transformed, our `b` is defined by the `Right b` constructor.  If the compiler permitted us to chose `Left b`, then it would be invalid because it violates the laws of natural transformations, described below.
 
 
 ## Natural Transformation Laws
@@ -83,7 +99,7 @@ The commutative diagram below helps to visualize the natural transformation laws
 
 ![img](../resources/natural_transformation.png)
 
-If we have an element `a` contained within the functor `F` and we map over it with a function `map (a -> b)`, then we obtain `F b`.  Furthermore, if we apply the natural transformation `nt` to `F b`, we get `G b`.  Going the other way, if instead we first apply the natural transformation `nt` to `F a` to obtain `G a`, then we map over it with the same function `(a -> b)` we reach the same result `G b`.
+If we have an element `a,` contained within the functor `F` and we map over it with a function `map (a -> b)`, then we obtain `F b`.  Furthermore, if we apply the natural transformation `nt` to `F b`, we get `G b`.  Going the other way, if instead we first apply the natural transformation `nt` to `F a` to obtain `G a`, then we map over it with the same function `(a -> b)` we reach the same result `G b`.
 
 
 ### Testing for a natural transformation
@@ -110,12 +126,12 @@ When we log the results of both functions, the console output is `Right 200`, co
     res4 :: Maybe Int
     res4 = head $ (\x -> x + 1) <$> [1, 2, 3]
 
-The `head` function gets the first `a` element in an array, returning `Just a` or `Nothing` when the array is empty.  Here again, logging the result to the console produces: `Just 2` for both functions.  Whenever the array is empty, then both functions return `Nothing`.
+The function `head,` gets the first element `a` from an array, returning `Just a` or `Nothing` when the array is empty.  Here again, logging the result to the console produces: `Just 2` for both functions.  Whenever the array is empty, then both functions return `Nothing`.
 
 
 ## Summary
 
-In this tutorial, we looked at a natural transformation - what it is, and what laws it obeys.  A simple explanation of a natural transformation is that it is a type conversion. It takes one functor holding an `a` to another functor holding that same `a`.  You can think of it as a data constructor change `F a -> G a`.  Digging further, we find that natural transformations obey the law of commutativity.  Such that `map (a -> b) -> nt a -> nt b == nt $ map (a -> b) -> F a -> F b`, where `nt` is a natural transformation from the functor `F` to a functor `G`.
+In this tutorial, we looked at a natural transformation - what it is, and what laws it obeys.  A simple explanation of a natural transformation is that it is a type conversion. It takes one functor holding an element `a`, to another functor holding that same `a`.  You can think of it as a data constructor change `F a -> G a`.  Delving further, we find that natural transformations obey the law of commutativity.  Such that `map (a -> b) -> nt a -> nt b == nt $ map (a -> b) -> F a -> F b`, where `nt` is a natural transformation from the functor `F` to a functor `G`.
 
 In the next tutorial, we'll continue with natural transformations by looking at examples of where they come in handy. That's all for now.   If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on social media.  Till next time!
 
