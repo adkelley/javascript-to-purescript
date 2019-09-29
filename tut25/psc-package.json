@@ -9,6 +9,8 @@
     "prelude",
     "lists",
     "arrays",
-    "strings"
+    "strings",
+    "transformers",
+    "aff"
   ]
 }
