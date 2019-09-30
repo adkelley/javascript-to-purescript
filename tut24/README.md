@@ -44,7 +44,7 @@ Let's create this natural transformation `eitherToTask` with the following JavaS
 
 In PureScript, the equivalent to `e.fold` is the `either` function from the [Data.Either](https://pursuit.purescript.org/packages/purescript-either/4.1.1/docs/Data.Either#v:either) module.  Using [point free style](https://en.wikipedia.org/wiki/Tacit_programming), the equivalent code in PureScript is:
 
-    type Either = String
+    type Error = String
     
     eitherToTask :: forall a. Either Error a -> TaskE Error a
     eitherToTask = either (\e -> taskRejected e) (\a -> taskOf a)
