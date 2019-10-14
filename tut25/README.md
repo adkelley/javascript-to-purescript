@@ -2,7 +2,7 @@
 
 # Apply Natural Transformations in everyday work
 
-[series banner](../resources/glitched-abstract.jpg)
+![series banner](../resources/glitched-abstract.jpg)
 
 > **Note: This is** **Tutorial 24** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
@@ -44,9 +44,9 @@ PureScript’s `Array` has an instance of `bind` (infix operator `>==`), which i
 It converts any `Foldable` structure into `Array`.  For example:
 
     fromFoldable (Just 1) = [1]
-    fromFodable (Nothing) = []
+    fromFoldable (Nothing) = []
 
-Notice the `~>` in `fromFoldable`'s type signature.  It is the infix operator for `NaturalTransformation`, and its a signal to not only the compiler, but to anyone reading your code that this function will perform a natural transformation. With that explanation, let's see how we can convert a list of words to characters in PureScript:
+Notice the `~>` in `fromFoldable`'s type signature.  It is the infix operator for `NaturalTransformation`, and its a signal to not only the compiler but to anyone reading your code that this function will perform a natural transformation. With that explanation, let's see how we can convert a list of words to characters in PureScript:
 
     import Data.Array (fromFoldable) as A
     import Data.List (fromFoldable)
@@ -61,7 +61,7 @@ Notice the `~>` in `fromFoldable`'s type signature.  It is the infix operator fo
       logShow $ fromFoldable $
          (A.fromFoldable wordList) >>= \x -> split (Pattern "") x
 
-In `main`, working from right to left, the steps are as follows:  1. transform `wordList` into an array using `Data.Array.fromFoldable`; 2. perform the split into characters by binding the array with `split`;  Step 3.  transform `Array` back to `List ~ with ~Data.List.fromFoldable`.
+In `main`, working from right to left, the steps are as follows:  1. transform `wordList` into an array using `Data.Array.fromFoldable`; 2. perform the split into characters by binding the array with `split`;  3. transform `Array` back to `List ~ with ~Data.List.fromFoldable`.
 
 
 ## Case 2: Accessing arbitrary elements within a foldable structure
@@ -161,7 +161,7 @@ Much better!  Our `eitherToTask` found their ids and returned the right results 
 
 ## Summary
 
-In this tutorial, we covered three use cases for using natural transformations in our everyday code.  The first case showed how natural transformations could be used to transform a data structure to match the type required by a function.  In the example, we showed how a `List` is naturally transformed into an `Array` using `Data.Array.fromFoldable`.  The second example focused on turning the first element of an `Array` into a `Maybe` type constructor. This transformation is useful in cases where the `Array` may be empty, and we’re looking for safety.  Finally, we showed how to naturally transform a composition of multiple database queries in order to bind them together more efficiently.  This approach avoids nested map functions and leads to more readable code.
+In this tutorial, we covered three use cases for using natural transformations in our everyday code.  The first case showed how natural transformations could be used to transform a data structure to match the type required by a function.  In the example, we showed how a `List` is naturally transformed into an `Array` using `Data.Array.fromFoldable`.  The second example focused on turning the first element of an `Array` into a `Maybe` type constructor. This transformation is useful in cases where the `Array` may be empty, and we’re looking for safety.  Finally, we showed how to naturally transform a composition of multiple database queries in order to bind them together more efficiently.  This approach avoids nested map functions and leads to a correct solution and more readable code.
 
 In the next tutorial, we’ll move onto a new topic - isomorphisms and round trip data transformations. That’s all for now.   If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on social media.  Till next time!
 

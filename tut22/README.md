@@ -2,7 +2,7 @@
 
 # Leapfrogging types with Traversable
 
-[series banner](../resources/glitched-abstract.jpg)
+![series banner](../resources/glitched-abstract.jpg)
 
 > **Note: This is** **Tutorial 22** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
