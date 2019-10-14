@@ -3,7 +3,7 @@ module Main where
 import Prelude
 import Effect (Effect)
 import Effect.Console (log)
-import Effect.Exception (catchException, error, message, throwException)
+import Effect.Exception (Error, catchException, error, message, throwException)
 import Effect.Random (randomInt)
 
 type PortRange = { min :: Int, max :: Int }
@@ -27,6 +27,7 @@ catchWhenBadPort :: Int -> Effect Unit
 catchWhenBadPort portNumber =
   catchException printException $ throwWhenBadPort portNumber
   where
+    printException :: Error -> Effect Unit
     printException e = log $ message e
 
 main :: Effect Unit

@@ -2,7 +2,7 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Task (TaskE, fork, newTask, rej, res, taskRejected, taskOf)
+import Control.Monad.Task (TaskE, fork, taskRejected, taskOf)
 import Data.Array (fromFoldable, filter, head) as A
 import Data.Either (Either(..), either)
 import Data.List (List(..), fromFoldable, (:))
@@ -17,11 +17,14 @@ type Error = String
 type ID = Int
 type User = { id :: ID
             , name :: String
-            , best_friend_id :: ID
+            , bestFriendId :: ID
             }
 
 wordList :: List String
 wordList = ("hello" : "world" : Nil)
+
+wordArray :: Array String
+wordArray = ["hello", "world"]
 
 numbers :: Array Int
 numbers = [2, 400, 5, 1000]
@@ -35,8 +38,11 @@ larger = \x -> x * 2
 eitherToTask :: forall a. Either Error a -> TaskE Error a
 eitherToTask = either (\e -> taskRejected e) (\a -> taskOf a)
 
-fake :: Int -> User
-fake x = { id: x, name: "user1", best_friend_id: (x + 1)}
+notFound :: User
+notFound = {id: -1, name: "notFound", bestFriendId: -1}
+
+fake :: ID -> User
+fake x = { id: x, name: "user" <> (show x), bestFriendId: (x + 1)}
 
 dbFind :: ID -> TaskE Error (Either Error User)
 dbFind id =
@@ -49,21 +55,33 @@ dbFind id =
   in
      taskOf $ query id
 
-
 main :: Effect Unit
 main = do
   log "Tutorial 25: Apply Natural Transformations in everyday work"
 
-  log "\nSplit on characters"
+  log "\nSplit on characters from a word Array"
+  logShow $ wordArray >>= \x -> split (Pattern "") x
+
+  log "\nSplit on characters from a word List"
   logShow $ fromFoldable $
      (A.fromFoldable wordList) >>= \x -> split (Pattern "") x
 
   log "\nProve that head is a natural transformation"
-  log $ (show $ A.head $ larger <$> (largeNumbers numbers)) <> " == "
-    <>  (show $ larger <$> A.head (largeNumbers numbers))
+  log $ (show $ larger <$> A.head (largeNumbers numbers)) <> " == "
+    <> (show $ A.head $ larger <$> (largeNumbers numbers))
 
   void $ launchAff $
-    let s = "\ndbFind(): "
+    let
+      s = "\nFind best friend record (no natural transformations): "
+      eitherUser = either (\_ -> notFound) identity
+      user = \x -> map eitherUser (dbFind x)
+      bestFriend = user 3 >>= \x -> user x.bestFriendId
+    in
+     bestFriend
+     # fork (\e -> Console.error $ s <> e) (\p -> Console.log (s <> (show p)))
+
+  void $ launchAff $
+    let s = "\nFind best friend record (natural transformations): "
     in do
-     (dbFind 3) >>= eitherToTask >>= \user -> (dbFind user.best_friend_id) >>= eitherToTask
+     (dbFind 3) >>= eitherToTask >>= \user -> (dbFind user.bestFriendId) >>= eitherToTask
      # fork (\e -> Console.error $ s <> e) (\p -> Console.log (s <> (show p)))
