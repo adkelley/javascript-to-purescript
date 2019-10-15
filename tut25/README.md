@@ -9,7 +9,7 @@
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
 > 
-> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 23](https:github.com/adkelley/javascript-to-purescript/tree/master/tut23)
+> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 24](https:github.com/adkelley/javascript-to-purescript/tree/master/tut24)
 
 In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22/), we began looking at natural transformations in functional programming - what they are and their laws.  In this tutorial, we'll continue on this topic by showing how to leverage natural transformations within your code.  To review, a natural transformation is a function that takes a functor holding some `a` to another functor holding that `a` (i.e. `F a -> G a`).
 
