@@ -4,7 +4,7 @@
 
 ![series banner](../resources/glitched-abstract.jpg)
 
-> **Note: This is** **Tutorial 24** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
+> **Note: This is** **Tutorial 25** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
