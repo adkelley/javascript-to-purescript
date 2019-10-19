@@ -1,11 +1,14 @@
-!{
-  "name": "tut22",
-  "set": "psc-0.12.0",
+{
+  "name": "tut27",
+  "set": "psc-0.13.3",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
     "psci-support",
     "console",
     "effect",
-    "prelude"
+    "prelude",
+    "node-process",
+    "aff",
+    "transformers"
   ]
 }
