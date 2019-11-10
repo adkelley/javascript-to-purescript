@@ -11,6 +11,7 @@
     "aff",
     "transformers",
     "node-http",
-    "simple-json"
+    "simple-json",
+    "functions"
   ]
 }
