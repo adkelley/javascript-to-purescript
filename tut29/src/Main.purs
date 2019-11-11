@@ -33,9 +33,11 @@ main = do
     async :: Async Unit -> IO
     async = flip runContT pure
 
-    inCommon :: Array String -> Array String
-    inCommon related = nubEq $ difference related $ nubEq related
+    inCommon :: Array String -> Array String -> Array String
+    inCommon duplicates unique = nubEq $ difference duplicates unique
 
     mkTuple :: Array String -> Tuple Int (Array String)
     mkTuple related =
-      (length related) /\ (inCommon related)
+      (length unique) /\ (inCommon related unique)
+      where
+        unique = nubEq related
