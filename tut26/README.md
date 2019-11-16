@@ -1,4 +1,8 @@
-[series banner](../resources/glitched-abstract.jpg)
+
+
+# Isomorphisms and round trip data transformations
+
+![series banner](../resources/glitched-abstract.jpg)
 
 > **Note: This is** **Tutorial 26** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
@@ -16,7 +20,7 @@ featured in this tutorial. Brian covers the featured concepts exceptionally well
 You'll find the text and code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut26/).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request.  Also, before leaving, please give it a star to help me publicize these tutorials.
 
 
-# What is an Isomorphism?
+## What is an Isomorphism?
 
 An Isomorphism is a set of two functions `from` and `to` such that composing them together is the same as doing nothing.  That is:
 
@@ -32,7 +36,7 @@ We see from above that the result of these compositions is the same as applying 
 ![img](../resources/tut26-isomorphism.png)
 
 
-# Constructing the Isomorphism type constructor
+## Constructing the Isomorphism type constructor
 
 In Brian's example, he constructed the isomorphism that takes a `to` and a `from` into a type with the following javascript:
 
@@ -85,7 +89,7 @@ From the above, similar to the JavaScript example, our `Iso a b` is constructed 
     true
 
 
-# Why are isomorphisms useful?
+## Why are isomorphisms useful?
 
 Isomorphisms are utilized in everyday programming because they make additional methods available to our types. For example, using our `chars` isomorphism from above, we're essentially making javascript's applicable array methods available to any string by turning it into an array of characters. Then, after applying one or more array methods, we turn it right back into a string.  For example, imagine we want to truncate the first three characters of a string and concatenate `"..."` to its tail. By using an isomorphism, we can take advantage of the array methods `slice` and `concat` to accomplish this task:
 
@@ -130,7 +134,7 @@ Testing our filter in the REPL produces the following results:
     (Left "")
 
 
-# Summary
+## Summary
 
 In this tutorial, we covered isomorphisms and delved into a couple of use cases in everyday coding. Like many concepts in functional programming, isomorphisms come directly from category theory.  So if you're interested in learning more about their properties, then I highly recommend you look at Bartosz Milewski's [blog](https://bartoszmilewski.com/2015/04/07/natural-transformations/) or [video](https://www.youtube.com/watch?v=2LJC-XD5Ffo) on this topic; but also category theory in general. In the next tutorial, we'll embark on the first of the final three posts in this series that ultimately finds common ground between two music artists using the [Spotify API](https://developer.spotify.com/console/).  If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on social media.  Until next time.
 
