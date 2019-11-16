@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I will be publishing a new tutorial approximately*
 > *once-per-month. So come back often, there is a lot more to come!*
 
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript/tree/blob/master/README.md) [< Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02) | [Tutorial 4 - Part 1 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1) [>> Tutorial 25](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript/tree/blob/master/README.md) [< Tutorial 2](https://github.com/adkelley/javascript-to-purescript/tree/master/tut02) | [Tutorial 4 - Part 1 >](https://github.com/adkelley/javascript-to-purescript/tree/master/tut04P1) [>> Tutorial 26](https://github.com/adkelley/javascript-to-purescript/tree/master/tut26)
 
 The series outline and javascript code samples were borrowed with permission from the egghead.io course 
 [Brian Lonsdorf](https://github.com/DrBoolean) - thank you, Brian! A fundamental assumption of each tutorial is that you've watched his video before tackling the equivalent PureScript abstraction featured in this tutorial.  Brian covers the featured concepts extremely well, and I feel it's better that you understand its implementation in the comfort of JavaScript.  

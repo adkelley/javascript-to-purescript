@@ -7,7 +7,7 @@
 > *compilation, & running of PureScript. I’ll be publishing a new tutorial approximately*
 > *once-per-month. So come back often, there’s a lot more to come!*
 
-> [Index](https://github.com/adkeelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 19](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19) | [Tutorial 25 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25)
+> [Index](https://github.com/adkeelley/javascript-to-purescript/tree/master/index.md) | [<< Introduction](https://github.com/adkelley/javascript-to-purescript) [< Tutorial 19](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19) | [Tutorial 26 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut26)
 
 In the last tutorial, I introduced our first practical example of an Applicative Functor for getting a web page's screen height from the DOM.  In this tutorial, we'll continue covering them with another example that captures the pattern of nested loops in your imperative code when constructing list comprehensions. For a quick review of applicative functors, please read my [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut19).  Alternatively, if you are new to the Applicative, then please start with [tutorial 18](https://github.com/adkelley/javascript-to-purescript/tree/master/tut18).
 

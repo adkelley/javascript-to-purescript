@@ -1,5 +1,3 @@
-
-
 # Leapfrogging types with Traversable
 
 ![series banner](../resources/glitched-abstract.jpg)
@@ -9,7 +7,7 @@
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
 > 
-> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 21](https:github.com/adkelley/javascript-to-purescript/tree/master/tut21) | [Tutorial 23 >](https:github.com/adkelley/javascript-to-purescript/tree/master/tut23) [Tutorial 25 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25)
+> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 21](https:github.com/adkelley/javascript-to-purescript/tree/master/tut21) | [Tutorial 23 >](https:github.com/adkelley/javascript-to-purescript/tree/master/tut23) [Tutorial 26 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut26)
 
 In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut21/), we concluded our extensive exploration of `Functor` type classes, by ending with the `Applicative Functor`. Now, in this tutorial, we'll look at a new type class that has a relationship with `Functor`, called `Traversable`.   Throughout our `Functor` exploration the transformation functions processed the elements within a `Functor` type class (using `map`, `apply` or `bind`) while preserving the structure of the original `Functor`. For example, `map (\x -> x + 1) [1, 2, 3]` takes the array `[1, 2, 3]` and returns a new array `[2, 3, 4]`, leaving the outer structure intact.  However, what if we what to change the original `Functor` to another type constructor?  For example, perhaps we want `Array String` to become \`Maybe (Array String)~ to reflect the overall success or failure of our transformation function.   That is the topic of this and the next tutorial - commuting two types, turning
 the these structures inside out.
