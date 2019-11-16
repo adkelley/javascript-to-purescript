@@ -2,7 +2,7 @@
 
 # Isomorphisms and round trip data transformations
 
-![series banner](../resources/glitched-abstract.jpg)
+[series banner](../resources/glitched-abstract.jpg)
 
 > **Note: This is** **Tutorial 26** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
@@ -11,7 +11,7 @@
 > 
 > [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 25](https:github.com/adkelley/javascript-to-purescript/tree/master/tut25)
 
-In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25/), we wrapped up natural transformations in functional programming.  In this tutorial, we'll move onto Isomorphisms and round trip transformations, which, spoiler alert, have nothing to do with running the same code on the client and server.
+In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25/), we wrapped up natural transformations in functional programming.  Now we'll move onto Isomorphisms and round trip transformations, which, spoiler alert, have nothing to do with running the same code on the client and server.
 
 I borrowed this series outline, and the JavaScript code samples with permission from the egghead.io course Professor Frisby Introduces Composable Functional JavaScript by
 Brian Lonsdorf — thank you, Brian! A fundamental assumption is that you've watched his [video](https://egghead.io/lessons/javascript-isomorphisms-and-round-trip-data-transformations) on the topic before tackling the equivalent PureScript abstraction
@@ -72,12 +72,12 @@ In purescript, we can construct a type for an Isomorphism with the following con
     from :: forall f g a b. Iso f g -> b -> a
     from = to <<< inverse
 
-The function `to` takes two arguments, the `Iso a b` type constructor, where `a` and `b` are functions, and the value `a` to be transformed.  Using PureScripts pattern matching, we match on the first function and use it to transform our `a` value.  The function `from` is similar, but in this case, we are transforming a `b` value to an `a` value.  Now, matching the JavaScript example above, let's use this isomorphism to turn a string into a list of characters.  First, we create our `Iso` type constructor:
+The function `to` takes two arguments, the `Iso a b` type constructor, where `a` and `b` are functions, and the value `a` to be transformed.  Using PureScripts pattern matching, we match on the first function `f` and use it to transform our `a` value.  The function `from` is similar, but in this case, we are transforming a `b` value to an `a` value.  Now, matching the JavaScript example above, let's use this isomorphism to turn a string into a list of characters.  First, we create our `Iso` type constructor:
 
     chars :: Iso String (Array String)
     chars = Iso (split (Pattern "")) (joinWith "")
 
-From the above, similar to the JavaScript example, our `Iso a b` is constructed using the `chars` function.  Thus, `to chars a`  transforms a string `a` into a character array, and `from chars b` takes a character array `b` and transforms it to a string.  Using purescript's REPL, we can test both sides to ensure we've constructed this isomorphism correctly:
+Our `Iso a b` is constructed using the `chars` function.  Thus, `to chars a` transforms a string `a` into a character array, and `from chars b` takes a character array `b` and transforms it into a string.  Using purescript's REPL, we can test both sides to ensure we've constructed this isomorphism correctly:
 
     pulp psci
     > import Main
@@ -91,7 +91,9 @@ From the above, similar to the JavaScript example, our `Iso a b` is constructed 
 
 ## Why are isomorphisms useful?
 
-Isomorphisms are utilized in everyday programming because they make additional methods available to our types. For example, using our `chars` isomorphism from above, we're essentially making javascript's applicable array methods available to any string by turning it into an array of characters. Then, after applying one or more array methods, we turn it right back into a string.  For example, imagine we want to truncate the first three characters of a string and concatenate `"..."` to its tail. By using an isomorphism, we can take advantage of the array methods `slice` and `concat` to accomplish this task:
+Isomorphisms are utilized in everyday programming because they make additional methods available to our types. For example, using our `chars` isomorphism from above, we're essentially making javascript's applicable array methods available to our string by turning it into an array of characters. Then, after applying one or more array methods, we turn it right back into a string.
+
+For our second example, imagine we want to truncate the first three characters of a string and concatenate `"..."` to its tail. By using an isomorphism, we can take advantage of the array methods `slice` and `concat` to accomplish this task:
 
     truncate :: String -> String
     truncate xs = from chars $ concat [slice 0 3 $ to chars xs, ["..."]]
@@ -109,8 +111,11 @@ Let's make another isomorphism that proves a singleton array of `String` (i.e., 
     first :: Array String -> Either String String
     first [] = Left ""
     first xs = Right $ fromMaybe "" $ head xs
+    
+    filterEither :: (String -> Boolean) -> Either String String -> Either String String
+    filterEither pred m = from single $ filter pred $ to single m
 
-Note that we're using `fromFoldable` from the `Data.Array` module to take our `Either` constructor and turn it into an array.  This natural transformation works because type constructors such as `Maybe` and `Either` are foldable and, therefore, can become an array.  Note that if our `Maybe` or `Either` value is `Nothing` or `Left e` respectively, then an empty array is returned.  By default, the function `head` from `Data.Array` returns a `Maybe` value, so we'll transform it to an `Either` constructor using a natural transformation (see [Tutorial 25](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25)). Now that we have our isomorphism, let's go ahead and test it in the REPL by turning our `Either` into an array so that we can later filter it using available array methods.
+We are using `fromFoldable` from the `Data.Array` module to take our `Either` constructor and turn it into an array.  Since type constructors such as Maybe and Either are foldable, this natural transformation (see [Tutorial 25](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25)) turns them into an array.  Note that if our `Maybe` or `Either` value is `Nothing` or `Left e` respectively, then an empty array is returned.  The function `head` from `Data.Array` returns a `Maybe` value, so we'll transform it to an `Either` constructor using a natural transformation. Now that we have our isomorphism, let's go ahead and test it in the REPL by turning our `Either` into an array so that we can later filter it using available array methods.
 
     pulp psci
     > import Main
@@ -119,9 +124,6 @@ Note that we're using `fromFoldable` from the `Data.Array` module to take our `E
     ["Hello"]
     > from single ["Hello"]
     (Right "Hello")
-
-    filterEither :: (String -> Boolean) -> Either String String -> Either String String
-    filterEither pred m = from single $ filter pred $ to single m
 
 Testing our filter in the REPL produces the following results:
 
@@ -136,5 +138,5 @@ Testing our filter in the REPL produces the following results:
 
 ## Summary
 
-In this tutorial, we covered isomorphisms and delved into a couple of use cases in everyday coding. Like many concepts in functional programming, isomorphisms come directly from category theory.  So if you're interested in learning more about their properties, then I highly recommend you look at Bartosz Milewski's [blog](https://bartoszmilewski.com/2015/04/07/natural-transformations/) or [video](https://www.youtube.com/watch?v=2LJC-XD5Ffo) on this topic; but also category theory in general. In the next tutorial, we'll embark on the first of the final three posts in this series that ultimately finds common ground between two music artists using the [Spotify API](https://developer.spotify.com/console/).  If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on social media.  Until next time.
+In this tutorial, we covered isomorphisms and delved into a couple of use cases in everyday coding. Like many concepts in functional programming, isomorphisms come directly from category theory.  So if you're interested in learning more about their properties, then I highly recommend you look at Bartosz Milewski's [blog](https://bartoszmilewski.com/2015/04/07/natural-transformations/) or [video](https://www.youtube.com/watch?v=2LJC-XD5Ffo) on this topic; but also category theory in general. In the next tutorial, we'll embark on the first of the final three posts in this series that ultimately finds common ground between two music artists using the [Spotify API](https://developer.spotify.com/console/).  If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on [social media](https://twitter.com/adkelley/status/1195818653138046976?s=20).  Until next time.
 
