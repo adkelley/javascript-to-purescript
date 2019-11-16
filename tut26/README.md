@@ -27,7 +27,7 @@ An Isomorphism is a set of two functions `from` and `to` such that composing the
     (from <<< to $ x) == (identity x)
     (to >>> from $ y) == (identity y)
 
-From above, we also see that the result of these compositions is the same as applying the identity function to the value.  You can also think of `from` and `to` as functions `f` and `g`, so that more formally:
+We see from above that the result of these compositions is the same as applying the identity function.  You can also think of `from` and `to` as functions `f` and `g`, so that more formally:
 
 ![img](../resources/tut26-isomorphism.png)
 
@@ -98,7 +98,7 @@ Isomorphisms are utilized in everyday programming because they make additional m
 
 Let's make another isomorphism that proves a singleton array of `String` (i.e., an array holding one string value) is isomorphic to `Either String String`. First, we determine our isomorphism, naming it `single`:
 
-    -- Input must be non-empty array or Just a
+    -- Input must be a non-empty array or Just a
     single ::Iso (Either String String) (Array String)
     single = Iso (fromFoldable) (first)
     
@@ -132,5 +132,5 @@ Testing our filter in the REPL produces the following results:
 
 # Summary
 
-In this tutorial, we covered isomorphisms and delved into a couple of use cases in everyday coding. Like many concepts in functional programming, isomorphisms come directly from category theory.  So if you're interested in learning more about their properties, then I highly recommend you look at Bartosz Milewski's [blog](https://bartoszmilewski.com/2015/04/07/natural-transformations/) or [video](https://www.youtube.com/watch?v=2LJC-XD5Ffo) on this topic; but also category theory in genneral. In the next tutorial, we'll embark on the first of the final three posts in this series that ultimately will find common ground between two music artists using the [Spotify API](https://developer.spotify.com/console/).  If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on social media.  Until next time.
+In this tutorial, we covered isomorphisms and delved into a couple of use cases in everyday coding. Like many concepts in functional programming, isomorphisms come directly from category theory.  So if you're interested in learning more about their properties, then I highly recommend you look at Bartosz Milewski's [blog](https://bartoszmilewski.com/2015/04/07/natural-transformations/) or [video](https://www.youtube.com/watch?v=2LJC-XD5Ffo) on this topic; but also category theory in general. In the next tutorial, we'll embark on the first of the final three posts in this series that ultimately finds common ground between two music artists using the [Spotify API](https://developer.spotify.com/console/).  If you are enjoying these tutorials, then please help me to tell others by recommending this article and favoring it on social media.  Until next time.
 
