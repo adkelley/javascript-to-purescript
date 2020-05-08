@@ -1,8 +1,7 @@
-/bower_components/
 /node_modules/
-/.pulp-cache/
+bower_components/
+.psci_modules/
+.purs-repl/
+.spago/
 /output/
-/.psc*
-/.psa*
 .DS_Store
-/tut03.003/

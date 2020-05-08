@@ -4,7 +4,7 @@
   "private": true,
   "version": "2.1.0",
   "scripts": {
-    "clean":   "rimraf output && rimraf .spago && rimraf .purs-repl",
+    "clean":   "rimraf output && rimraf .spago && rimraf .purs-repl && rimfaf .psci_modules",
     "install": "spago install",
     "build":   "spago build",
     "exec":    "spago run",
