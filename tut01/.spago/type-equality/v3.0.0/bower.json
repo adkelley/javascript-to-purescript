@@ -1,0 +1,22 @@
+{
+  "name": "purescript-type-equality",
+  "homepage": "https://github.com/purescript/purescript-invariant",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-type-equality.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "test",
+    "bower.json",
+    "package.json"
+  ],
+  "devDependencies": {
+    "purescript-console": "^4.0.0",
+    "purescript-newtype": "^3.0.0"
+  }
+}

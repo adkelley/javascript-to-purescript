@@ -4,6 +4,8 @@
 /output/
 /.psc*
 /.psa*
+/.spago/
+/.psci_modules/
 .DS_Store
 */README.oo3/
 */*.org
