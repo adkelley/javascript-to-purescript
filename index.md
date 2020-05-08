@@ -2,8 +2,8 @@
 
 ![series banner](resources/glitched-abstract.jpg)
 
-> *Note: This is the index to the “Make the Leap from JavaScript to PureScript” tutorial series. I’ll be*
-> *publishing a new tutorial approximately once-per-month So come back often, there’s a lot more of this to come!
+> *Note: This is the index to the “Make the Leap from JavaScript to PureScript” tutorial series.
+> *These tutorial's are code complete, but with the READMEs for 27-29 still pending.
 >
 
 ## Index
@@ -34,3 +34,8 @@
 * [22 - Leapfrogging types with traversable](https://github.com/adkelley/javascript-to-purescript/tree/master/tut22/README.md)
 * [23 - Maintaining structure whilst asyncing](https://github.com/adkelley/javascript-to-purescript/tree/master/tut23/README.md)
 * [24 - Principled type conversions with Natural Transformations](https://github.com/adkelley/javascript-to-purescript/tree/master/tut24/README.md)
+* [25 - Apply Natural Transformations in everyday work](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25/README.md)
+* [26 - Isomorphisms and round trip data transformations](https://github.com/adkelley/javascript-to-purescript/tree/master/tut26/README.md)
+* [27 - Build a data flow for a real world app](https://github.com/adkelley/javascript-to-purescript/tree/master/tut27/README.md)
+* [28 - Retrieve and use data from an api with pure functional constructs](https://github.com/adkelley/javascript-to-purescript/tree/master/tut28/README.md)
+* [29 - Find the intersection of sets with Semigroups](https://github.com/adkelley/javascript-to-purescript/tree/master/tut29/README.md)
