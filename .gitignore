@@ -1,8 +1,8 @@
 /bower_components/
 /node_modules/
-/.purs-repl/
+*/.purs-repl/
 /output/
-/.spago/
+*/.spago
 /.psci_modules/
 .DS_Store
 */README.oo3/
