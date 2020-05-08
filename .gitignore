@@ -10,3 +10,5 @@
 *.org
 */src/Secret.purs
 */*.sketch
+test-build-log.txt
+spago-update-log.txt

@@ -3,7 +3,7 @@
 set -x
 rm ./spago-build-log.txt
 touch ./spago-build-log.txt
-for files in ./tut10/ ./tut11/ ./tut12/ ./tut13/ ./tut14/ ./tut15/ ./tut16/ ./tut16/. ./tut18/ ./tut19/ ./tut20/ ./tut21/ ./tut22/ ./tut23/ ./tut24/ ./tut25/ ./tut26/; do
+for files in ./tut27/ ./tut28/ ./tut29/; do
     cd $files
     cp ../tut01/package.json .
     cp ../tut01/.gitignore .
