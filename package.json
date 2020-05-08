@@ -1,9 +1,9 @@
 {
-  "name": "purescript_tutorials",
-  "version": "0.1.0",
-  "description": "See https://hackernoon.com/make-the-leap-from-javascript-to-purescript-5b35b1c06fef",
+  "name": "javascript-to-purescript",
+  "description": "Javascript to Purescript Tutorial Series. See https://medium.com/@kelleyalex/index-make-the-leap-from-javascript-to-purescript-a1566d657e9c",
+  "private": true,
   "scripts": {
-    "clean": "rm -rf */output */dist */.psc* */.pulp-cache */bower_components"
+    "clean":   "rimraf */output && rimraf */.spago && rimraf */.purs-repl && rimraf */.psci_modules"
   },
   "private": true,
   "author": [
