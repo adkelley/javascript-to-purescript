@@ -4,10 +4,10 @@
   "private": true,
   "version": "2.1.0",
   "scripts": {
-    "clean": "rimraf bower_components && rimraf output && rimraf .psc* && rimraf .pulp-cache",
+    "clean":   "rimraf output && rimraf .spago && rimraf .purs-repl",
     "install": "spago install",
-    "build": "spago build",
-    "exec": "spago run",
-    "all": "npm run clean && npm run install && npm run build && npm run exec"
+    "build":   "spago build",
+    "exec":    "spago run",
+    "all":     "npm run clean && npm run install && npm run build && npm run exec"
   }
 }
