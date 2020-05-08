@@ -1,6 +1,6 @@
 {
   "name": "javascript-to-purescript",
-  "description": "Javascript to Purescript Tutorial Series. See https://medium.com/@kelleyalex/index-make-the-leap-from-javascript-to-purescript-a1566d657e9c",
+  "description": "Javascript to Purescript Tutorial Series",
   "private": true,
   "version": "2.1.0",
   "scripts": {
