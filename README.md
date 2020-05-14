@@ -4,7 +4,7 @@
 
 > *Note: This is the introduction to the “Make the Leap from JavaScript to PureScript” tutorial series.*
 >
-> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/md) | [> Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) [>> Tutorial 26](https://github.com/adkelley/javascript-to-purescript/tree/master/tut26)
+> [Index](https://github.com/adkelley/javascript-to-purescript/tree/master/md) | [> Tutorial 1](https://github.com/adkelley/javascript-to-purescript/tree/master/tut01) [>> Tutorial 27](https://github.com/adkelley/javascript-to-purescript/tree/master/tut27)
 
 ## Introduction
 

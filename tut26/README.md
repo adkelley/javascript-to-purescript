@@ -7,7 +7,7 @@
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
 > 
-> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 25](https:github.com/adkelley/javascript-to-purescript/tree/master/tut25)
+> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 25](https:github.com/adkelley/javascript-to-purescript/tree/master/tut25) | [Tutorial 27 >>](https://github.com/adkelley/javascript-to-purescript/tree/master/tut27)
 
 In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25/), we wrapped up natural transformations in functional programming.  Now we'll move onto Isomorphisms and round trip transformations, which, spoiler alert, have nothing to do with running the same code on the client and server.  Isomorphisms are an important concept in functional programming because they allow methods belonging to one type to be made available to other types that are isomorphic.  The canonical example of two types that are isomorphic to one another is `String` and `Array String`.  For example, "hello" and ["h", "e", "l", "l", "o"], respectively.
 

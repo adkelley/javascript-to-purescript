@@ -7,7 +7,7 @@
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
 > 
-> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 24](https:github.com/adkelley/javascript-to-purescript/tree/master/tut24) [Tutorial 26 >>](https:github.com/adkelley/javascript-to-purescript/tree/master/tut26)
+> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 24](https:github.com/adkelley/javascript-to-purescript/tree/master/tut24) [Tutorial 27 >>](https:github.com/adkelley/javascript-to-purescript/tree/master/tut27)
 
 In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut24/), we began looking at natural transformations in functional programming - what they are and their laws.  In this tutorial, we'll continue on this topic by showing how to leverage natural transformations within your code.  To review, a natural transformation is a function that takes a functor holding some `a` to another functor holding that `a` (i.e. `F a -> G a`).
 
@@ -15,7 +15,7 @@ I borrowed this series outline, and the JavaScript code samples with permission 
 Brian Lonsdorf — thank you, Brian! A fundamental assumption is that you've watched his [video](https://egghead.io/lessons/javascript-applying-natural-transformations-in-everyday-work) on the topic before tackling the equivalent PureScript abstraction
 featured in this tutorial. Brian covers the featured concepts exceptionally well, and I feel it's better that you understand its implementation in the comfort of JavaScript.
 
-You'll find the text and code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut26).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request.  Also, before leaving, please give it a star to help me publicize these tutorials.
+You'll find the text and code examples for this tutorial on [Github](https://github.com/adkelley/javascript-to-purescript/tree/master/tut25).  If you read something that you feel could be explained better, or a code example that needs refactoring, then please let me know via a comment or send me a pull request.  Also, before leaving, please give it a star to help me publicize these tutorials.
 
 
 ## Case 1: When a function doesn’t support your type constructor

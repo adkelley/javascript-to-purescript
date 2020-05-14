@@ -1,0 +1,3 @@
+*.dhall linguist-detectable=false
+*.ps linguist-detectable=true
+*.js linguist-detectable=true

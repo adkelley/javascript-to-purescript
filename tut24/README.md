@@ -7,7 +7,7 @@
 > **compilation, & running of PureScript. I’ll be publishing a new tutorial approximately**
 > **once-per-month. So come back often, there’s a lot more to come!**
 > 
-> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 23](https:github.com/adkelley/javascript-to-purescript/tree/master/tut23) | [Tutorial 26 >>](https:github.com/adkelley/javascript-to-purescript/tree/master/tut26)
+> [Index](https:github.com/adkelley/javascript-to-purescript/tree/master/md) | [<< Introduction](https:github.com/adkelley/javascript-to-purescript) [< Tutorial 23](https:github.com/adkelley/javascript-to-purescript/tree/master/tut23) | [Tutorial 27 >>](https:github.com/adkelley/javascript-to-purescript/tree/master/tut27)
 
 In the [last tutorial](https://github.com/adkelley/javascript-to-purescript/tree/master/tut23/), we wrapped up our look at the `Traversable` type class with an example of how to process a sequence of `HTTP GET` requests using the member function `traverse`. Now, we'll move on to natural transformations in functional programming - what they are and the laws they must obey.  Then, in the next tutorial, we'll show how natural transformations come in handy during everyday programming.
 
