@@ -1,6 +1,6 @@
 # Build a data flow for a real-world app
 
-[series banner](../resources/glitched-abstract.jpg)
+![series banner](../resources/glitched-abstract.jpg)
 
 > **Note: This is** **Tutorial 27** **in the series** **Make the leap from JavaScript to PureScript**. Be sure
 > **to read the series introduction where we cover the goals & outline, and the installation,**
