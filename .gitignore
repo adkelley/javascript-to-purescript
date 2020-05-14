@@ -9,7 +9,7 @@
 */*.org
 *.org
 */src/Secret.purs
-*/*.sketch
+resources/*.sketch
 test-build-log.txt
 spago-update-log.txt
 */index.js
