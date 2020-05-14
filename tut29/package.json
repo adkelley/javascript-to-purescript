@@ -7,6 +7,7 @@
     "clean":   "rimraf output && rimraf .spago && rimraf .purs-repl && rimraf .psci_modules",
     "install": "spago install",
     "build":   "spago build",
+    "bundle":  "spago bundle-app --main Main --to index.js",
     "exec":    "spago run",
     "all":     "npm run clean && npm run install && npm run build && npm run exec"
   }

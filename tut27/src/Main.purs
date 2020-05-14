@@ -27,20 +27,20 @@ names =
       pure $
         if (length args > 0)
           then Right args
-          else Left "you must enter at least one name"
+          else Left "you must enter at least one artist"
   in
     newTask $ \callback -> do
       checkArgs >>= \args ->
         callback $ either (\e -> rej e) (\xs -> res xs) args
       pure $ nonCanceler
 
-findArtist :: String -> TaskE Error Artist
-findArtist name = taskOf name
+findArtist :: Artist -> TaskE Error Artist
+findArtist = taskOf
 
 relatedArtists :: Id -> TaskE Error RelatedArtists
-relatedArtists id = taskOf ["Oasis", "Blur"]
+relatedArtists _ = taskOf ["John Lennon", "Paul McCartney"]
 
-artistId :: Artist -> TaskE Error Int
+artistId :: Artist -> TaskE Error Id
 artistId _ = taskOf 10
 
 related :: String -> TaskE Error RelatedArtists

@@ -12,3 +12,4 @@
 */*.sketch
 test-build-log.txt
 spago-update-log.txt
+*/index.js
