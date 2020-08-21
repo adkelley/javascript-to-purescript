@@ -67,7 +67,7 @@ $ spago run
 
 ### My Favorite PureScript tools & references
 
-1. [PureScript by Example](https://leanpub.com/purescript/) by Phil Freeman, the author of the PureScript language.  Also, see the [dwhitney](https://github.com/dwhitney/purescript-book) fork, which updates the text and exercises to reflect 0.13.x.
+1. [PureScript by Example](https://book.purescript.org) is the official PureScript book, originally by Phil Freeman (the author of the PureScript language) and now maintained by the community.
 2. [Pursuit](https://pursuit.purescript.org) is the home of PureScript documentation; soon to become your best friend
 3. [Try PureScript](http://try.purescript.org/) allows you to try key examples of PureScript in the browser.  You can also create your own.
 4. psc-ide (distributed with the compiler) provides editor support, including [atom](https://github.com/nwolverson/atom-ide-purescript), [emacs]( https://github.com/epost/psc-ide-emacs), [vim](https://github.com/FrigoEU/psc-ide-vim), and [visual studio]( https://github.com/nwolverson/vscode-ide-purescript)
