@@ -7,11 +7,14 @@ You can edit this file as you like.
   [ "aff"
   , "console"
   , "effect"
+  , "either"
   , "exceptions"
+  , "node-buffer"
   , "node-fs"
-  , "node-fs-aff"
   , "prelude"
   , "psci-support"
+  , "strings"
+  , "transformers"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

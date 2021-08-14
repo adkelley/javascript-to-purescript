@@ -30,35 +30,23 @@ I've created a GitHub repository with the markdown versions of these stories (i.
 
 Each tutorial has been placed in a separate folder named 'tut##', where ## is a number (e.g., 'tut01') that corresponds to video## from Brian's [course](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript). There is the accompanying tutorial markdown (e.g., tut01/README.md)here, which illustrates the abstraction from Brian's corresponding video (e.g., video1) and how to implement it in PureScript.
 
-I have set up the folders so that you can run the PureScript code samples for the first time with `npm run all` then `npm run exec` from thereon. There's also individual scripts `npm run clean`, `npm run install`, `npm run build`, and `npm run exec`; used to clean, install, build, and execute the tutorial examples respectively. Naturally, this assumes you have the `npm` package manager installed. These scripts also depend on `rimraf` (the UNIX command `rm -rf` for node), and `Spago` (PureScript's package manager and build tool). I explain all of this below.
+I have set up the folders so that you can run the PureScript code samples for the first time with `npm install` which installs spago and purescript as dependencies.  Then type `npm run all` which will compile and run the source code.  Thereafter, type `npm run exec` to run it again. There's also individual scripts `npm run clean`, `npm run install`, `npm run build`, and `npm run exec`; used to clean, install, build, and execute the tutorial examples respectively. Naturally, this assumes you have the `npm` package manager installed. These scripts also depend on `rimraf` (the UNIX command `rm -rf` for node), and `Spago` (PureScript's package manager and build tool). I explain all of this below.
+
+### PureScript and its supporting actors
+The PureScript community has now settled on the [Spago](https://github.com/purescript/spago) package manager and build tool.  Spago is the recommendation given in [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/), which I recommend you read thoroughly before proceeding further. In my experience so far, Spago is a welcome addition to PureScript's tooling, providing a great UX, with minimal dependencies and reproducible builds.
 
 ## Get up and running in PureScript
-
-You can skip this section if you've already installed Spago and are using version 0.13.x PureScript on your computer.
-
-### Install PureScript and its supporting actors
-In earlier versions of this tutorial, I recommended that you use the `Psc-Package` package manager and, preceding that, [Bower](https://bower.io). You'll still see these artifacts in many PureScript modules.  But, as of this tutorial revision, the PureScript community has now settled on the [Spago](https://github.com/purescript/spago) package manager and build tool.  Spago is the recommendation given in [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/), which I recommend you read thoroughly before proceeding further. In my experience so far, Spago is a welcome addition to PureScript's tooling, providing a great UX, with minimal dependencies and reproducible builds.
-
-Assuming you already have npm running on your machine, here's how to install PureScript together with its development environment.   Before executing the following command, be sure you have the latest [npm](https://www.npmjs.com/) package manager and [node](https://nodejs.org/en/) installed.
-`"
-npm i -g purescript spago rimraf
-`"
-You can check that the installation was successful by trying these commands:
-`"
-spago version
-purs --version
-`"
+The `package.json` file in each of the tutorials includes `spago` and `purescript` as dev dependencies.  Therefore, there is no need to install them globally. At the time of this tutorial revision, the latest npm version of spago is `0.20.3` and purescript is `0.14.3`.
 
 ### Install  editor plugins
 There are plugins for most editors to support syntax highlighting, build support, REPL (Read, Evaluate, Print, Loop), and autocomplete. You'll find the information to install these plugins for your favorite editor [here](https://github.com/purescript/documentation/blob/master/ecosystem/Editor-and-tool-support.md).
 
 ### Run your first PureScript program
 
-Assuming you've installed PureScript and Spago, then it doesn't get any easier than this to start your adventure in functional programming with PureScript:
-
 `"
 $ mkdir purescript-hello
 $ cd purescript-hello
+$ npm i -D spago purescript
 $ spago init
 $ spago build
 $ spago run

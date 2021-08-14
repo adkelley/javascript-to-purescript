@@ -5,13 +5,13 @@ You can edit this file as you like.
 { name = "tut01"
 , dependencies =
   [ "console"
+  , "control"
   , "effect"
-  , "identity"
   , "integers"
+  , "maybe"
   , "prelude"
   , "psci-support"
   , "strings"
-  , "unsafe-coerce"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

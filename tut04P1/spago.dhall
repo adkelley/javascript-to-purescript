@@ -7,7 +7,6 @@ You can edit this file as you like.
   [ "console"
   , "effect"
   , "exceptions"
-  , "node-fs"
   , "prelude"
   , "psci-support"
   , "random"

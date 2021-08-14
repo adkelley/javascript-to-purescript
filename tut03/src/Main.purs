@@ -42,7 +42,7 @@ findColor colorName =
 
 
 hex :: Color -> HexValue
-hex (Color n h) = h
+hex (Color _ h) = h
 
 
 result :: ColorName -> String
@@ -50,7 +50,7 @@ result name =
   findColor name #
   map hex #
   map (slice 1 0) #
-  either (\e -> "No color") toUpper
+  either (\_ -> "No color") toUpper
 
 -- Bonus: This variation will make your head spin. It really shows the power of
 -- mapping and composition. All in one expression!  Thanks to @goodacre.liam on

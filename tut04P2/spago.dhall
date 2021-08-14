@@ -6,12 +6,16 @@ You can edit this file as you like.
 , dependencies =
   [ "console"
   , "effect"
+  , "either"
   , "exceptions"
   , "foreign"
+  , "lists"
+  , "node-buffer"
   , "node-fs"
   , "prelude"
   , "psci-support"
   , "simple-json"
+  , "transformers"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

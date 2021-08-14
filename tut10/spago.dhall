@@ -8,11 +8,12 @@ You can edit this file as you like.
   , "effect"
   , "foldable-traversable"
   , "group"
-  , "identity"
-  , "orders"
+  , "lists"
+  , "maybe"
+  , "newtype"
   , "prelude"
   , "psci-support"
-  , "test-unit"
+  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

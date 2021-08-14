@@ -4,10 +4,9 @@ You can edit this file as you like.
 -}
 { name = "tut07"
 , dependencies =
-  [ "arrays"
-  , "console"
+  [ "console"
   , "effect"
-  , "generics-rep"
+  , "foldable-traversable"
   , "lists"
   , "maybe"
   , "prelude"

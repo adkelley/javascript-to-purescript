@@ -4,13 +4,6 @@ Welcome to your new Dhall package-set!
 Below are instructions for how to edit this file for most use
 cases, so that you don't need to know Dhall to use it.
 
-## Warning: Don't Move This Top-Level Comment!
-
-Due to how `dhall format` currently works, this comment's
-instructions cannot appear near corresponding sections below
-because `dhall format` will delete the comment. However,
-it will not delete a top-level comment like this one.
-
 ## Use Cases
 
 Most will want to do one or both of these options:
@@ -31,28 +24,25 @@ Purpose:
     the package set's repo
 
 Syntax:
-Replace the overrides' "{=}" (an empty record) with the following idea
-The "//" or "⫽" means "merge these two records and
-  when they have the same value, use the one on the right:"
+where `entityName` is one of the following:
+- dependencies
+- repo
+- version
 -------------------------------
-let override =
-  { packageName =
-      upstream.packageName // { updateEntity1 = "new value", updateEntity2 = "new value" }
-  , packageName =
-      upstream.packageName // { version = "v4.0.0" }
-  , packageName =
-      upstream.packageName // { repo = "https://www.example.com/path/to/new/repo.git" }
-  }
+let upstream = --
+in  upstream
+  with packageName.entityName = "new value"
 -------------------------------
 
 Example:
 -------------------------------
-let overrides =
-  { halogen =
-      upstream.halogen // { version = "master" }
-  , halogen-vdom =
-      upstream.halogen-vdom // { version = "v4.0.0" }
-  }
+let upstream = --
+in  upstream
+  with halogen.version = "master"
+  with halogen.repo = "https://example.com/path/to/git/repo.git"
+
+  with halogen-vdom.version = "v4.0.0"
+  with halogen-vdom.dependencies = [ "extra-dependency" ] # halogen-vdom.dependencies
 -------------------------------
 
 ### Additions
@@ -61,37 +51,30 @@ Purpose:
 - Add packages that aren't already included in the default package set
 
 Syntax:
-Replace the additions' "{=}" (an empty record) with the following idea:
+where `<version>` is:
+- a tag (i.e. "v4.0.0")
+- a branch (i.e. "master")
+- commit hash (i.e. "701f3e44aafb1a6459281714858fadf2c4c2a977")
 -------------------------------
-let additions =
-  { package-name =
-       { dependencies =
-           [ "dependency1"
-           , "dependency2"
-           ]
-       , repo =
-           "https://example.com/path/to/git/repo.git"
-       , version =
-           "tag ('v4.0.0') or branch ('master')"
-       }
-  , package-name =
-       { dependencies =
-           [ "dependency1"
-           , "dependency2"
-           ]
-       , repo =
-           "https://example.com/path/to/git/repo.git"
-       , version =
-           "tag ('v4.0.0') or branch ('master')"
-       }
-  , etc.
-  }
+let upstream = --
+in  upstream
+  with new-package-name =
+    { dependencies =
+       [ "dependency1"
+       , "dependency2"
+       ]
+    , repo =
+       "https://example.com/path/to/git/repo.git"
+    , version =
+        "<version>"
+    }
 -------------------------------
 
 Example:
 -------------------------------
-let additions =
-  { benchotron =
+let upstream = --
+in  upstream
+  with benchotron =
       { dependencies =
           [ "arrays"
           , "exists"
@@ -113,14 +96,9 @@ let additions =
       , version =
           "v7.0.0"
       }
-  }
 -------------------------------
 -}
 let upstream =
       https://github.com/purescript/package-sets/releases/download/psc-0.14.3-20210811/packages.dhall sha256:a2de7ef2f2e753733eddfa90573a82da0c7c61d46fa87d015b7f15ef8a6e97d5
 
-let overrides = {=}
-
-let additions = {=}
-
-in  upstream // overrides // additions
+in  upstream

@@ -7,10 +7,13 @@ You can edit this file as you like.
   [ "aff"
   , "console"
   , "effect"
+  , "either"
+  , "foldable-traversable"
   , "ordered-collections"
   , "prelude"
   , "psci-support"
   , "transformers"
+  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

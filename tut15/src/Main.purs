@@ -10,7 +10,7 @@ import Data.String (Replacement(..), Pattern(..), replace)
 import Effect (Effect)
 import Effect.Aff (launchAff)
 import Effect.Class.Console (log, logShow)
-import Global (isNaN)
+import Data.Number (isNaN)
 
 -- We use an unsafe prefix for parseFloat, because JS parseFloat
 -- may return NaN.

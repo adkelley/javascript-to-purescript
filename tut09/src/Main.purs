@@ -44,7 +44,7 @@ badStats = [ { page: "Home",  views: (Just 1) }
 regexFlags :: RegexFlagsRec
 regexFlags = { global: true, ignoreCase: true
              , multiline: false, sticky: false
-             , unicode: false
+             , unicode: false, dotAll: false
              }
 
 vowelsRegex :: Regex

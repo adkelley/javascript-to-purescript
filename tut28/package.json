@@ -2,13 +2,16 @@
   "name": "javascript-to-purescript",
   "description": "Javascript to Purescript Tutorial Series",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "scripts": {
     "clean":   "rimraf output && rimraf .spago && rimraf .purs-repl && rimraf .psci_modules",
     "install": "spago install",
     "build":   "spago build",
-    "bundle":  "spago bundle-app --main Main --to index.js",
     "exec":    "spago run",
     "all":     "npm run clean && npm run install && npm run build && npm run exec"
-  }
+  },
+    "devDependencies": {
+        "purescript": "^0.14.3",
+        "spago": "^0.20.3"
+    }
 }

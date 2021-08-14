@@ -6,13 +6,15 @@ You can edit this file as you like.
 , dependencies =
   [ "aff"
   , "console"
+  , "control"
   , "effect"
   , "either"
-  , "exceptions"
-  , "globals"
+  , "maybe"
+  , "numbers"
   , "prelude"
   , "psci-support"
   , "strings"
+  , "transformers"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

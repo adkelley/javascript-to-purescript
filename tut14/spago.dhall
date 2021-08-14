@@ -6,8 +6,9 @@ You can edit this file as you like.
 , dependencies =
   [ "bifunctors"
   , "console"
+  , "contravariant"
   , "effect"
-  , "functions"
+  , "integers"
   , "prelude"
   , "profunctor"
   , "psci-support"
