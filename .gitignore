@@ -1,6 +1,7 @@
 /bower_components/
 /node_modules/
 */.purs-repl/
+*/.psc-ide-port
 /output/
 */.spago
 /.psci_modules/
