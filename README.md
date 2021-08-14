@@ -33,7 +33,7 @@ Each tutorial has been placed in a separate folder named 'tut##', where ## is a 
 I have set up the folders so that you can run the PureScript code samples for the first time with `npm install` which installs spago and purescript as dependencies.  Then type `npm run all` which will compile and run the source code.  Thereafter, type `npm run exec` to run it again. There's also individual scripts `npm run clean`, `npm run install`, `npm run build`, and `npm run exec`; used to clean, install, build, and execute the tutorial examples respectively. Naturally, this assumes you have the `npm` package manager installed. These scripts also depend on `rimraf` (the UNIX command `rm -rf` for node), and `Spago` (PureScript's package manager and build tool). I explain all of this below.
 
 ### PureScript and its supporting actors
-The PureScript community has now settled on the [Spago](https://github.com/purescript/spago) package manager and build tool.  Spago is the recommendation given in [Getting Started with PureScript](http://www.purescript.org/learn/getting-started/), which I recommend you read thoroughly before proceeding further. In my experience so far, Spago is a welcome addition to PureScript's tooling, providing a great UX, with minimal dependencies and reproducible builds.
+The PureScript community has now settled on the [Spago](https://github.com/purescript/spago) package manager and build tool.  Spago is the recommendation given in [Getting Started with PureScript](https://github.com/purescript/documentation/blob/master/guides/Getting-Started.md), which I recommend you read thoroughly before proceeding further. In my experience so far, Spago is a welcome addition to PureScript's tooling, providing a great UX, with minimal dependencies and reproducible builds.
 
 ## Get up and running in PureScript
 The `package.json` file in each of the tutorials includes `spago` and `purescript` as dev dependencies.  Therefore, there is no need to install them globally. At the time of this tutorial revision, the latest npm version of spago is `0.20.3` and purescript is `0.14.3`.
@@ -46,7 +46,7 @@ There are plugins for most editors to support syntax highlighting, build support
 `"
 $ mkdir purescript-hello
 $ cd purescript-hello
-$ npm i -D spago purescript
+$ npm install -D spago purescript
 $ spago init
 $ spago build
 $ spago run
@@ -55,7 +55,7 @@ $ spago run
 
 ### My Favorite PureScript tools & references
 
-1. [PureScript by Example](https://leanpub.com/purescript/) by Phil Freeman, the author of the PureScript language.  Also, see the [dwhitney](https://github.com/dwhitney/purescript-book) fork, which updates the text and exercises to reflect 0.13.x.
+1. [PureScript by Example](https://leanpub.com/purescript/) by Phil Freeman, the author of the PureScript language.  Also, see the [community fork](https://github.com/purescript-contrib/purescript-book), which updates the text and exercises to reflect purescript 0.14.x.
 2. [Pursuit](https://pursuit.purescript.org) is the home of PureScript documentation; soon to become your best friend
 3. [Try PureScript](http://try.purescript.org/) allows you to try key examples of PureScript in the browser.  You can also create your own.
 4. psc-ide (distributed with the compiler) provides editor support, including [atom](https://github.com/nwolverson/atom-ide-purescript), [emacs]( https://github.com/epost/psc-ide-emacs), [vim](https://github.com/FrigoEU/psc-ide-vim), and [visual studio]( https://github.com/nwolverson/vscode-ide-purescript)
@@ -68,4 +68,4 @@ $ spago run
 
 I'll add additional links as I write the tutorials. But If you would like to look ahead, then the majority of the code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) are available on [Github](https://github.com/adkelley/javascript-to-purescript). But I may amend them as I write the accompanying tutorial markdown.  
 
-*Edited on May 8, 2020, to support the Spago package manager and introduce the latest PureScript resources*
+*Edited on August 14, 2021, bumping to Spago 0.20. 3 and PureScript 0.14.3, and removing references to bower*
