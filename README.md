@@ -30,13 +30,15 @@ I've created a GitHub repository with the markdown versions of these stories (i.
 
 Each tutorial has been placed in a separate folder named 'tut##', where ## is a number (e.g., 'tut01') that corresponds to video## from Brian's [course](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript). There is the accompanying tutorial markdown (e.g., tut01/README.md)here, which illustrates the abstraction from Brian's corresponding video (e.g., video1) and how to implement it in PureScript.
 
-I have set up the folders so that you can run the PureScript code samples for the first time with `npm install` which installs spago and purescript as dependencies.  Then type `npm run all` which will compile and run the source code.  Thereafter, type `npm run exec` to run it again. There's also individual scripts `npm run clean`, `npm run install`, `npm run build`, and `npm run exec`; used to clean, install, build, and execute the tutorial examples respectively. Naturally, this assumes you have the `npm` package manager installed. These scripts also depend on `rimraf` (the UNIX command `rm -rf` for node), and `Spago` (PureScript's package manager and build tool). I explain all of this below.
+I have set up the folders so that you can run the PureScript code samples for the first time with `npm install` which installs spago and purescript as dependencies.  Then type `npm run all` which will compile and run the source code.  Thereafter, type `npm run exec` to run it again. There's also individual scripts `npm run clean`, `npm run install`, `npm run build`, and `npm run exec`; used to clean, install, build, and execute the tutorial examples respectively. 
 
-### PureScript and its supporting actors
+Naturally, all this assumes you have the `npm` package manager installed. These scripts also depend on `rimraf` (the UNIX command `rm -rf` for node), and `Spago` (PureScript's package manager and build tool). I explain all of this below.
+
+### Supporting actors
 The PureScript community has now settled on the [Spago](https://github.com/purescript/spago) package manager and build tool.  Spago is the recommendation given in [Getting Started with PureScript](https://github.com/purescript/documentation/blob/master/guides/Getting-Started.md), which I recommend you read thoroughly before proceeding further. In my experience so far, Spago is a welcome addition to PureScript's tooling, providing a great UX, with minimal dependencies and reproducible builds.
 
 ## Get up and running in PureScript
-The `package.json` file in each of the tutorials includes `spago` and `purescript` as dev dependencies.  Therefore, there is no need to install them globally. At the time of this tutorial revision, the latest npm version of spago is `0.20.3` and purescript is `0.14.3`.
+The `package.json` file in each of the tutorials includes `spago` and `purescript` as dev dependencies.  Therefore, there is no need to install them globally. At the time of this tutorial revision, the latest npm version of Spago is `0.20.3` and PureScript is `0.14.3`.
 
 ### Install  editor plugins
 There are plugins for most editors to support syntax highlighting, build support, REPL (Read, Evaluate, Print, Loop), and autocomplete. You'll find the information to install these plugins for your favorite editor [here](https://github.com/purescript/documentation/blob/master/ecosystem/Editor-and-tool-support.md).
@@ -55,7 +57,7 @@ $ spago run
 
 ### My Favorite PureScript tools & references
 
-1. [PureScript by Example](https://book.purescript.org) is the official PureScript book, originally by Phil Freeman (the author of the PureScript language) and now maintained by the community.
+1. [PureScript by Example](https://book.purescript.org) is the official PureScript book, originally by Phil Freeman (the author of the PureScript language) and now maintained by the [community fork](https://github.com/purescript-contrib/purescript-book).
 2. [Pursuit](https://pursuit.purescript.org) is the home of PureScript documentation; soon to become your best friend
 3. [Try PureScript](http://try.purescript.org/) allows you to try key examples of PureScript in the browser.  You can also create your own.
 4. psc-ide (distributed with the compiler) provides editor support, including [atom](https://github.com/nwolverson/atom-ide-purescript), [emacs]( https://github.com/epost/psc-ide-emacs), [vim](https://github.com/FrigoEU/psc-ide-vim), and [visual studio]( https://github.com/nwolverson/vscode-ide-purescript)
@@ -68,4 +70,4 @@ $ spago run
 
 I'll add additional links as I write the tutorials. But If you would like to look ahead, then the majority of the code samples from Brian's [videos](https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript) are available on [Github](https://github.com/adkelley/javascript-to-purescript). But I may amend them as I write the accompanying tutorial markdown.  
 
-*Edited on August 14, 2021, bumping to Spago 0.20. 3 and PureScript 0.14.3, and removing references to bower*
+*Edited on August 14, 2021, bumping to Spago 0.20.3 & PureScript 0.14.3, and removing references to Bower*
