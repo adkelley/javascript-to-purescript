@@ -1,7 +1,6 @@
 /node_modules/
 bower_components/
 .psci_modules/
-.purs-repl/
 .spago/
 /output/
 .DS_Store

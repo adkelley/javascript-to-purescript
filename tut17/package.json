@@ -2,12 +2,16 @@
   "name": "javascript-to-purescript",
   "description": "Javascript to Purescript Tutorial Series",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.2.0",
   "scripts": {
-    "clean": "rimraf bower_components && rimraf output && rimraf .psc* && rimraf .pulp-cache",
-    "install": "psc-package install",
-    "build": "pulp --psc-package build",
-    "exec": "pulp --psc-package run",
-    "all": "npm run clean && npm run install && npm run exec"
-  }
+    "clean":   "rimraf node_modules && rimraf output && rimraf .spago && rimraf .purs-repl && rimraf .psci_modules && rimraf .psc-ide-port",
+    "install": "spago install",
+    "build":   "spago build",
+    "exec":    "spago run",
+    "all":     "npm run clean && npm run install && npm run build && npm run exec"
+  },
+    "devDependencies": {
+        "purescript": "^0.14.5",
+        "spago": "^0.20.4"
+    }
 }

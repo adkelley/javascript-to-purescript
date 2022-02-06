@@ -11,6 +11,5 @@
 *.org
 */src/Secret.purs
 resources/*.sketch
-test-build-log.txt
-spago-build-log.txt
+bump-deps-log.txt
 */index.js

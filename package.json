@@ -1,17 +1,12 @@
 {
-  "name": "javascript-to-purescript",
-  "description": "Javascript to Purescript Tutorial Series. See https://medium.com/@kelleyalex/index-make-the-leap-from-javascript-to-purescript-a1566d657e9c",
-  "private": true,
-  "scripts": {
-    "clean":   "rimraf */output && rimraf */.spago && rimraf */.purs-repl && rimraf */.psci_modules"
-  },
-  "private": true,
-  "author": [
-    {
-      "name": "Alex Kelley",
-      "email": "",
-      "url": "https://github.com/adkelley"
-    }
-  ],
-  "license": "MIT"
+    "name": "javascript-to-purescript",
+    "description": "Javascript to Purescript Tutorial Series. See https://medium.com/@kelleyalex/index-make-the-leap-from-javascript-to-purescript-a1566d657e9c",
+    "private": true,
+    "version": "2.2.1",
+    "author": {
+        "name": "Alex Kelley",
+        "email": "",
+        "url": "https://github.com/adkelley"
+    },
+    "license": "MIT"
 }

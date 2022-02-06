@@ -1,6 +1,6 @@
-/bower_components/
 /node_modules/
-/.pulp-cache/
+bower_components/
+.psci_modules/
+.spago/
 /output/
-/.psc*
-/.psa*
+.DS_Store
