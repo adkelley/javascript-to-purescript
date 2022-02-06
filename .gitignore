@@ -12,4 +12,5 @@
 */src/Secret.purs
 resources/*.sketch
 bump-deps-log.txt
+audit-fix-log.txt
 */index.js
