@@ -1,6 +1,4 @@
-module Main
-  ( nextCharForNumberString
-  ) where
+module Main where
 
 import Prelude
 
@@ -48,8 +46,7 @@ nextCharForNumberString'' =
     >>> (+) 1
     >>> fromCharCode
     >>> fromMaybe ' '
-    >>>
-      singleton
+    >>> singleton
 
 -- But when mixing categories (i.e., Box, Maybe), we'll often use
 -- composition by putting s into a box and mapping over it
@@ -61,8 +58,7 @@ nextCharForNumberString str =
     # map (\i -> i + 1)
     # map (\i -> fromMaybe ' ' $ fromCharCode i)
     # map (\c -> toLower $ singleton c)
-    #
-      extract
+    # extract
 
 main :: Effect Unit
 main = do
